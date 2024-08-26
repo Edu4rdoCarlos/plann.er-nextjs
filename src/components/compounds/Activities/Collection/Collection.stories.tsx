@@ -1,6 +1,7 @@
 import React from "react";
 import { Meta, StoryFn } from "@storybook/react";
 import { CollectionProps, Collection } from "./Collection";
+import { activitiesMock } from "./mock";
 
 export default {
   title: "Components/Activities",
@@ -8,12 +9,21 @@ export default {
     layout: "centered",
   },
   args: {
-    date: "2024-08-26T14:00:00.123Z",
-    label: "Corrida de Kart",
+    activities: activitiesMock,
+    date: "2024-08-19T08:00:00.123Z",
   },
 } as Meta;
 
-const Template: StoryFn<CollectionProps> = (args) => <Collection {...args} />;
+const Template: StoryFn<CollectionProps> = (args) => (
+  <div style={{ width: 600 }}>
+    <Collection {...args} />
+  </div>
+);
 
 export const Default = Template.bind({});
 Default.args = {};
+
+export const Empty = Template.bind({});
+Empty.args = {
+  activities: [],
+};

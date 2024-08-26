@@ -2,26 +2,20 @@ import { tv } from "tailwind-variants";
 
 export const activityVariants = tv({
   slots: {
-    sCollection: [
-      "rounded-xl",
-      "bg-zinc-900",
-      "flex",
-      "justify-between",
-      "w-full",
-      "px-4",
-      "py-3",
-    ],
-    sLabel: ["text-zinc-100"],
-    sHour: ["text-zinc-400"],
-    sLabelWrapper: ["flex", "gap-3", "items-center"],
-  },
-  variants: {
-    checked: {
-      true: {
-        sCollection: "opacity-60",
-      },
-    },
+    sCollectionWrapper: ["flex", "flex-col", "gap-2"],
+    sHeading: ["flex", "items-end", "gap-2.5"],
+    sDay: ["text-xl", "text-zinc-50", "font-semibold"],
+    sDayOfWeek: ["text-sm", "text-zinc-500", "font-light", "capitalize"],
+    sActivities: ["flex", "flex-col", "gap-2.5", "mt-1.5"],
+    sEmpty: ["text-zinc-500", "font-light", "text-sm"],
   },
 });
 
-export const { sCollection, sLabelWrapper, sLabel, sHour } = activityVariants();
+export const {
+  sCollectionWrapper,
+  sHeading,
+  sDay,
+  sDayOfWeek,
+  sActivities,
+  sEmpty,
+} = activityVariants();

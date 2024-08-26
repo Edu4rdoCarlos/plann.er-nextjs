@@ -11,14 +11,8 @@ export const getHour = ({ date }: IDate) => {
   });
 };
 
-export const getDay = ({ date }: IDate) => {
-  return format(date, "D", {
-    locale: ptBR,
-  });
-};
-
 export const getDayOfWeek = ({ date }: IDate) => {
-  return format(date, "D", {
+  return format(date, "EEEE", {
     locale: ptBR,
   });
 };
