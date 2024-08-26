@@ -1,10 +1,19 @@
-import { ActivityProps } from "../Activity/Activity";
+import { Activity, ActivityProps } from "../Activity/Activity";
 
-export interface CollectionProps  {
+export interface CollectionProps {
   date: Date;
-  items: ActivityProps[]
+  activities: ActivityProps[];
 }
 
 export const Collection = (props: CollectionProps) => {
-  return <></>  
-}
+  const { activities, date } = props;
+
+  return (
+    <div>
+      <div>dia</div>
+      {activities.map((activity) => (
+        <Activity {...activity} />
+      ))}
+    </div>
+  );
+};

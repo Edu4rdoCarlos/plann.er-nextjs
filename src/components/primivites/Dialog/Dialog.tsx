@@ -1,6 +1,6 @@
 import { X } from "lucide-react";
 import { HtmlHTMLAttributes, PropsWithChildren, ReactNode } from "react";
-import { 
+import {
   sWrapper,
   sContainer,
   sCloseButton,
@@ -9,14 +9,13 @@ import {
   sTitle,
   sContent,
   sFooter,
-  sSubtitle
- } from "./Dialog.variants";
-
+  sSubtitle,
+} from "./Dialog.variants";
 
 export interface DialogProps extends HtmlHTMLAttributes<HTMLDivElement> {
   open: boolean;
   onOpenChange: (value: boolean) => void;
-  trigger?: ReactNode
+  trigger?: ReactNode;
 }
 
 interface HeaderProps {
@@ -27,26 +26,30 @@ interface HeaderProps {
 
 const Header = ({ title, className, subtitle }: HeaderProps) => {
   return (
-    <div className={sHeader({className})}>
-        <h2 className={sTitle()}>
-          {title}
-        </h2>
-        <p className={sSubtitle()}>{subtitle}</p>
+    <div className={sHeader({ className })}>
+      <h2 className={sTitle()}>{title}</h2>
+      <p className={sSubtitle()}>{subtitle}</p>
     </div>
   );
 };
 
-const Content = ({ children, className }: PropsWithChildren<{className?: string}>) => {
-  return <div className={sContent({className})}>{children}</div>;
+const Content = ({
+  children,
+  className,
+}: PropsWithChildren<{ className?: string }>) => {
+  return <div className={sContent({ className })}>{children}</div>;
 };
-const Footer = ({ children, className }: PropsWithChildren<{className?: string}>) => {
-  return <div className={sFooter({className})}>{children}</div>;
+const Footer = ({
+  children,
+  className,
+}: PropsWithChildren<{ className?: string }>) => {
+  return <div className={sFooter({ className })}>{children}</div>;
 };
 
 const Dialog = ({ open, children, onOpenChange, trigger }: DialogProps) => {
   return (
     <>
-    {trigger && (
+      {trigger && (
         <div onClick={() => onOpenChange(true)} className="cursor-pointer">
           {trigger}
         </div>

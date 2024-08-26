@@ -1,34 +1,39 @@
-
-import React from 'react';
-import { Meta, StoryFn } from '@storybook/react';
-import { Button, ButtonProps } from './Button';
-import { ArrowRight } from 'lucide-react';
+import React from "react";
+import { Meta, StoryFn } from "@storybook/react";
+import { Button, ButtonProps } from "./Button";
+import { ArrowRight } from "lucide-react";
 
 export default {
-  title: 'Primitives/Button',
+  title: "Primitives/Button",
   parameters: {
-    layout: 'centered'
+    layout: "centered",
   },
   args: {
-    size: 'md',
-    colorScheme: 'primary',
-    children: <>Label <ArrowRight /></>,
+    size: "md",
+    colorScheme: "primary",
+    children: (
+      <>
+        Label <ArrowRight />
+      </>
+    ),
   },
 } as Meta;
 
-const Template: StoryFn<ButtonProps> = (args) => <Button {...args} />;
+const Template: StoryFn<ButtonProps> = (args) => (
+  <div style={{ width: 300 }}>
+    <Button {...args} />
+  </div>
+);
 
 export const Primary = Template.bind({});
 Primary.args = {};
 
-
 export const Secondary = Template.bind({});
 Secondary.args = {
-  colorScheme: 'secondary'
+  colorScheme: "secondary",
 };
 
 export const disabled = Template.bind({});
 disabled.args = {
-  disabled: true
+  disabled: true,
 };
-
