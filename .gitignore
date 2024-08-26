@@ -92,3 +92,4 @@ sketch
 # .pnp.*
 
 # End of https://www.toptal.com/developers/gitignore/api/nextjs,react,visualstudiocode,vercel,yarn
+*storybook.log
