@@ -13,12 +13,12 @@ import { Check } from "../../primivites/Check/Check";
 
 export const member1 = {
   label: "Guilherme Barbosa",
-  info: "gbp1@aluno.ifal.edu.br",
+  info: "guilhemebarbosa@gmail.com",
   widget: <Check />,
 };
 
 export const member2 = {
   label: "Eduardo Carlos",
-  info: "edu4rdobarb0za@gmail.com",
+  info: "eduardocarlos@gmail.com",
   widget: <Check checked />,
 };

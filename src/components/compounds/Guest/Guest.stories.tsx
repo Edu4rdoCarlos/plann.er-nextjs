@@ -8,7 +8,7 @@ export default {
     layout: "centered",
   },
   args: {
-    email: "edu4rdobarb0za@gmail.com",
+    email: "eduardocarlos@gmail.com",
     onCancel: () => void 0,
   },
 } as Meta;
