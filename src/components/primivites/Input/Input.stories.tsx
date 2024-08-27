@@ -2,6 +2,7 @@ import React from "react";
 import { Meta, StoryFn } from "@storybook/react";
 import { Input, InputProps } from "./Input";
 import { ArrowRight, AtSign } from "lucide-react";
+import { Button } from "../Button/Button";
 
 export default {
   title: "Primitives/Input",
@@ -16,9 +17,18 @@ export default {
 } as Meta;
 
 const Template: StoryFn<InputProps> = (args) => (
-  <div style={{ width: 400 }}>
+  <div style={{ width: 500 }}>
     <Input {...args} />
   </div>
 );
 
 export const Default = Template.bind({});
+
+export const WithButton = Template.bind({});
+WithButton.args = {
+  Button: (
+    <Button size="sm" className="w-fit">
+      Confirmar viagem <ArrowRight width={20} />
+    </Button>
+  ),
+};

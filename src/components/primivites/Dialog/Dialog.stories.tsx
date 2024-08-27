@@ -27,7 +27,7 @@ const Template: StoryFn<DialogProps> = (args) => {
         }
       />
       <Dialog.Content>
-        <Input Icon={User} type="text" placeholder="Seu nome completo" />
+        <Input Icon={User} placeholder="Seu nome completo" />
         <Input Icon={Mail} type="email" placeholder="Seu e-mail" />
       </Dialog.Content>
       <Dialog.Footer>
