@@ -16,7 +16,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   const { Icon, className, Button, type = "text", ...rest } = props;
 
   return (
-    <div className={sInputWrapper()}>
+    <div className={sInputWrapper({ className })}>
       <div className="min-w-5">
         <Icon strokeWidth={1.7} width={20} />
       </div>

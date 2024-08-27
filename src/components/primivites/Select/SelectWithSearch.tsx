@@ -1,6 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Input } from "../Input/Input";
 import { MapPin } from "lucide-react";
+import {
+  sDropdown,
+  sItems,
+  sSearch,
+  sWrapper,
+} from "./SelectWithSearch.variants";
 
 export interface SelectWithSearchProps {
   options?: string[];
@@ -50,7 +56,7 @@ export const SelectWithSearch = ({
   };
 
   return (
-    <div>
+    <div className={sWrapper()}>
       <Input
         ref={inputRef}
         Icon={MapPin}
@@ -59,15 +65,17 @@ export const SelectWithSearch = ({
         placeholder="Para aonde você vai?"
         onFocus={() => inputValue && setShowDropdown(true)}
         onBlur={handleInputBlur}
+        className={sSearch()}
       />
       {showDropdown && (
-        <ul>
+        <ul className={sDropdown()}>
           {filteredOptions.length > 0 ? (
             filteredOptions.map((option, index) => (
               <li
                 key={index}
                 onClick={() => handleOptionSelect(option)}
                 style={{ cursor: "pointer" }}
+                className={sItems()}
               >
                 {option}
               </li>
