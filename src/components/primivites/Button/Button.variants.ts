@@ -27,6 +27,10 @@ export const buttonVariants = tv({
       primary: { sButton: ["bg-lime-300 text-lime-950"] },
       secondary: { sButton: ["bg-zinc-800 text-zinc-200"] },
     },
+    variants: {
+      default: {},
+      ghost: {},
+    },
     size: {
       sm: {
         sButton: [""],
@@ -36,6 +40,22 @@ export const buttonVariants = tv({
       },
     },
   },
+  compoundVariants: [
+    {
+      colorScheme: "primary",
+      variants: "ghost",
+      class: {
+        sButton: ["bg-transparent", "text-lime-300"],
+      },
+    },
+    {
+      colorScheme: "secondary",
+      variants: "ghost",
+      class: {
+        sButton: ["bg-transparent", "text-zinc-400"],
+      },
+    },
+  ],
 });
 
 export const { sButton } = buttonVariants();

@@ -10,11 +10,15 @@ export const Button = (props: ButtonProps) => {
     colorScheme = "primary",
     size = "md",
     children,
+    variants = "default",
     className,
     ...rest
   } = props;
   return (
-    <button className={sButton({ colorScheme, size, className })} {...rest}>
+    <button
+      className={sButton({ colorScheme, size, className, variants })}
+      {...rest}
+    >
       {children}
     </button>
   );
