@@ -9,11 +9,11 @@ export interface InputProps
   extends VariantProps<typeof inputVariants>,
     InputHTMLAttributes<HTMLInputElement> {
   Icon: ComponentType<LucideProps>;
-  Button?: React.ReactElement<ButtonProps>;
+  cta?: React.ReactElement<ButtonProps>;
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
-  const { Icon, className, Button, type = "text", ...rest } = props;
+  const { Icon, className, cta, type = "text", ...rest } = props;
 
   return (
     <div className={sInputWrapper({ className })}>
@@ -21,7 +21,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
         <Icon strokeWidth={1.7} width={20} />
       </div>
       <input ref={ref} className={sInput()} type={type} {...rest} />
-      {Button}
+      {cta}
     </div>
   );
 });

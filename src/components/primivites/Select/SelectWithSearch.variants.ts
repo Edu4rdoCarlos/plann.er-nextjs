@@ -12,7 +12,7 @@ const selectWithSearch = tv({
       "border-zinc-800",
       "border-[1px]",
       "absolute",
-      "top-[45px]",
+      "top-[48px]",
       "z-[0]",
     ],
     sItems: [
@@ -26,7 +26,10 @@ const selectWithSearch = tv({
       "first:pt-5",
       "last:border-none",
     ],
+    sBar: ["h-[25px]", "w-0.5", "bg-zinc-800", "mx-1"],
+    sNotFound: ["last:hover:bg-zinc-900", "select-none"],
   },
 });
 
-export const { sDropdown, sItems, sWrapper, sSearch } = selectWithSearch();
+export const { sDropdown, sItems, sWrapper, sSearch, sNotFound, sBar } =
+  selectWithSearch();

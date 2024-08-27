@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Meta, StoryFn } from "@storybook/react";
-import { AtSign } from "lucide-react";
+import { ArrowRight, AtSign } from "lucide-react";
 import { SelectWithSearch, SelectWithSearchProps } from "./SelectWithSearch";
 import { countries } from "./mock";
+import { Button } from "../Button/Button";
 
 export default {
   title: "Primitives/SelectWithSearch",
@@ -26,9 +27,19 @@ const Template: StoryFn<SelectWithSearchProps> = (args) => {
     setOptions(filteredOptions);
   };
 
+  const button = (
+    <Button size="sm" className="w-fit">
+      Continuar <ArrowRight width={20} />
+    </Button>
+  );
+
   return (
     <div style={{ width: 500 }}>
-      <SelectWithSearch onInputValue={handleInput} options={options} />
+      <SelectWithSearch
+        onInputValue={handleInput}
+        options={options}
+        cta={button}
+      />
     </div>
   );
 };

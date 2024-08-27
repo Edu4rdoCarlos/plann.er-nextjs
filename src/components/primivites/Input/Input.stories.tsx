@@ -26,7 +26,7 @@ export const Default = Template.bind({});
 
 export const WithButton = Template.bind({});
 WithButton.args = {
-  Button: (
+  cta: (
     <Button size="sm" className="w-fit">
       Confirmar viagem <ArrowRight width={20} />
     </Button>

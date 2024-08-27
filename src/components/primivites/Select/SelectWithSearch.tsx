@@ -2,20 +2,26 @@ import React, { useState, useEffect, useRef } from "react";
 import { Input } from "../Input/Input";
 import { MapPin } from "lucide-react";
 import {
+  sBar,
   sDropdown,
   sItems,
+  sNotFound,
   sSearch,
   sWrapper,
 } from "./SelectWithSearch.variants";
+import { cn } from "@/src/utils/twMerge";
+import { ButtonProps } from "../Button/Button";
 
 export interface SelectWithSearchProps {
   options?: string[];
   onInputValue: (option: string) => void;
+  cta?: React.ReactElement<ButtonProps>;
 }
 
 export const SelectWithSearch = ({
   options,
   onInputValue,
+  cta,
 }: SelectWithSearchProps) => {
   const [inputValue, setInputValue] = useState("");
   const [filteredOptions, setFilteredOptions] = useState<string[]>([]);
@@ -66,6 +72,12 @@ export const SelectWithSearch = ({
         onFocus={() => inputValue && setShowDropdown(true)}
         onBlur={handleInputBlur}
         className={sSearch()}
+        cta={
+          <>
+            <div className={sBar()} />
+            {cta}
+          </>
+        }
       />
       {showDropdown && (
         <ul className={sDropdown()}>
@@ -81,7 +93,9 @@ export const SelectWithSearch = ({
               </li>
             ))
           ) : (
-            <li>Nenhum resultado encontrado</li>
+            <li className={cn(sItems(), sNotFound())}>
+              Nenhum resultado encontrado
+            </li>
           )}
         </ul>
       )}
