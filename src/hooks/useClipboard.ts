@@ -2,27 +2,22 @@ import { useState, useCallback, ComponentType } from "react";
 import copy from "copy-to-clipboard";
 import { Check, Link2, LucideProps } from "lucide-react";
 
-interface ClipboardProps {
-  content: string;
-  IconArg?: ComponentType<LucideProps>;
-}
+interface ClipboardProps {}
 
-export const useClipboard = (props: ClipboardProps) => {
-  const { content, IconArg = Link2 } = props;
-
+export const useClipboard = (IconArg?: ComponentType<LucideProps>) => {
   const [copied, setCopied] = useState<boolean>(false);
 
-  const handleCopy = useCallback(() => {
+  const handleCopy = useCallback((content: string) => {
     if (copy(content)) {
       setCopied(true);
       setTimeout(() => {
         setCopied(false);
       }, 2000);
     }
-  }, [content]);
+  }, []);
 
   return {
-    Icon: copied ? Check : IconArg,
-    onClick: handleCopy,
+    Icon: copied ? Check : IconArg || Link2,
+    copy: handleCopy,
   };
 };

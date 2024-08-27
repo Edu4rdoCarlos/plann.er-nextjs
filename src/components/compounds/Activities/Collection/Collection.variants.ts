@@ -1,6 +1,6 @@
 import { tv } from "tailwind-variants";
 
-export const activityVariants = tv({
+const activityVariants = tv({
   slots: {
     sCollectionWrapper: ["flex", "flex-col", "gap-2"],
     sHeading: ["flex", "items-end", "gap-2.5"],

@@ -1,7 +1,6 @@
-// Input.variants.ts
 import { tv } from "tailwind-variants";
 
-export const inputVariants = tv({
+const inputVariants = tv({
   slots: {
     sInputWrapper: [
       "rounded-lg",

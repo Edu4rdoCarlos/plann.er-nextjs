@@ -52,7 +52,7 @@ export const buttonVariants = tv({
       colorScheme: "secondary",
       variants: "ghost",
       class: {
-        sButton: ["bg-transparent", "text-zinc-400"],
+        sButton: ["bg-transparent", "text-zinc-400", "p-0"],
       },
     },
   ],
