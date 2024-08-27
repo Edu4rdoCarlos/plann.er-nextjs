@@ -2,8 +2,6 @@ import { useState, useCallback, ComponentType } from "react";
 import copy from "copy-to-clipboard";
 import { Check, Link2, LucideProps } from "lucide-react";
 
-interface ClipboardProps {}
-
 export const useClipboard = (IconArg?: ComponentType<LucideProps>) => {
   const [copied, setCopied] = useState<boolean>(false);
 
