@@ -20,7 +20,6 @@ const Template: StoryFn<ActivityProps> = (args) => (
 );
 
 export const Default = Template.bind({});
-Default.args = {};
 
 export const Concluded = Template.bind({});
 Concluded.args = {

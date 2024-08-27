@@ -26,11 +26,15 @@ const Template: StoryFn<ButtonProps> = (args) => (
 );
 
 export const Primary = Template.bind({});
-Primary.args = {};
 
 export const Secondary = Template.bind({});
 Secondary.args = {
   colorScheme: "secondary",
+};
+
+export const Ghost = Template.bind({});
+Ghost.args = {
+  variants: "ghost",
 };
 
 export const disabled = Template.bind({});

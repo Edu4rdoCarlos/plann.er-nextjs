@@ -22,4 +22,3 @@ const Template: StoryFn<InputProps> = (args) => (
 );
 
 export const Default = Template.bind({});
-Default.args = {};
