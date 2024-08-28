@@ -2,6 +2,8 @@ import { tv } from "tailwind-variants";
 
 const calendarVariants = tv({
   slots: {
+    sWrapper: ["relative"],
+    sCalendarWrapper: ["absolute", "top-0", "translate-y-10"],
     sCalendar: [
       "[&.react-calendar]:bg-zinc-900",
       "[&.react-calendar]:rounded-lg",
@@ -13,4 +15,4 @@ const calendarVariants = tv({
   },
 });
 
-export const { sCalendar } = calendarVariants();
+export const { sWrapper, sCalendar, sCalendarWrapper } = calendarVariants();
