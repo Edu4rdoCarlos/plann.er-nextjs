@@ -4,6 +4,7 @@ import { ArrowRight, AtSign } from "lucide-react";
 import { SelectWithSearch, SelectWithSearchProps } from "./SelectWithSearch";
 import { countries } from "./mock";
 import { Button } from "../Button/Button";
+import { Calendar } from "../Calendar/Calendar";
 
 export default {
   title: "Primitives/SelectWithSearch",
@@ -33,11 +34,14 @@ const Template: StoryFn<SelectWithSearchProps> = (args) => {
     </Button>
   );
 
+  const calendar = <Calendar />;
+
   return (
-    <div style={{ width: 500 }}>
+    <div style={{ width: 800 }}>
       <SelectWithSearch
         onInputValue={handleInput}
         options={options}
+        calendar={calendar}
         cta={button}
       />
     </div>

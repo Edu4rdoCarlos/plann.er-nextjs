@@ -11,17 +11,20 @@ import {
 } from "./SelectWithSearch.variants";
 import { cn } from "@/src/utils/twMerge";
 import { ButtonProps } from "../Button/Button";
+import { CalendarProps } from "../Calendar/Calendar";
 
 export interface SelectWithSearchProps {
   options?: string[];
   onInputValue: (option: string) => void;
   cta?: React.ReactElement<ButtonProps>;
+  calendar?: React.ReactElement<CalendarProps>;
 }
 
 export const SelectWithSearch = ({
   options,
   onInputValue,
   cta,
+  calendar,
 }: SelectWithSearchProps) => {
   const [inputValue, setInputValue] = useState("");
   const [filteredOptions, setFilteredOptions] = useState<string[]>([]);
@@ -74,6 +77,7 @@ export const SelectWithSearch = ({
         className={sSearch()}
         cta={
           <>
+            {calendar}
             <div className={sBar()} />
             {cta}
           </>

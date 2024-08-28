@@ -31,6 +31,7 @@ export const Calendar = (props: CalendarProps) => {
       <Button
         colorScheme="secondary"
         variants="ghost"
+        className="font-normal"
         onClick={() => setShowCalendar((prev) => !prev)}
       >
         <CalendarIcon width={20} />
