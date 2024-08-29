@@ -23,7 +23,7 @@ export const getDayOfWeek = ({ date }: IDate) => {
 };
 
 export const getRangeDate = ({ startDate, endDate }: IRangeDate) => {
-  if (!(startDate && endDate)) return;
+  if (!(startDate && endDate)) return "";
   const initialDate = new Date(startDate);
   const finalDate = new Date(endDate);
 
