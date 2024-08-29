@@ -9,7 +9,7 @@ export const inputVariants = tv({
       "outline-none",
       "text-zinc-400",
       "border-[1px]",
-      "font-normal",
+      "font-light",
       "py-3.5",
       "px-4",
       "text-lg",

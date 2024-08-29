@@ -1,5 +1,5 @@
 import { X } from "lucide-react";
-import { Button } from "../../primivites/Button/Button";
+import { Button } from "../../primitives/Button/Button";
 import { sEmail, sGuest } from "./Guest.variants";
 
 export interface GuestProps {

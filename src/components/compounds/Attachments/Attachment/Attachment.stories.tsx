@@ -1,7 +1,7 @@
 import React from "react";
 import { Meta, StoryFn } from "@storybook/react";
 import { Attachment, AttachmentProps } from "./Attachment";
-import { Button } from "@/src/components/primivites/Button/Button";
+import { Button } from "@/src/components/primitives/Button/Button";
 import { Plus } from "lucide-react";
 import { Content } from "../Content/Content";
 import { attachmentItems } from "../mock";

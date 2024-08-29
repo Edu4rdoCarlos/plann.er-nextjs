@@ -9,7 +9,7 @@ export const attachmentItems = [
   },
 ];
 
-import { Check } from "../../primivites/Check/Check";
+import { Check } from "../../primitives/Check/Check";
 
 export const member1 = {
   label: "Guilherme Barbosa",

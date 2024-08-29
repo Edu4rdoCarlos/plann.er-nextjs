@@ -1,7 +1,7 @@
 import React from "react";
 import { Meta, StoryFn } from "@storybook/react";
 import { Content, ContentProps } from "./Content";
-import { Button } from "../../../primivites/Button/Button";
+import { Button } from "../../../primitives/Button/Button";
 import { useClipboard } from "@/src/hooks/useClipboard";
 import { member1, member2 } from "../mock";
 
