@@ -26,10 +26,6 @@ const Template: StoryFn<SelectWithSearchProps> = (args) => {
     setCalendarValue(value);
   };
 
-  useEffect(() => {
-    console.log(calendarValue);
-  }, [calendarValue]);
-
   const handleInput = (inputValue: string) => {
     const filteredOptions = countries.filter((option) =>
       option.toLowerCase().includes(inputValue.toLowerCase())

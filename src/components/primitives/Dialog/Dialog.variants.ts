@@ -8,7 +8,6 @@ const dialogVariants = tv({
       "flex",
       "items-center",
       "justify-center",
-      "z-50",
       "bg-black",
       "bg-opacity-50",
       "h-screen",

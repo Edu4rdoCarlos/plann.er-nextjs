@@ -14,13 +14,8 @@ const Template: StoryFn<CalendarProps> = (args) => {
   const [calendarValue, setCalendarValue] = useState<CalendarValue>(new Date());
 
   const handleCalendarChange = (value: CalendarValue) => {
-    console.log("foi");
     setCalendarValue(value);
   };
-
-  useEffect(() => {
-    console.log(calendarValue);
-  }, [calendarValue]);
 
   return (
     <Calendar onChange={handleCalendarChange} value={calendarValue} {...args} />

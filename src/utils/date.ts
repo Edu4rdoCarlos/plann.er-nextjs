@@ -32,3 +32,13 @@ export const getRangeDate = ({ startDate, endDate }: IRangeDate) => {
 
   return `${formattedStartDate} a ${formattedEndDate}`;
 };
+
+export const getDate = ({ date }: IDate) => {
+  if (!date) return "";
+
+  const formattedEndDate = format(new Date(date), "d 'de' MMMM", {
+    locale: ptBR,
+  });
+
+  return formattedEndDate;
+};
