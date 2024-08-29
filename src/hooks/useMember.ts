@@ -1,50 +1,50 @@
-import { ApiMember } from '@/app/services/member'
-import { useMutation, useQuery, useQueryClient } from 'react-query'
+import { ApiMember } from "@/src/services/member";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 
-const QUERY_KEY = 'qkMember'
+const QUERY_KEY = "qkMember";
 
 const Create = () => {
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
   return useMutation(ApiMember.create, {
     onSuccess: () => {
-      queryClient.invalidateQueries(QUERY_KEY)
-    }
-  })
-}
+      queryClient.invalidateQueries(QUERY_KEY);
+    },
+  });
+};
 
 const Delete = () => {
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
   return useMutation(ApiMember.delete, {
     onSuccess: () => {
-      queryClient.invalidateQueries(QUERY_KEY)
-    }
-  })
-}
+      queryClient.invalidateQueries(QUERY_KEY);
+    },
+  });
+};
 
 const ListAll = () => {
-  return useQuery([QUERY_KEY], () => ApiMember.listAll())
-}
+  return useQuery([QUERY_KEY], () => ApiMember.listAll());
+};
 
 const FindOne = (id: string) => {
-  return useQuery([QUERY_KEY, id], () => ApiMember.findOne(id))
-}
+  return useQuery([QUERY_KEY, id], () => ApiMember.findOne(id));
+};
 
 const Update = () => {
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
   return useMutation(ApiMember.update, {
     onSuccess: () => {
-      queryClient.invalidateQueries(QUERY_KEY)
-    }
-  })
-}
+      queryClient.invalidateQueries(QUERY_KEY);
+    },
+  });
+};
 
 export const useMember = {
-    Create,
-    Delete,
-    Update,
-    FindOne,
-    ListAll,
-}
+  Create,
+  Delete,
+  Update,
+  FindOne,
+  ListAll,
+};
