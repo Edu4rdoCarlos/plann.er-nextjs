@@ -37,15 +37,16 @@ const dialogVariants = tv({
       "duration-150",
     ],
     sContentWrapper: [""],
-    sHeader: ["flex", "justify-between", "mb-5", "flex-col", "gap-2"],
+    sHeader: ["flex", "justify-between", "mb-5", "flex-col", "gap-1"],
     sTitle: ["text-xl", "text-accent-800", "font-semibold", "tracking-normal"],
     sFooter: ["flex", " flex-col", " gap-3", "mt-3"],
     sContent: ["mt-6", "w-full", "flex", "flex-col", "gap-2"],
     sSubtitle: [
       "[&>span]:text-zinc-100",
-      "[&>span]:font-bold",
+      "[&>span]:font-semibold",
       "text-zinc-400",
       "text-base",
+      "font-light",
     ],
   },
 });

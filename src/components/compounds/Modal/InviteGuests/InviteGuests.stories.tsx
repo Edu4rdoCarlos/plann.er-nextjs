@@ -1,7 +1,5 @@
 import { Meta, StoryFn } from "@storybook/react";
 import { useState } from "react";
-import { FormatLocation } from "@/src/utils/location";
-import { getRangeDate } from "@/src/utils/date";
 import { InviteGuests, InviteGuestsProps } from "./InviteGuests";
 
 export default {

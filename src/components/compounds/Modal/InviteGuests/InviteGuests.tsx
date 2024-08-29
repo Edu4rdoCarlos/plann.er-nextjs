@@ -2,7 +2,7 @@ import { Button } from "@/src/components/primitives/Button/Button";
 import { Dialog } from "@/src/components/primitives/Dialog/Dialog";
 import { Input } from "@/src/components/primitives/Input/Input";
 import { AtSign, Plus } from "lucide-react";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { Guest } from "../../Guest/Guest";
 import { sBar, sEmpty, sGuest } from "./InviteGuests.variants";
 
@@ -16,7 +16,7 @@ export const InviteGuests = (props: InviteGuestsProps) => {
   const { open, onOpenChange, onGuestsChange, guests } = props;
   const inputRef = useRef<HTMLInputElement | null>(null);
 
-  const handleConfirmTrip = () => {
+  const handleInviteGuests = () => {
     const input = inputRef.current;
     console.log(input?.value);
     if (input) {
@@ -35,7 +35,7 @@ export const InviteGuests = (props: InviteGuestsProps) => {
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
-      handleConfirmTrip();
+      handleInviteGuests();
     }
   };
 
@@ -57,7 +57,7 @@ export const InviteGuests = (props: InviteGuestsProps) => {
             ))}
           </div>
         ) : (
-          <div className={sEmpty()}>Nenhum convite efetuado</div>
+          <div className={sEmpty()}>Nenhum convite inserido</div>
         )}
         <div className={sBar()} />
       </Dialog.Content>
@@ -68,7 +68,7 @@ export const InviteGuests = (props: InviteGuestsProps) => {
           placeholder="Digite o e-mail do convidado"
           onKeyDown={handleKeyDown}
           cta={
-            <Button onClick={handleConfirmTrip} className="w-fit" size="sm">
+            <Button onClick={handleInviteGuests} className="w-fit" size="sm">
               Convidar <Plus width={20} />
             </Button>
           }
