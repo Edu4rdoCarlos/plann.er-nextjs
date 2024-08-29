@@ -28,4 +28,6 @@ const Template: StoryFn<CalendarProps> = (args) => {
 };
 
 export const Default = Template.bind({});
-Default.args = {};
+Default.args = {
+  selectRange: true,
+};

@@ -43,7 +43,6 @@ export const Calendar = (props: CalendarProps) => {
           onBlur={() => setShowCalendar(false)}
         >
           <ReactCalendar
-            selectRange
             className={cn(sCalendar({ className }))}
             value={value}
             {...rest}

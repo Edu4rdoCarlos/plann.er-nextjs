@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Meta, StoryFn } from "@storybook/react";
 import { ArrowRight, AtSign } from "lucide-react";
 import { SelectWithSearch, SelectWithSearchProps } from "./SelectWithSearch";
 import { countries } from "./mock";
 import { Button } from "../Button/Button";
-import { Calendar } from "../Calendar/Calendar";
+import { Calendar, CalendarValue } from "../Calendar/Calendar";
 
 export default {
   title: "Primitives/SelectWithSearch",
@@ -20,6 +20,15 @@ export default {
 
 const Template: StoryFn<SelectWithSearchProps> = (args) => {
   const [options, setOptions] = useState<string[] | undefined>(undefined);
+  const [calendarValue, setCalendarValue] = useState<CalendarValue>(new Date());
+
+  const handleCalendarChange = (value: CalendarValue) => {
+    setCalendarValue(value);
+  };
+
+  useEffect(() => {
+    console.log(calendarValue);
+  }, [calendarValue]);
 
   const handleInput = (inputValue: string) => {
     const filteredOptions = countries.filter((option) =>
@@ -34,7 +43,13 @@ const Template: StoryFn<SelectWithSearchProps> = (args) => {
     </Button>
   );
 
-  const calendar = <Calendar />;
+  const calendar = (
+    <Calendar
+      onChange={handleCalendarChange}
+      value={calendarValue}
+      selectRange
+    />
+  );
 
   return (
     <div style={{ width: 800 }}>
