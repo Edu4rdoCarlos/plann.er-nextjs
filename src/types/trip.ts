@@ -1,3 +1,4 @@
+import { IAttachment } from "./attachment";
 import { IMember } from "./member";
 
 export interface ITrip {
@@ -7,4 +8,6 @@ export interface ITrip {
     endDate: Date;
     owner: IMember;
     members: IMember[];
+    attachment: IAttachment[];
+    
 }
