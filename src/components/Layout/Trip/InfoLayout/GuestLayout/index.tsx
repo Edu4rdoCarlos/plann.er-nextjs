@@ -1,17 +1,21 @@
 import { Attachment } from "@/src/components/compounds/Attachments";
 import { Content, ContentProps } from "@/src/components/compounds/Attachments/Content/Content";
 import { Button } from "@/src/components/primitives/Button/Button";
-import { useClipboard } from "@/src/hooks/useClipboard";
-import { Plus } from "lucide-react";
+import {  UserRoundCog } from "lucide-react";
+import { ReactNode } from "react";
 
-interface AttachmentLayoutProps {
-  items: Pick<ContentProps,'info' |'label'>[]
+interface GuestsItems extends Pick<ContentProps,'info' |'label'> {
+  widget: ReactNode
 }
 
-export const AttachmentLayout = ({items}: AttachmentLayoutProps) => {
+export interface GuestsLayoutProps {
+  items: GuestsItems[]
+}
+
+export const GuestsLayout = ({items}: GuestsLayoutProps) => {
   const action = () => (
     <Button colorScheme="secondary">
-      <Plus width={20} /> Cadastrar novo link
+      <UserRoundCog width={20} /> Gerenciar convidados
     </Button>
   );
 
@@ -19,8 +23,6 @@ export const AttachmentLayout = ({items}: AttachmentLayoutProps) => {
     <div className="w-full">
       <Attachment title="Links Importantes" action={action()}>
         {items.map((item) => {
-          const { Icon, copy } = useClipboard();
-
           return (
             <Content
               key={item.label}
@@ -30,9 +32,8 @@ export const AttachmentLayout = ({items}: AttachmentLayoutProps) => {
                   className="w-fit"
                   variants="ghost"
                   colorScheme="secondary"
-                  onClick={() => copy(item.info)}
                 >
-                  <Icon width={20} />
+                 {item.widget}
                 </Button>
               }
             />

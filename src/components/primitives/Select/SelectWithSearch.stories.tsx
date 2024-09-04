@@ -3,8 +3,8 @@ import { Meta, StoryFn } from "@storybook/react";
 import { ArrowRight, AtSign } from "lucide-react";
 import { SelectWithSearch, SelectWithSearchProps } from "./SelectWithSearch";
 import { countriesMock } from "./mock";
-import { Button } from "../Button/Button";
 import { Calendar, CalendarValue } from "../Calendar/Calendar";
+import { Button } from "../Button/Button";
 
 export default {
   title: "Primitives/SelectWithSearch",

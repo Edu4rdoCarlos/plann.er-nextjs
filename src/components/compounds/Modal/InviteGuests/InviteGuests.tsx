@@ -1,10 +1,10 @@
-import { Button } from "@/src/components/primitives/Button/Button";
 import { Dialog } from "@/src/components/primitives/Dialog/Dialog";
 import { Input } from "@/src/components/primitives/Input/Input";
 import { AtSign, Plus } from "lucide-react";
 import { useRef } from "react";
 import { Guest } from "../../Guest/Guest";
 import { sBar, sEmpty, sGuest } from "./InviteGuests.variants";
+import { Button } from "@/src/components/primitives/Button/Button";
 
 export interface InviteGuestsProps {
   open: boolean;

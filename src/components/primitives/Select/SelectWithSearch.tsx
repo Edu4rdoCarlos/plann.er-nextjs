@@ -10,8 +10,8 @@ import {
   sWrapper,
 } from "./SelectWithSearch.variants";
 import { cn } from "@/src/utils/twMerge";
-import { ButtonProps } from "../Button/Button";
 import { CalendarProps } from "../Calendar/Calendar";
+import { ButtonProps } from "../Button/Button";
 
 export interface SelectWithSearchProps {
   options?: string[];

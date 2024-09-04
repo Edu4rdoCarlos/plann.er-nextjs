@@ -6,9 +6,13 @@ export default function TripPage() {
   return (
   <div className="w-full flex flex-col gap-10">
     <SelectLayout  />
-    <div className="grid grid-cols-2 gap-5">
-      <ActivitiesLayout />
-      <InfoLayout />
+    <div className="flex w-full gap-10">
+      <div className="w-[70%]">
+        <ActivitiesLayout />
+      </div>
+      <div className="w-[30%]">
+        <InfoLayout />
+      </div>
     </div>
   </div>)
 

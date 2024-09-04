@@ -23,3 +23,18 @@ export const member2 = {
   info: "eduardocarlos@gmail.com",
   widget: <Check checked />,
 };
+
+export const member3 = {
+  label: "Victor Luan",
+  info: "victorluan@gmail.com",
+  widget: <Check checked />,
+};
+
+export const member4 = {
+  label: "Samila Raphaela",
+  info: "samila@gmail.com",
+  widget: <Check />,
+};
+
+
+export const allMembers = [member1, member2, member3, member4]

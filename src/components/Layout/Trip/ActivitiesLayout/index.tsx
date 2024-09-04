@@ -9,5 +9,5 @@ export const ActivitiesLayout = () => {
 
   console.log(items)
 
-  return <div className="flex flex-col gap-5">{items.map((item, idx) => { return <Collection {...item} key={`${item.date}-${idx}`} />})}</div>
+  return <div className="flex flex-col gap-8">{items.map((item, idx) => { return <Collection {...item} key={`${item.date}-${idx}`} />})}</div>
 }

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Meta, StoryFn } from "@storybook/react";
-import { ArrowRight, Mail, User } from "lucide-react";
+import { Mail, User } from "lucide-react";
 import { Dialog, DialogProps } from "./Dialog";
-import { Button } from "../Button/Button";
 import { Input } from "../Input/Input";
+import { Button } from "../Button/Button";
 
 export default {
   title: "Primitives/Dialog",
