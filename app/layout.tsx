@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import ReactQueryProvider from "@/src/providers/ReactQueryProvider";
+import { cn } from "@/src/utils/twMerge";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={cn(inter.className, 'max-w-[1250px] px-5 pt-11 mx-auto')}>
         <ReactQueryProvider>{children}</ReactQueryProvider>
       </body>
     </html>

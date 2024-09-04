@@ -19,7 +19,7 @@ const config: Config = {
   plugins: [],
   purge: {
     mode: "all",
-    content: ["./src/components/**/**/*.{ts, tsx}"],
+    content: ["./src/components/**/**/*.{ts, tsx}", "./app/**/*.{ts,tsx}"],
   },
 };
 export default config;
