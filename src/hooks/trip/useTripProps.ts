@@ -8,10 +8,10 @@ export const useTripProps = () => {
   const inputValue = countries[0];
 
   const currentDate = new Date();
-  const previousMonthDate = new Date(currentDate);
-  previousMonthDate.setMonth(currentDate.getMonth() - 1);
+  const twoDaysAgo = new Date(currentDate);
+  twoDaysAgo.setDate(currentDate.getDate() - 2);
 
-  const defaultCalendarValue: CalendarValue = [previousMonthDate, currentDate];
+  const defaultCalendarValue: CalendarValue = [twoDaysAgo, currentDate];
 
   const [options, setOptions] = useState<string[] | undefined>();
   const [calendarValue, setCalendarValue] =
