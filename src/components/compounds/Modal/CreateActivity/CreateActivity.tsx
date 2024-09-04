@@ -52,7 +52,7 @@ export const CreateActivity = (props: CreateActivityProps) => {
         </div>
       </Dialog.Content>
       <Dialog.Footer>
-        <Button onClick={handleCreateActivity}>Salvar link</Button>
+        <Button onClick={handleCreateActivity}>Cadastrar</Button>
       </Dialog.Footer>
     </Dialog.Root>
   );
