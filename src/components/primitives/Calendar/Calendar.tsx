@@ -38,11 +38,9 @@ const formatDate = (value: any) => {
 
 export const Calendar = (props: CalendarProps) => {
   const [showCalendar, setShowCalendar] = useState(false);
-  const { className, value, as, defaultValue, ...rest } = props;
+  const { className, value, as, ...rest } = props;
 
-
-
-  const date = formatDate(value) || formatDate(defaultValue);
+  const date = formatDate(value);
 
   return (
     <div className={sWrapper({ as })}>

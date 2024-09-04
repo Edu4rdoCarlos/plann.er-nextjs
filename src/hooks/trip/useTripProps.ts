@@ -14,7 +14,8 @@ export const useTripProps = () => {
   const defaultCalendarValue: CalendarValue = [previousMonthDate, currentDate];
 
   const [options, setOptions] = useState<string[] | undefined>();
-  const [calendarValue, setCalendarValue] = useState<CalendarValue>(new Date());
+  const [calendarValue, setCalendarValue] =
+    useState<CalendarValue>(defaultCalendarValue);
 
   const handleCalendarChange = (value: CalendarValue) => {
     setCalendarValue(value);
@@ -32,6 +33,5 @@ export const useTripProps = () => {
     handleCalendarChange,
     calendarValue,
     inputValue,
-    defaultCalendarValue,
   };
 };
