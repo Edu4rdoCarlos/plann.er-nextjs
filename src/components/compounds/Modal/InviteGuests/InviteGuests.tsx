@@ -18,12 +18,10 @@ export const InviteGuests = (props: InviteGuestsProps) => {
 
   const handleInviteGuests = () => {
     const input = inputRef.current;
-    console.log(input?.value);
     if (input) {
       const newValue = input.value;
       const newGuests = [...guests, newValue];
       onGuestsChange(newGuests);
-      console.log(guests);
       input.value = "";
     }
   };

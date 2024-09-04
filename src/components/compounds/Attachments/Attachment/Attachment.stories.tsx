@@ -4,7 +4,7 @@ import { Attachment, AttachmentProps } from "./Attachment";
 import { Button } from "@/src/components/primitives/Button/Button";
 import { Plus } from "lucide-react";
 import { Content } from "../Content/Content";
-import { attachmentItems } from "../mock";
+import { attachmentItemsMock } from "../mock";
 import { useClipboard } from "@/src/hooks/useClipboard";
 
 export default {
@@ -25,7 +25,7 @@ const Template: StoryFn<AttachmentProps> = () => {
   return (
     <div style={{ width: 320 }}>
       <Attachment title="Links Importantes" action={action()}>
-        {attachmentItems.map((item) => {
+        {attachmentItemsMock.map((item) => {
           const { Icon, copy } = useClipboard();
 
           return (

@@ -1,7 +1,7 @@
 import React from "react";
 import { Meta, StoryFn } from "@storybook/react";
 import { CollectionProps, Collection } from "./Collection";
-import { activitiesMock } from "./mock";
+import { activitiesMock2 } from "./mock";
 
 export default {
   title: "Components/Activities",
@@ -9,7 +9,7 @@ export default {
     layout: "centered",
   },
   args: {
-    activities: activitiesMock,
+    activities: activitiesMock2,
     date: "2024-08-19T08:00:00.123Z",
   },
 } as Meta;

@@ -1,4 +1,4 @@
-export const attachmentItems = [
+export const attachmentItemsMock:Pick<ContentProps,'info' |'label'>[] = [
   {
     label: "Reserva do AirBnB",
     info: "https://www.airbnb.com.br/rooms/104700011",
@@ -10,6 +10,7 @@ export const attachmentItems = [
 ];
 
 import { Check } from "../../primitives/Check/Check";
+import { ContentProps } from "./Content/Content";
 
 export const member1 = {
   label: "Guilherme Barbosa",

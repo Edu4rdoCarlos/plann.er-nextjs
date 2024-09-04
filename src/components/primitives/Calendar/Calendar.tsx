@@ -23,7 +23,6 @@ export type CalendarProps = ReactCalendarProps &
   VariantProps<typeof calendarVariants>;
 
 const formatDate = (value: any) => {
-  console.log(value);
   if (Array.isArray(value)) {
     return getRangeDate({
       startDate: new Date(value[0] || ""),
