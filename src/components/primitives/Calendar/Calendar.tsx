@@ -23,6 +23,7 @@ export type CalendarProps = ReactCalendarProps &
   VariantProps<typeof calendarVariants>;
 
 const formatDate = (value: any) => {
+  console.log(value);
   if (Array.isArray(value)) {
     return getRangeDate({
       startDate: new Date(value[0] || ""),
@@ -30,14 +31,18 @@ const formatDate = (value: any) => {
     });
   }
 
-  return getDate(value);
+
+  
+  return getDate({date: value});
 };
 
 export const Calendar = (props: CalendarProps) => {
   const [showCalendar, setShowCalendar] = useState(false);
-  const { className, value, as, ...rest } = props;
+  const { className, value, as, defaultValue, ...rest } = props;
 
-  const date = formatDate(value);
+
+
+  const date = formatDate(value) || formatDate(defaultValue);
 
   return (
     <div className={sWrapper({ as })}>

@@ -1,4 +1,4 @@
-export const countries = [
+export const countriesMock = [
   "Estados Unidos",
   "Canadá",
   "México",

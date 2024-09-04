@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Meta, StoryFn } from "@storybook/react";
 import { ArrowRight, AtSign } from "lucide-react";
 import { SelectWithSearch, SelectWithSearchProps } from "./SelectWithSearch";
-import { countries } from "./mock";
+import { countriesMock } from "./mock";
 import { Button } from "../Button/Button";
 import { Calendar, CalendarValue } from "../Calendar/Calendar";
 
@@ -27,7 +27,7 @@ const Template: StoryFn<SelectWithSearchProps> = (args) => {
   };
 
   const handleInput = (inputValue: string) => {
-    const filteredOptions = countries.filter((option) =>
+    const filteredOptions = countriesMock.filter((option) =>
       option.toLowerCase().includes(inputValue.toLowerCase())
     );
     setOptions(filteredOptions);

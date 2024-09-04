@@ -18,6 +18,7 @@ export interface SelectWithSearchProps {
   onInputValue: (option: string) => void;
   cta?: React.ReactElement<ButtonProps>;
   calendar?: React.ReactElement<CalendarProps>;
+  defaultValue?: string;
 }
 
 export const SelectWithSearch = ({
@@ -25,6 +26,7 @@ export const SelectWithSearch = ({
   onInputValue,
   cta,
   calendar,
+  defaultValue
 }: SelectWithSearchProps) => {
   const [inputValue, setInputValue] = useState("");
   const [filteredOptions, setFilteredOptions] = useState<string[]>([]);
@@ -69,7 +71,7 @@ export const SelectWithSearch = ({
       <Input
         ref={inputRef}
         Icon={MapPin}
-        value={inputValue}
+        value={inputValue || defaultValue}
         onChange={(e) => setInputValue(e.target.value)}
         placeholder="Para aonde você vai?"
         onFocus={() => inputValue && setShowDropdown(true)}
