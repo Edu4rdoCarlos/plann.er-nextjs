@@ -1,18 +1,20 @@
 import { Attachment } from "@/src/components/compounds/Attachments";
 import { Content, ContentProps } from "@/src/components/compounds/Attachments/Content/Content";
+import { CreateAttachment } from "@/src/components/compounds/Modal/CreateAttachment/CreateAttachment";
 import { Button } from "@/src/components/primitives/Button/Button";
 import { useClipboard } from "@/src/hooks/useClipboard";
 import { Plus } from "lucide-react";
+import { useState } from "react";
 
 interface AttachmentLayoutProps {
   items: Pick<ContentProps,'info' |'label'>[]
 }
 
 export const AttachmentLayout = ({items}: AttachmentLayoutProps) => {
+  const [open, setOpen] = useState(false);
+
   const action = () => (
-    <Button colorScheme="secondary">
-      <Plus width={20} /> Cadastrar novo link
-    </Button>
+    <CreateAttachment onOpenChange={setOpen} open={open} />
   );
 
   return (

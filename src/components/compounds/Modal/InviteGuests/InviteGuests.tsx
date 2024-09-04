@@ -1,6 +1,6 @@
 import { Dialog } from "@/src/components/primitives/Dialog/Dialog";
 import { Input } from "@/src/components/primitives/Input/Input";
-import { AtSign, Plus } from "lucide-react";
+import { AtSign, Plus, UserRoundCog } from "lucide-react";
 import { useRef } from "react";
 import { Guest } from "../../Guest/Guest";
 import { sBar, sEmpty, sGuest } from "./InviteGuests.variants";
@@ -38,7 +38,14 @@ export const InviteGuests = (props: InviteGuestsProps) => {
   };
 
   return (
-    <Dialog.Root open={open} onOpenChange={onOpenChange}>
+    <Dialog.Root 
+      open={open} 
+      onOpenChange={onOpenChange} 
+      trigger={ 
+        <Button colorScheme="secondary">
+          <UserRoundCog width={20} /> Gerenciar convidados
+        </Button>}
+      >
       <Dialog.Header
         title="Selecionar convidados"
         subtitle="Os convidados irão receber e-mails para confirmar a participação na viagem."

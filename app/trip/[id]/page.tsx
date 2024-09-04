@@ -4,9 +4,9 @@ import { SelectLayout } from "@/src/components/Layout/Trip/SelectLayout";
 
 export default function TripPage() {
   return (
-  <div className="w-full flex flex-col gap-10">
+  <div className="w-full flex flex-col gap-14">
     <SelectLayout  />
-    <div className="flex w-full gap-10">
+    <div className="flex w-full gap-14">
       <div className="w-[70%]">
         <ActivitiesLayout />
       </div>
