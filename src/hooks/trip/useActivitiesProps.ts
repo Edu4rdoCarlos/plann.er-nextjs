@@ -1,24 +1,14 @@
-import { CollectionProps } from "@/src/components/compounds/Activities/Collection/Collection";
-import {
-  activitiesMock1,
-  activitiesMock2,
-  activitiesMock3,
-} from "@/src/components/compounds/Activities/Collection/mock";
+import { useParams } from "next/navigation";
+import { useTrip } from "../useTrip";
+import { useActivity } from "../useActivity";
 
 export const useActivitiesProps = () => {
-  const currentDate = new Date();
-  const oneDaysAgo = new Date(currentDate);
-  oneDaysAgo.setDate(currentDate.getDate() - 1);
-  const twoDaysAgo = new Date(currentDate);
-  twoDaysAgo.setDate(currentDate.getDate() - 2);
+  const router = useParams();
 
-  const items: CollectionProps[] = [
-    { date: twoDaysAgo, activities: activitiesMock1 },
-    { date: oneDaysAgo, activities: activitiesMock2 },
-    { date: currentDate, activities: activitiesMock3 },
-  ];
+  const { data } = useActivity.FindOne(router.id as string);
+  console.log(data);
 
   return {
-    items,
+    items: [],
   };
 };
