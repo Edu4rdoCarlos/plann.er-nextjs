@@ -3,7 +3,6 @@ import { countriesMock } from "@/src/components/primitives/Select/mock";
 import { useState } from "react";
 
 export const useTripProps = () => {
-  //request here
   const countries: string[] = countriesMock || [];
   const inputValue = countries[0];
 

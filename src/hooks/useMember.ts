@@ -1,16 +1,22 @@
 import { ApiMember } from "@/src/services/member";
 import { useMutation, useQuery, useQueryClient } from "react-query";
+import { CreateMemberArgs } from "../types/member";
 
 const QUERY_KEY = "qkMember";
 
 const Create = () => {
   const queryClient = useQueryClient();
 
-  return useMutation(ApiMember.create, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(QUERY_KEY);
-    },
-  });
+  return useMutation<boolean, Error, CreateMemberArgs>(
+    ({ formData, tripId }) => ApiMember.createMember(formData, tripId),
+    {
+      onSuccess: (data) => {
+        if (data) {
+          queryClient.invalidateQueries(QUERY_KEY);
+        }
+      },
+    }
+  );
 };
 
 const Delete = () => {

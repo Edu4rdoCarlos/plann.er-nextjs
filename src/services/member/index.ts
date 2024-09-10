@@ -1,14 +1,18 @@
-import { IMember } from "@/src/types/member";
+import { CreateMemberArgs, IMember } from "@/src/types/member";
 import { api } from "../api";
 
 const endpoint = "/members";
 
 const createMember = async (
-  formData: IMember,
+  formData: CreateMemberArgs["formData"],
   tripId: string
-): Promise<IMember> => {
-  const { data } = await api.post<IMember>(`${endpoint}`, formData, tripId);
-  return data;
+): Promise<boolean> => {
+  await api.post<void>(
+    `${endpoint}`,
+    { data: formData },
+    { params: { tripId } }
+  );
+  return true;
 };
 
 const listAllMembers = async (tripId: string): Promise<IMember[]> => {

@@ -4,11 +4,22 @@ import { api } from "../api";
 const endpoint = "/attachments";
 
 const createAttachment = async (
-  formData: IAttachment,
+  formData: IAttachment[],
   tripId: string
-): Promise<IAttachment> => {
-  const { data } = await api.post<IAttachment>(`${endpoint}`, formData, tripId);
-  return data;
+): Promise<boolean> => {
+  try {
+    await api.post<void>(
+      `${endpoint}`,
+      { data: formData },
+      {
+        params: { tripId },
+      }
+    );
+    return true;
+  } catch (error) {
+    console.error("Erro ao criar link:", error);
+    return false;
+  }
 };
 
 const listAllAttachments = async (tripId: string): Promise<IAttachment[]> => {

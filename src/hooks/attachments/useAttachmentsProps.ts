@@ -1,6 +1,5 @@
 import { useParams } from "next/navigation";
 import { useAttachment } from "../useAttachment";
-import { AttachmentProps } from "@/src/components/compounds/Attachments/Attachment/Attachment";
 import { ContentProps } from "@/src/components/compounds/Attachments/Content/Content";
 
 export const useAttachmentsProps = () => {

@@ -1,16 +1,22 @@
 import { ApiAttachment } from "@/src/services/attachment";
 import { useMutation, useQuery, useQueryClient } from "react-query";
+import { CreateAttachmentArgs } from "../types/attachment";
 
 const QUERY_KEY = "qkAttachment";
 
 const Create = () => {
   const queryClient = useQueryClient();
 
-  return useMutation(ApiAttachment.createAttachment, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(QUERY_KEY);
-    },
-  });
+  return useMutation<boolean, Error, CreateAttachmentArgs>(
+    ({ formData, tripId }) => ApiAttachment.createAttachment(formData, tripId),
+    {
+      onSuccess: (data) => {
+        if (data) {
+          queryClient.invalidateQueries(QUERY_KEY);
+        }
+      },
+    }
+  );
 };
 
 const Delete = () => {

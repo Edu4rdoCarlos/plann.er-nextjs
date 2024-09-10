@@ -1,20 +1,20 @@
 import { Meta, StoryFn } from "@storybook/react";
 import { useState } from "react";
-import { InviteGuests, InviteGuestsProps } from "./InviteGuests";
+import { InviteMembers, InviteMembersProps } from "./InviteMember";
 
 export default {
-  title: "Components/Modal/InviteGuests",
+  title: "Components/Modal/InviteMembers",
   parameters: {
     layout: "centered",
   },
 } as Meta;
 
-const Template: StoryFn<InviteGuestsProps> = (args) => {
+const Template: StoryFn<InviteMembersProps> = (args) => {
   const [open, setOpen] = useState(args.open);
   const [guests, setGuests] = useState<string[]>([]);
 
   return (
-    <InviteGuests
+    <InviteMembers
       onOpenChange={setOpen}
       open={open}
       guests={guests}

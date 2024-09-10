@@ -9,7 +9,7 @@ export default function TripPage() {
   const router = useRouter();
 
   return (
-    <div className="w-full flex flex-col gap-14">
+    <div className="w-full flex flex-col gap-14 mb-24">
       <SelectLayout onContinueEdit={() => router.push("/")} />
       <div className="flex w-full gap-14">
         <div className="w-[70%]">

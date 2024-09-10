@@ -3,7 +3,7 @@ import {
   Content,
   ContentProps,
 } from "@/src/components/compounds/Attachments/Content/Content";
-import { InviteGuests } from "@/src/components/compounds/Modal/InviteGuests/InviteGuests";
+import { InviteMembers } from "@/src/components/compounds/Modal/InviteMember/InviteMember";
 import { Button } from "@/src/components/primitives/Button/Button";
 import { ReactNode, useState } from "react";
 
@@ -20,7 +20,7 @@ export const MemberLayout = ({ items }: MemberLayoutProps) => {
   const [guests, setGuests] = useState<string[]>([]);
 
   const action = () => (
-    <InviteGuests
+    <InviteMembers
       onOpenChange={setOpen}
       open={open}
       guests={guests}
@@ -30,7 +30,7 @@ export const MemberLayout = ({ items }: MemberLayoutProps) => {
 
   return (
     <div className="w-full">
-      <Attachment title="Links Importantes" action={action()}>
+      <Attachment title="Membros" action={action()}>
         {items.length ? (
           items.map((item) => {
             return (

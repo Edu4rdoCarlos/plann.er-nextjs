@@ -4,3 +4,8 @@ export interface IMember {
   owner: boolean;
   status: boolean;
 }
+
+export interface CreateMemberArgs {
+  formData: { email: IMember["email"] }[];
+  tripId: string;
+}
