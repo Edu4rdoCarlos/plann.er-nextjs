@@ -19,6 +19,7 @@ export interface SelectWithSearchProps {
   cta?: React.ReactElement<ButtonProps>;
   calendar?: React.ReactElement<CalendarProps>;
   defaultValue?: string;
+  disabled?: boolean;
 }
 
 export const SelectWithSearch = ({
@@ -26,7 +27,8 @@ export const SelectWithSearch = ({
   onInputValue,
   cta,
   calendar,
-  defaultValue
+  defaultValue,
+  disabled,
 }: SelectWithSearchProps) => {
   const [inputValue, setInputValue] = useState("");
   const [filteredOptions, setFilteredOptions] = useState<string[]>([]);
@@ -77,6 +79,7 @@ export const SelectWithSearch = ({
         onFocus={() => inputValue && setShowDropdown(true)}
         onBlur={handleInputBlur}
         className={sSearch()}
+        disabled={disabled}
         cta={
           <>
             {calendar}

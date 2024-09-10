@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ButtonHTMLAttributes, useState } from "react";
 import {
   Calendar as ReactCalendar,
   CalendarProps as ReactCalendarProps,
@@ -20,7 +20,8 @@ type ValuePiece = Date | null;
 export type CalendarValue = ValuePiece | [ValuePiece, ValuePiece];
 
 export type CalendarProps = ReactCalendarProps &
-  VariantProps<typeof calendarVariants>;
+  VariantProps<typeof calendarVariants> &
+  Pick<ButtonHTMLAttributes<HTMLButtonElement>, "disabled">;
 
 const formatDate = (value: any) => {
   if (Array.isArray(value)) {
@@ -30,14 +31,12 @@ const formatDate = (value: any) => {
     });
   }
 
-
-  
-  return getDate({date: value});
+  return getDate({ date: value });
 };
 
 export const Calendar = (props: CalendarProps) => {
   const [showCalendar, setShowCalendar] = useState(false);
-  const { className, value, as, ...rest } = props;
+  const { className, value, as, disabled, ...rest } = props;
 
   const date = formatDate(value);
 
@@ -48,6 +47,7 @@ export const Calendar = (props: CalendarProps) => {
         variants="ghost"
         className="font-normal"
         onClick={() => setShowCalendar((prev) => !prev)}
+        disabled={disabled}
       >
         <CalendarIcon width={20} />
         {date || <>Quando?</>}

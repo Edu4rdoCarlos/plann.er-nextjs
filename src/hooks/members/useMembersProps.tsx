@@ -6,7 +6,6 @@ export const useMembersProps = () => {
   const router = useParams();
 
   const { data } = useMember.ListAll(router.id as string);
-  console.log(data);
 
   const members =
     data?.map((member, idx) => {
