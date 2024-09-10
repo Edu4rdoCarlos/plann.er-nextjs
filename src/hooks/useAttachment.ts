@@ -6,7 +6,7 @@ const QUERY_KEY = "qkAttachment";
 const Create = () => {
   const queryClient = useQueryClient();
 
-  return useMutation(ApiAttachment.create, {
+  return useMutation(ApiAttachment.createAttachment, {
     onSuccess: () => {
       queryClient.invalidateQueries(QUERY_KEY);
     },
@@ -16,25 +16,25 @@ const Create = () => {
 const Delete = () => {
   const queryClient = useQueryClient();
 
-  return useMutation(ApiAttachment.delete, {
+  return useMutation(ApiAttachment.deleteAttachment, {
     onSuccess: () => {
       queryClient.invalidateQueries(QUERY_KEY);
     },
   });
 };
 
-const ListAll = () => {
-  return useQuery([QUERY_KEY], () => ApiAttachment.listAll());
+const ListAll = (tripId: string) => {
+  return useQuery([QUERY_KEY], () => ApiAttachment.listAllAttachments(tripId));
 };
 
 const FindOne = (id: string) => {
-  return useQuery([QUERY_KEY, id], () => ApiAttachment.findOne(id));
+  return useQuery([QUERY_KEY, id], () => ApiAttachment.findAttachment(id));
 };
 
 const Update = () => {
   const queryClient = useQueryClient();
 
-  return useMutation(ApiAttachment.update, {
+  return useMutation(ApiAttachment.updateAttachment, {
     onSuccess: () => {
       queryClient.invalidateQueries(QUERY_KEY);
     },

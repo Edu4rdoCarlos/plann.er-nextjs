@@ -3,21 +3,30 @@ import {
   Content,
   ContentProps,
 } from "@/src/components/compounds/Attachments/Content/Content";
-import { CreateAttachment } from "@/src/components/compounds/Modal/CreateAttachment/CreateAttachment";
+import { InviteGuests } from "@/src/components/compounds/Modal/InviteGuests/InviteGuests";
 import { Button } from "@/src/components/primitives/Button/Button";
-import { useClipboard } from "@/src/hooks/useClipboard";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 
-interface AttachmentLayoutProps {
-  items: Pick<ContentProps, "info" | "label">[];
+interface GuestsItems extends Pick<ContentProps, "info" | "label"> {
+  widget: ReactNode;
 }
 
-export const AttachmentLayout = ({ items }: AttachmentLayoutProps) => {
+export interface MemberLayoutProps {
+  items: GuestsItems[];
+}
+
+export const MemberLayout = ({ items }: MemberLayoutProps) => {
   const [open, setOpen] = useState(false);
+  const [guests, setGuests] = useState<string[]>([]);
 
-  const action = () => <CreateAttachment onOpenChange={setOpen} open={open} />;
-
-  const { Icon, copy } = useClipboard();
+  const action = () => (
+    <InviteGuests
+      onOpenChange={setOpen}
+      open={open}
+      guests={guests}
+      onGuestsChange={setGuests}
+    />
+  );
 
   return (
     <div className="w-full">
@@ -33,16 +42,15 @@ export const AttachmentLayout = ({ items }: AttachmentLayoutProps) => {
                     className="w-fit"
                     variants="ghost"
                     colorScheme="secondary"
-                    onClick={() => copy(item.info)}
                   >
-                    <Icon width={20} />
+                    {item.widget}
                   </Button>
                 }
               />
             );
           })
         ) : (
-          <div className="text-zinc-400">Nenhum link cadastrado</div>
+          <div className="text-zinc-400">Nenhum convite enviado</div>
         )}
       </Attachment>
     </div>

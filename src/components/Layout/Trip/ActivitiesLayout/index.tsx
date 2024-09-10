@@ -6,7 +6,7 @@ import { useActivitiesProps } from "@/src/hooks/trip/useActivitiesProps";
 import { useState } from "react";
 
 export const ActivitiesLayout = () => {
-  const { items } = useActivitiesProps();
+  const activities = useActivitiesProps();
   const [open, setOpen] = useState(false);
 
   return (
@@ -17,9 +17,13 @@ export const ActivitiesLayout = () => {
         </h1>
         <CreateActivity onOpenChange={setOpen} open={open} />
       </div>
-      {items.map((item, idx) => {
-        return <Collection {...item} key={`${item.date}-${idx}`} />;
-      })}
+      {activities.length ? (
+        activities.map((item, idx) => {
+          return <Collection {...item} key={`${item.date}-${idx}`} />;
+        })
+      ) : (
+        <div className="text-zinc-400">Nenhuma atividade cadastrada</div>
+      )}
     </div>
   );
 };

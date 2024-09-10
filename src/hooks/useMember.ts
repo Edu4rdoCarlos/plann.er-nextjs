@@ -23,8 +23,8 @@ const Delete = () => {
   });
 };
 
-const ListAll = () => {
-  return useQuery([QUERY_KEY], () => ApiMember.listAll());
+const ListAll = (tripId: string) => {
+  return useQuery([QUERY_KEY], () => ApiMember.listAllMembers(tripId));
 };
 
 const FindOne = (id: string) => {

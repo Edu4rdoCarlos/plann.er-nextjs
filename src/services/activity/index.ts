@@ -1,4 +1,4 @@
-import { IActivity } from "@/src/types/activity";
+import { IActivity, IActivityDay } from "@/src/types/activity";
 import { api } from "../api";
 
 const endpoint = "/activities";
@@ -6,22 +6,26 @@ const endpoint = "/activities";
 const createActivity = async (
   formData: IActivity,
   tripId: string
-): Promise<IActivity> => {
-  const { data } = await api.post<IActivity>(`${endpoint}`, formData, {
-    params: tripId,
-  });
-  return data;
+): Promise<boolean> => {
+  try {
+    const { data } = await api.post<void>(`${endpoint}`, formData, {
+      params: tripId,
+    });
+    return true;
+  } catch (e) {
+    return false;
+  }
 };
 
-const listAllActivities = async (tripId: string): Promise<IActivity[]> => {
-  const { data } = await api.get<IActivity[]>(`${endpoint}`, {
-    params: tripId,
+const listAllActivities = async (tripId: string): Promise<IActivityDay[]> => {
+  const { data } = await api.get<IActivityDay[]>(`${endpoint}/`, {
+    params: { tripId },
   });
   return data;
 };
 
 const findActivity = async (id: string, tripId: string): Promise<IActivity> => {
-  const { data } = await api.get<IActivity>(`${endpoint}/${id}`, {
+  const { data } = await api.post<IActivity>(`${endpoint}/${id}`, {
     params: tripId,
   });
   return data;

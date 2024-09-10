@@ -1,5 +1,6 @@
 export interface IMember {
-    name: string;
-    email: string;
-    owner: boolean;
+  name: string;
+  email: string;
+  owner: boolean;
+  status: boolean;
 }

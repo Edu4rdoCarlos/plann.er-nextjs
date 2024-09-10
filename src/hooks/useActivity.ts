@@ -7,7 +7,7 @@ const QUERY_KEY = "qkActivity";
 const Create = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<IActivity, Error, UpdateActivityArgs>(
+  return useMutation<void, Error, UpdateActivityArgs>(
     ({ formData, id }) => ApiActivity.createActivity(formData, id),
     {
       onSuccess: () => {
@@ -27,8 +27,8 @@ const Delete = () => {
   });
 };
 
-const ListAll = () => {
-  return useQuery([QUERY_KEY], () => ApiActivity.listAllActivities());
+const ListAll = (tripId: string) => {
+  return useQuery([QUERY_KEY], () => ApiActivity.listAllActivities(tripId));
 };
 
 const FindOne = (id: string) => {

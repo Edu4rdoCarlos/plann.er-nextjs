@@ -3,15 +3,17 @@ import {
   allMembers,
   attachmentItemsMock,
 } from "@/src/components/compounds/Attachments/mock";
-import { GuestsLayoutProps } from "@/src/components/Layout/Trip/InfoLayout/GuestLayout";
+import { useAttachmentsProps } from "../attachments/useAttachmentsProps";
+import { MemberLayoutProps } from "@/src/components/Layout/Trip/InfoLayout/MemberLayout";
+import { useMembersProps } from "../members/useMembersProps";
 
 export const useInfoLayoutProps = () => {
-  const attachmentItems: Pick<ContentProps, "info" | "label">[] =
-    attachmentItemsMock || [];
+  const attachmentItems = useAttachmentsProps();
 
-  const guestItems: GuestsLayoutProps = { items: allMembers };
+  const memberItems = useMembersProps();
+
   return {
     attachmentItems,
-    guestItems,
+    memberItems,
   };
 };

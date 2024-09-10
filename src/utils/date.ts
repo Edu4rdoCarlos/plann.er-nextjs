@@ -1,4 +1,4 @@
-const { format } = require("date-fns");
+const { format, isBefore } = require("date-fns");
 const { ptBR } = require("date-fns/locale");
 
 interface IDate {
@@ -41,4 +41,11 @@ export const getDate = ({ date }: IDate) => {
   });
 
   return formattedEndDate;
+};
+
+export const hasDatePassed = (dateDay: string): boolean => {
+  const today = new Date();
+  const targetDate = new Date(dateDay);
+
+  return isBefore(targetDate, today);
 };
