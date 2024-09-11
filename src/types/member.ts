@@ -3,6 +3,8 @@ export interface IMember {
   email: string;
   owner: boolean;
   status: boolean;
+  id: string;
+  tripId: string;
 }
 
 export interface CreateMemberArgs {
@@ -14,4 +16,9 @@ export interface ConfirmPresenceArgs {
   formData: Pick<IMember, "name">;
   tripId: string;
   email: string;
+}
+
+export interface DeleteMemberArgs {
+  id: string;
+  tripId: string;
 }

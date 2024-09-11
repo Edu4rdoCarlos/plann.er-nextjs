@@ -1,6 +1,10 @@
 import { ApiMember } from "@/src/services/member";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { ConfirmPresenceArgs, CreateMemberArgs } from "../types/member";
+import {
+  ConfirmPresenceArgs,
+  CreateMemberArgs,
+  DeleteMemberArgs,
+} from "../types/member";
 
 const QUERY_KEY = "qkMember";
 
@@ -22,11 +26,14 @@ const Create = () => {
 const Delete = () => {
   const queryClient = useQueryClient();
 
-  return useMutation(ApiMember.delete, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(QUERY_KEY);
-    },
-  });
+  return useMutation<boolean, Error, DeleteMemberArgs>(
+    ({ tripId, id }) => ApiMember.deleteMember(id, tripId),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(QUERY_KEY);
+      },
+    }
+  );
 };
 
 const ListAll = (tripId: string) => {

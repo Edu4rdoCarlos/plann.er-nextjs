@@ -49,9 +49,15 @@ const confirmMember = async (
   }
 };
 
-const deleteMember = async (id: string, tripId: string): Promise<IMember> => {
-  const { data } = await api.delete<IMember>(`${endpoint}/${id}`, tripId);
-  return data;
+const deleteMember = async (id: string, tripId: string): Promise<boolean> => {
+  try {
+    await api.delete<void>(`${endpoint}/${id}`, {
+      params: { tripId },
+    });
+    return true;
+  } catch (error) {
+    return false;
+  }
 };
 
 export const ApiMember = {

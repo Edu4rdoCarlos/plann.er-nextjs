@@ -7,7 +7,6 @@ import Link from "next/link";
 
 export default function TripPage() {
   const { data: trips } = useTrip.ListAll();
-  console.log(trips);
 
   return (
     <div className="flex flex-col" style={{ gap: 25 }}>

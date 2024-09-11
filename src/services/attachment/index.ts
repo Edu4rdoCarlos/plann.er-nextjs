@@ -52,9 +52,15 @@ const updateAttachment = async (
 const deleteAttachment = async (
   id: string,
   tripId: string
-): Promise<IAttachment> => {
-  const { data } = await api.delete<IAttachment>(`${endpoint}/${id}`, tripId);
-  return data;
+): Promise<boolean> => {
+  try {
+    await api.delete<void>(`${endpoint}/${id}`, {
+      params: { tripId },
+    });
+    return true;
+  } catch (error) {
+    return false;
+  }
 };
 
 export const ApiAttachment = {
