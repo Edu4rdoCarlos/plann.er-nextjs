@@ -15,9 +15,10 @@ export const toastVariants = tv({
       "items-center",
       "space-x-2",
       "text-white",
+      "z-40",
     ],
     sIcon: ["w-5 h-5"],
-    sButton: ["w-fit"],
+    sButton: ["w-fit mb-1"],
   },
   variants: {
     type: {
@@ -26,7 +27,11 @@ export const toastVariants = tv({
         sIcon: ["text-lime-950"],
         sButton: ["text-lime-950"],
       },
-      error: { sWrapper: ["bg-red-500"] },
+      error: {
+        sWrapper: ["bg-zinc-800 text-zinc-200"],
+        sIcon: ["text-zinc-200"],
+        sButton: ["text-zinc-200"],
+      },
     },
   },
 });

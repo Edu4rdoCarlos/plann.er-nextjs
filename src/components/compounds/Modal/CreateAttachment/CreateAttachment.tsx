@@ -11,6 +11,7 @@ import {
 import { useAttachment } from "@/src/hooks/useAttachment";
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
+import { useToast } from "@/src/providers/ToastProvider";
 
 export interface CreateAttachmentProps {
   open: boolean;
@@ -21,6 +22,7 @@ export const CreateAttachment = (props: CreateAttachmentProps) => {
   const { open, onOpenChange } = props;
   const { mutateAsync: createAttachment } = useAttachment.Create();
   const router = useParams();
+  const { showToast } = useToast();
 
   const {
     register,
@@ -39,7 +41,10 @@ export const CreateAttachment = (props: CreateAttachmentProps) => {
     });
     if (res) {
       onOpenChange(false);
+      showToast("Operation Successful!", "success");
+      return;
     }
+    showToast("Operation Error!", "error");
   };
 
   useEffect(() => {

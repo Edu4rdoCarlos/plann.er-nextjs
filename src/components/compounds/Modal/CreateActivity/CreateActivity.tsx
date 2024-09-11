@@ -17,6 +17,8 @@ import {
 } from "@/src/schemas/activity/activitySchema";
 import { useActivity } from "@/src/hooks/useActivity";
 import { useParams } from "next/navigation";
+import { Toastlayout } from "@/src/components/Layout/ToastLayout";
+import { useToast } from "@/src/providers/ToastProvider";
 
 export interface CreateActivityProps {
   open: boolean;
@@ -39,6 +41,7 @@ export const CreateActivity = (props: CreateActivityProps) => {
 
   const { mutateAsync: createActivity } = useActivity.Create();
   const [calendarValue, setCalendarValue] = useState<CalendarValue>(new Date());
+  const { showToast } = useToast();
 
   const handleCalendarChange = (value: CalendarValue) => {
     setCalendarValue(value);
@@ -50,7 +53,7 @@ export const CreateActivity = (props: CreateActivityProps) => {
       data.activityDate,
       data.activityTime
     );
-    console.log("rorou");
+
     const formData = [
       {
         title: data.activityName,
@@ -61,7 +64,10 @@ export const CreateActivity = (props: CreateActivityProps) => {
     const res = await createActivity({ formData, tripId: router.id as string });
     if (res) {
       onOpenChange(false);
+      showToast("Operation Successful!", "success");
+      return;
     }
+    showToast("Operation Error!", "error");
   };
 
   useEffect(() => {

@@ -13,6 +13,7 @@ import {
 } from "@/src/schemas/members/membersSchema";
 import { useMember } from "@/src/hooks/useMember";
 import { useParams } from "next/navigation";
+import { useToast } from "@/src/providers/ToastProvider";
 
 export interface InviteMembersProps {
   open: boolean;
@@ -26,6 +27,7 @@ export const InviteMembers = (props: InviteMembersProps) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [error, setError] = useState<string | null>(null);
   const router = useParams();
+  const { showToast } = useToast();
 
   const { mutateAsync: inviteMember } = useMember.Create();
 
@@ -73,7 +75,10 @@ export const InviteMembers = (props: InviteMembersProps) => {
     });
     if (res) {
       onOpenChange(false);
+      showToast("Operation Successful!", "success");
+      return;
     }
+    showToast("Operation Error!", "error");
   };
 
   useEffect(() => {

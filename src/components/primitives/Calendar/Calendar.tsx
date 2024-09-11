@@ -48,6 +48,7 @@ export const Calendar = (props: CalendarProps) => {
         className="font-normal text-sm md:text-lg"
         onClick={() => setShowCalendar((prev) => !prev)}
         disabled={disabled}
+        type="button"
       >
         <CalendarIcon width={20} />
         {date || <>Quando?</>}

@@ -1,6 +1,6 @@
-import { getDay } from "date-fns";
+import { format } from "date-fns";
 import { Activity, ActivityProps } from "../Activity/Activity";
-import { getDayOfWeek } from "@/src/utils/date";
+import { getDayOfMonth, getDayOfWeek } from "@/src/utils/date";
 import {
   sActivities,
   sCollectionWrapper,
@@ -19,8 +19,10 @@ export interface CollectionProps {
 export const Collection = (props: CollectionProps) => {
   const { activities, date, className } = props;
 
-  const day = getDay(new Date(date));
+  const day = getDayOfMonth({ date });
   const dayOfWeek = getDayOfWeek({ date });
+
+  console.log(new Date(date).toISOString());
 
   return (
     <div className={sCollectionWrapper({ className })}>

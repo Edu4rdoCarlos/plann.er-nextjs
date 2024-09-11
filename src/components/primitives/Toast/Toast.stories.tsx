@@ -17,7 +17,6 @@ const Template: StoryFn<ToastProps> = (args) => {
 
   const handleShowToast = () => {
     setToastOpen(true);
-    setTimeout(() => setToastOpen(true), args.duration);
   };
 
   return (
@@ -26,7 +25,7 @@ const Template: StoryFn<ToastProps> = (args) => {
       <Toast
         {...args}
         isOpen={isToastOpen}
-        onClose={() => setToastOpen(true)}
+        onClose={() => setToastOpen(false)}
       />
     </div>
   );
@@ -36,7 +35,7 @@ export const Default = Template.bind({});
 Default.args = {
   message: "Operation Successful!",
   type: "success",
-  isOpen: true,
+  isOpen: false,
   duration: 3000,
 };
 
@@ -44,6 +43,6 @@ export const Error = Template.bind({});
 Error.args = {
   message: "Operation Error!",
   type: "error",
-  isOpen: true,
+  isOpen: false,
   duration: 3000,
 };
