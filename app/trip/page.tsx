@@ -3,7 +3,7 @@
 import { useTrip } from "@/src/hooks/useTrip";
 import { format } from "date-fns";
 
-export const TripsLayout = () => {
+export default function TripPage() {
   const { data: trips } = useTrip.ListAll();
 
   return (
