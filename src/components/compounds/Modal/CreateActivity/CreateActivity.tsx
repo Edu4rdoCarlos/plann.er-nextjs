@@ -5,26 +5,69 @@ import {
 } from "@/src/components/primitives/Calendar/Calendar";
 import { Dialog } from "@/src/components/primitives/Dialog/Dialog";
 import { Input } from "@/src/components/primitives/Input/Input";
-import { Clock4, Plus, Tag, Timer } from "lucide-react";
-import { useState } from "react";
+import { Clock4, Plus, Tag } from "lucide-react";
+import { useEffect, useState } from "react";
 import { sTimeWrapper } from "./CreateActivity.variants";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { formatDateTime } from "@/src/utils/date";
+import {
+  CreateActivityFormData,
+  createActivitySchema,
+} from "@/src/schemas/activity/activitySchema";
+import { useActivity } from "@/src/hooks/useActivity";
+import { useParams } from "next/navigation";
 
 export interface CreateActivityProps {
   open: boolean;
   onOpenChange: (value: boolean) => void;
 }
+
 export const CreateActivity = (props: CreateActivityProps) => {
   const { open, onOpenChange } = props;
+  const router = useParams();
 
-  const handleCreateActivity = () => {
-    onOpenChange(false);
-  };
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    reset,
+    formState: { errors },
+  } = useForm<CreateActivityFormData>({
+    resolver: zodResolver(createActivitySchema),
+  });
 
+  const { mutateAsync: createActivity } = useActivity.Create();
   const [calendarValue, setCalendarValue] = useState<CalendarValue>(new Date());
 
   const handleCalendarChange = (value: CalendarValue) => {
     setCalendarValue(value);
+    setValue("activityDate", value as Date);
   };
+
+  const handleCreateActivity = async (data: CreateActivityFormData) => {
+    const formattedDateTime = formatDateTime(
+      data.activityDate,
+      data.activityTime
+    );
+    console.log("rorou");
+    const formData = [
+      {
+        title: data.activityName,
+        date: formattedDateTime,
+      },
+    ];
+
+    const res = await createActivity({ formData, tripId: router.id as string });
+    if (res) {
+      onOpenChange(false);
+    }
+  };
+
+  useEffect(() => {
+    reset();
+    setCalendarValue(new Date());
+  }, [open]);
 
   return (
     <Dialog.Root
@@ -41,19 +84,31 @@ export const CreateActivity = (props: CreateActivityProps) => {
         subtitle="Todos convidados podem visualizar as atividades."
       />
       <Dialog.Content>
-        <Input Icon={Tag} placeholder="Qual atividade" />
-        <div className={sTimeWrapper()}>
-          <Calendar
-            onChange={handleCalendarChange}
-            value={calendarValue}
-            as="input"
+        <form onSubmit={handleSubmit(handleCreateActivity)}>
+          <Input
+            Icon={Tag}
+            placeholder="Qual atividade"
+            {...register("activityName")}
+            error={errors.activityName?.message}
           />
-          <Input Icon={Clock4} placeholder="Horário" />
-        </div>
+          <div className={sTimeWrapper()}>
+            <Calendar
+              onChange={handleCalendarChange}
+              value={calendarValue}
+              as="input"
+            />
+            <Input
+              Icon={Clock4}
+              placeholder="Horário"
+              {...register("activityTime")}
+              error={errors.activityTime?.message}
+            />
+          </div>
+          <Dialog.Footer>
+            <Button type="submit">Cadastrar</Button>
+          </Dialog.Footer>
+        </form>
       </Dialog.Content>
-      <Dialog.Footer>
-        <Button onClick={handleCreateActivity}>Cadastrar</Button>
-      </Dialog.Footer>
     </Dialog.Root>
   );
 };

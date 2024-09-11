@@ -1,18 +1,27 @@
-import { IActivity, IActivityDay } from "@/src/types/activity";
+import {
+  CreateActivityArgs,
+  IActivity,
+  IActivityDay,
+} from "@/src/types/activity";
 import { api } from "../api";
 
 const endpoint = "/activities";
 
 const createActivity = async (
-  formData: IActivity,
+  formData: Pick<IActivity, "date" | "title">[],
   tripId: string
 ): Promise<boolean> => {
   try {
-    const { data } = await api.post<void>(`${endpoint}`, formData, {
-      params: tripId,
-    });
+    await api.post<void>(
+      `${endpoint}`,
+      { data: formData },
+      {
+        params: { tripId },
+      }
+    );
     return true;
-  } catch (e) {
+  } catch (error) {
+    console.error("Erro ao criar link:", error);
     return false;
   }
 };

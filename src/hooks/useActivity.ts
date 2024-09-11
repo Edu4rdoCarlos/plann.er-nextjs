@@ -1,17 +1,19 @@
 import { ApiActivity } from "@/src/services/activity";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { IActivity, UpdateActivityArgs } from "../types/activity";
+import { CreateActivityArgs } from "../types/activity";
 
 const QUERY_KEY = "qkActivity";
 
 const Create = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<void, Error, UpdateActivityArgs>(
-    ({ formData, id }) => ApiActivity.createActivity(formData, id),
+  return useMutation<boolean, Error, CreateActivityArgs>(
+    ({ formData, tripId }) => ApiActivity.createActivity(formData, tripId),
     {
-      onSuccess: () => {
-        queryClient.invalidateQueries(QUERY_KEY);
+      onSuccess: (data) => {
+        if (data) {
+          queryClient.invalidateQueries(QUERY_KEY);
+        }
       },
     }
   );

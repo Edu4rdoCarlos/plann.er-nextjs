@@ -49,3 +49,8 @@ export const hasDatePassed = (dateDay: string): boolean => {
 
   return isBefore(targetDate, today);
 };
+
+export const formatDateTime = (date: Date, time: string): string => {
+  const formattedDate = format(date, "yyyy-MM-dd");
+  return `${formattedDate}T${time}:00.000Z`;
+};

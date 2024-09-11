@@ -10,18 +10,22 @@ export interface InputProps
     InputHTMLAttributes<HTMLInputElement> {
   Icon: ComponentType<LucideProps>;
   cta?: React.ReactElement<ButtonProps>;
+  error?: string;
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
-  const { Icon, className, cta, type = "text", ...rest } = props;
+  const { Icon, className, cta, type = "text", error, ...rest } = props;
 
   return (
-    <div className={sInputWrapper({ className })}>
-      <div className="min-w-5">
-        <Icon strokeWidth={1.7} width={20} />
+    <div className="flex flex-col gap-2">
+      <div className={sInputWrapper({ className })}>
+        <div className="min-w-5">
+          <Icon strokeWidth={1.7} width={20} />
+        </div>
+        <input ref={ref} className={sInput()} type={type} {...rest} />
+        {cta}
       </div>
-      <input ref={ref} className={sInput()} type={type} {...rest} />
-      {cta}
+      {error && <div className="text-zinc-400 text-xs">{error}</div>}
     </div>
   );
 });

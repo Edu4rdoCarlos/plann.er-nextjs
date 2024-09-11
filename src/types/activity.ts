@@ -11,7 +11,7 @@ export interface IActivityDay {
   activities: IActivity[];
 }
 
-export interface UpdateActivityArgs {
-  formData: IActivity;
-  id: string;
+export interface CreateActivityArgs {
+  formData: Pick<IActivity, "date" | "title">[];
+  tripId: string;
 }
