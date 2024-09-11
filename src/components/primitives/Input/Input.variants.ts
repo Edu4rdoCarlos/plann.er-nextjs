@@ -20,6 +20,9 @@ export const inputVariants = tv({
       "focus-within:border-lime-300",
       "transform",
       "duration-150",
+      "flex-wrap",
+      "md:flex-nowrap",
+      "justify-between",
     ],
     sInput: [
       "bg-transparent",

@@ -11,7 +11,7 @@ export const ActivitiesLayout = () => {
 
   return (
     <div className="flex flex-col" style={{ gap: 25 }}>
-      <div className="flex justify-between items-center relative z-10">
+      <div className="flex justify-between md:items-center relative z-10 flex-col md:flex-row gap-4">
         <h1 style={{ fontSize: 36 }} className="font-semibold">
           Atividades
         </h1>

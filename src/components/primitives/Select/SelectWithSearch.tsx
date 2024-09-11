@@ -81,11 +81,11 @@ export const SelectWithSearch = ({
         className={sSearch()}
         disabled={disabled}
         cta={
-          <>
+          <div className="flex justify-between md:justify-normal items-center gap-3">
             {calendar}
             <div className={sBar()} />
             {cta}
-          </>
+          </div>
         }
       />
       {showDropdown && (

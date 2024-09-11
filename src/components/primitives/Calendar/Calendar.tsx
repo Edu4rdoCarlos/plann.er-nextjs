@@ -45,7 +45,7 @@ export const Calendar = (props: CalendarProps) => {
       <Button
         colorScheme="secondary"
         variants="ghost"
-        className="font-normal"
+        className="font-normal text-sm md:text-lg"
         onClick={() => setShowCalendar((prev) => !prev)}
         disabled={disabled}
       >

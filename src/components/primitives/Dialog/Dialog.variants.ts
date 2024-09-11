@@ -3,15 +3,16 @@ import { tv } from "tailwind-variants";
 const dialogVariants = tv({
   slots: {
     sWrapper: [
-      "md:fixed",
+      "fixed",
       "inset-0",
       "flex",
       "items-center",
       "justify-center",
       "bg-black",
-      "bg-opacity-50",
+      "z-20",
+      "bg-opacity-60",
+      "backdrop-blur-[3px]",
       "h-screen",
-      "absolute",
     ],
     sContainer: [
       "bg-zinc-900",

@@ -28,7 +28,7 @@ const selectWithSearch = tv({
       "first:pt-5",
       "last:border-none",
     ],
-    sBar: ["h-[25px]", "w-0.5", "bg-zinc-800", "mx-1"],
+    sBar: ["h-[25px]", "w-0.5", "bg-zinc-800", "mx-1", "hidden", "md:flex"],
     sNotFound: ["last:hover:bg-zinc-900", "select-none"],
   },
 });
