@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 interface DecodedData {
-  email: string;
+  mail: string;
   trip: string;
 }
 

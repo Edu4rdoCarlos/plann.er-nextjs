@@ -16,6 +16,7 @@ export interface DialogProps extends HtmlHTMLAttributes<HTMLDivElement> {
   open: boolean;
   onOpenChange: (value: boolean) => void;
   trigger?: ReactNode;
+  closable?: boolean;
 }
 
 interface HeaderProps {
@@ -46,7 +47,13 @@ const Footer = ({
   return <div className={sFooter({ className })}>{children}</div>;
 };
 
-const Dialog = ({ open, children, onOpenChange, trigger }: DialogProps) => {
+const Dialog = ({
+  open,
+  children,
+  onOpenChange,
+  trigger,
+  closable = true,
+}: DialogProps) => {
   return (
     <>
       {trigger && (
@@ -57,12 +64,14 @@ const Dialog = ({ open, children, onOpenChange, trigger }: DialogProps) => {
       {open && (
         <div className={sWrapper()}>
           <div className={sContainer()}>
-            <button
-              className={sCloseButton()}
-              onClick={() => onOpenChange(false)}
-            >
-              <X strokeWidth={1} width={22} />
-            </button>
+            {closable && (
+              <button
+                className={sCloseButton()}
+                onClick={() => onOpenChange(false)}
+              >
+                <X strokeWidth={1} width={22} />
+              </button>
+            )}
             <div className={sContentWrapper()}>{children}</div>
           </div>
         </div>

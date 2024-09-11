@@ -9,3 +9,9 @@ export interface CreateMemberArgs {
   formData: { email: IMember["email"] }[];
   tripId: string;
 }
+
+export interface ConfirmPresenceArgs {
+  formData: Pick<IMember, "name">;
+  tripId: string;
+  email: string;
+}

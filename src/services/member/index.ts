@@ -33,16 +33,20 @@ const findByEmail = async (email: string, tripId: string): Promise<IMember> => {
 };
 
 const confirmMember = async (
-  formData: IMember,
+  formData: Pick<IMember, "name">,
   tripId: string,
-  id: string
-): Promise<IMember> => {
-  const { data } = await api.patch<IMember>(
-    `${endpoint}/confirm/${id}`,
-    formData,
-    tripId
-  );
-  return data;
+  email: string
+): Promise<boolean> => {
+  try {
+    const { data } = await api.patch<void>(
+      `${endpoint}/confirm/${email}`,
+      formData,
+      { params: { tripId } }
+    );
+    return true;
+  } catch (error) {
+    return false;
+  }
 };
 
 const deleteMember = async (id: string, tripId: string): Promise<IMember> => {

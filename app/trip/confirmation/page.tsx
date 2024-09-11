@@ -6,7 +6,7 @@ import { FormatLocation } from "@/src/utils/location";
 import { useState } from "react";
 
 export default function ConfirmationPage() {
-  const { data } = useConfirmTripProps();
+  const { data, decodedData } = useConfirmTripProps();
   const [open, setOpen] = useState(true);
 
   if (!data) return;
@@ -23,6 +23,8 @@ export default function ConfirmationPage() {
       location={location}
       onOpenChange={setOpen}
       open={open}
+      tripId={decodedData?.trip || ""}
+      email={decodedData?.mail || ""}
     ></ConfirmTrip>
   );
 }

@@ -1,6 +1,6 @@
 import { ApiMember } from "@/src/services/member";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { CreateMemberArgs } from "../types/member";
+import { ConfirmPresenceArgs, CreateMemberArgs } from "../types/member";
 
 const QUERY_KEY = "qkMember";
 
@@ -47,10 +47,27 @@ const Update = () => {
   });
 };
 
+const ConfirmPresence = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<boolean, Error, ConfirmPresenceArgs>(
+    ({ formData, tripId, email }) =>
+      ApiMember.confirmMember(formData, tripId, email),
+    {
+      onSuccess: (data) => {
+        if (data) {
+          queryClient.invalidateQueries(QUERY_KEY);
+        }
+      },
+    }
+  );
+};
+
 export const useMember = {
   Create,
   Delete,
   Update,
   FindOne,
   ListAll,
+  ConfirmPresence,
 };

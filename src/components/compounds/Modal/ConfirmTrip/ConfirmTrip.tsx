@@ -8,16 +8,24 @@ import {
   confirmTripSchema,
   ConfirmTripFormData,
 } from "@/src/schemas/trip/confirmTripSchema";
+import { useMember } from "@/src/hooks/useMember";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/src/providers/ToastProvider";
 
 export interface ConfirmTripProps {
   date: string;
   location: string;
   open: boolean;
+  tripId: string;
+  email: string;
   onOpenChange: (value: boolean) => void;
 }
 
 export const ConfirmTrip = (props: ConfirmTripProps) => {
-  const { location, date, open, onOpenChange } = props;
+  const { location, date, open, onOpenChange, tripId, email } = props;
+  const { mutateAsync: confirmTrip } = useMember.ConfirmPresence();
+  const router = useRouter();
+  const { showToast } = useToast();
 
   const {
     register,
@@ -26,16 +34,22 @@ export const ConfirmTrip = (props: ConfirmTripProps) => {
   } = useForm<ConfirmTripFormData>({
     resolver: zodResolver(confirmTripSchema),
     mode: "onBlur",
+    defaultValues: { email },
   });
 
   const handleConfirmTrip = async (data: ConfirmTripFormData) => {
-    console.log(data);
-
-    onOpenChange(false);
+    const formData = { name: data.name };
+    const res = await confirmTrip({ formData, email: data.email, tripId });
+    if (res) {
+      onOpenChange(false);
+      router.push(`/trip/${tripId}`);
+      return;
+    }
+    showToast("Operation Error!", "error");
   };
 
   return (
-    <Dialog.Root open={open} onOpenChange={onOpenChange}>
+    <Dialog.Root open={open} onOpenChange={onOpenChange} closable={false}>
       <Dialog.Header
         title="Confirmar participação"
         subtitle={
@@ -52,6 +66,7 @@ export const ConfirmTrip = (props: ConfirmTripProps) => {
             placeholder="Seu nome completo"
             {...register("name")}
             error={errors.name?.message}
+            className="mb-1"
           />
           <Input
             Icon={Mail}
@@ -59,6 +74,7 @@ export const ConfirmTrip = (props: ConfirmTripProps) => {
             placeholder="Seu e-mail"
             {...register("email")}
             error={errors.email?.message}
+            disabled
           />
           <Dialog.Footer>
             <Button type="submit">Confirmar minha presença</Button>
