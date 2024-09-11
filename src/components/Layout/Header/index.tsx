@@ -1,5 +1,5 @@
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 
 const Header = () => {
   return (
@@ -22,7 +22,7 @@ const Header = () => {
             <Link href="/">
               <div className="hover:underline">Home</div>
             </Link>
-            <Link href="/trips">
+            <Link href="/trip">
               <div className="hover:underline">Trips</div>
             </Link>
           </nav>

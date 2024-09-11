@@ -1,29 +1,32 @@
-import React, { useEffect, useRef, useState } from "react";
+"use client";
+
+import { Button } from "@/src/components/primitives/Button/Button";
 import { Dialog } from "@/src/components/primitives/Dialog/Dialog";
 import { Input } from "@/src/components/primitives/Input/Input";
 import { AtSign, Plus, UserRoundCog } from "lucide-react";
+import React, { useEffect, useRef, useState } from "react";
 import { Guest } from "../../Guest/Guest";
 import { sBar, sEmpty, sGuest } from "./InviteMember.variants";
-import { Button } from "@/src/components/primitives/Button/Button";
 
-import { z } from "zod";
+import { useMember } from "@/src/hooks/useMember";
+import { useToast } from "@/src/providers/ToastProvider";
 import {
   InviteMembersFormData,
   InviteMembersSchema,
 } from "@/src/schemas/members/membersSchema";
-import { useMember } from "@/src/hooks/useMember";
 import { useParams } from "next/navigation";
-import { useToast } from "@/src/providers/ToastProvider";
+import { z } from "zod";
 
 export interface InviteMembersProps {
   open: boolean;
   onOpenChange: (value: boolean) => void;
   onGuestsChange: (guest: string[]) => void;
   guests: string[];
+  hideTrigger?: boolean;
 }
 
 export const InviteMembers = (props: InviteMembersProps) => {
-  const { open, onOpenChange, onGuestsChange, guests } = props;
+  const { open, onOpenChange, onGuestsChange, guests, hideTrigger } = props;
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [error, setError] = useState<string | null>(null);
   const router = useParams();
@@ -89,11 +92,11 @@ export const InviteMembers = (props: InviteMembersProps) => {
     <Dialog.Root
       open={open}
       onOpenChange={onOpenChange}
-      trigger={
+      trigger={!hideTrigger ? (
         <Button colorScheme="secondary">
           <UserRoundCog width={20} /> Gerenciar convidados
         </Button>
-      }
+      ) : undefined} 
     >
       <Dialog.Header
         title="Selecionar convidados"
@@ -129,7 +132,7 @@ export const InviteMembers = (props: InviteMembersProps) => {
               </Button>
             }
           />
-          {guests.length > 0 && (
+          {!hideTrigger && guests.length > 0 && (
             <Button onClick={handleSubmit}>Submeter</Button>
           )}
         </div>

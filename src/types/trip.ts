@@ -9,6 +9,7 @@ export interface ITrip {
   owner: IMember;
   members: IMember[];
   attachment: IAttachment[];
+  id: string;
 }
 
 export interface UpdateTripArgs {
