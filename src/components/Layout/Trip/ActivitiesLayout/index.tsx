@@ -2,7 +2,7 @@
 
 import { Collection } from "@/src/components/compounds/Activities/Collection/Collection";
 import { CreateActivity } from "@/src/components/compounds/Modal/CreateActivity/CreateActivity";
-import { useActivitiesProps } from "@/src/hooks/trip/useActivitiesProps";
+import { useActivitiesProps } from "@/src/hooks/activities/useActivitiesProps";
 import { useState } from "react";
 
 export const ActivitiesLayout = () => {

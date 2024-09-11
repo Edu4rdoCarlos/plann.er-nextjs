@@ -1,11 +1,12 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { Dialog } from "@/src/components/primitives/Dialog/Dialog";
 import { Input } from "@/src/components/primitives/Input/Input";
 import { AtSign, Plus, UserRoundCog } from "lucide-react";
 import { Guest } from "../../Guest/Guest";
 import { sBar, sEmpty, sGuest } from "./InviteMember.variants";
 import { Button } from "@/src/components/primitives/Button/Button";
-
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import {
   InviteMembersFormData,
@@ -25,31 +26,36 @@ export interface InviteMembersProps {
 export const InviteMembers = (props: InviteMembersProps) => {
   const { open, onOpenChange, onGuestsChange, guests } = props;
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const router = useParams();
   const { showToast } = useToast();
+  const router = useParams();
+
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    reset,
+    formState: { errors },
+  } = useForm<InviteMembersFormData>({
+    resolver: zodResolver(InviteMembersSchema),
+    mode: "onBlur",
+  });
 
   const { mutateAsync: inviteMember } = useMember.Create();
 
   const handleInviteMembers = () => {
-    const input = inputRef.current;
+    const input = inputRef.current?.value.trim();
     if (input) {
-      const newValue = input.value.trim();
-      if (newValue) {
-        try {
-          InviteMembersSchema.parse({
-            email: newValue,
-          } as InviteMembersFormData);
-          const newGuests = [...guests, newValue];
-          onGuestsChange(newGuests);
-          input.value = "";
-          setError(null);
-        } catch (e) {
-          if (e instanceof z.ZodError) {
-            setError(e.errors[0]?.message || "Erro de validação.");
-          } else {
-            console.error(e);
-          }
+      const data = { email: input };
+      try {
+        InviteMembersSchema.parse(data);
+        const newGuests = [...guests, input];
+        onGuestsChange(newGuests);
+        setValue("email", "");
+      } catch (e) {
+        if (e instanceof z.ZodError) {
+          showToast(e.errors[0]?.message || "Erro de validação.", "error");
+        } else {
+          console.error(e);
         }
       }
     }
@@ -66,11 +72,9 @@ export const InviteMembers = (props: InviteMembersProps) => {
     }
   };
 
-  const handleSubmit = async () => {
+  const onSubmit = async () => {
     const res = await inviteMember({
-      formData: guests.map((email) => {
-        return { email };
-      }),
+      formData: guests.map((email) => ({ email })),
       tripId: router.id as string,
     });
     if (res) {
@@ -82,8 +86,9 @@ export const InviteMembers = (props: InviteMembersProps) => {
   };
 
   useEffect(() => {
+    reset();
     onGuestsChange([]);
-  }, [open]);
+  }, [open, reset, onGuestsChange]);
 
   return (
     <Dialog.Root
@@ -114,25 +119,38 @@ export const InviteMembers = (props: InviteMembersProps) => {
           <div className={sEmpty()}>Nenhum convite inserido</div>
         )}
         <div className={sBar()} />
-        {error && <div className="text-zinc-400">{error}</div>}{" "}
       </Dialog.Content>
       <Dialog.Footer>
-        <div className="flex flex-col gap-2">
-          <Input
-            ref={inputRef}
-            Icon={AtSign}
-            placeholder="Digite o e-mail do convidado"
-            onKeyDown={handleKeyDown}
-            cta={
-              <Button onClick={handleInviteMembers} className="w-fit" size="sm">
-                Adicionar <Plus width={20} />
-              </Button>
-            }
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Controller
+            name="email"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <Input
+                {...field}
+                ref={(e) => {
+                  inputRef.current = e;
+                  field.ref(e);
+                }}
+                Icon={AtSign}
+                placeholder="Digite o e-mail do convidado"
+                onKeyDown={handleKeyDown}
+                cta={
+                  <Button
+                    onClick={handleInviteMembers}
+                    className="w-fit"
+                    size="sm"
+                  >
+                    Adicionar <Plus width={20} />
+                  </Button>
+                }
+                error={errors.email?.message}
+              />
+            )}
           />
-          {guests.length > 0 && (
-            <Button onClick={handleSubmit}>Submeter</Button>
-          )}
-        </div>
+          {guests.length > 0 && <Button type="submit">Submeter</Button>}
+        </form>
       </Dialog.Footer>
     </Dialog.Root>
   );
