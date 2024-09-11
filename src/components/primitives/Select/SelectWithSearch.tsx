@@ -32,7 +32,7 @@ export const SelectWithSearch = ({
   disabled,
   newStyle
 }: SelectWithSearchProps) => {
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState(defaultValue || "");
   const [filteredOptions, setFilteredOptions] = useState<string[]>([]);
   const [showDropdown, setShowDropdown] = useState(false);
 
@@ -52,15 +52,19 @@ export const SelectWithSearch = ({
   }, [inputValue]);
 
   useEffect(() => {
-    if (!options) return;
-
-    setFilteredOptions(options);
-    setShowDropdown(true);
-  }, [options]);
+    if (options) {
+      const filtered = options.filter(option =>
+        option.toLowerCase().includes(inputValue.toLowerCase())
+      );
+      setFilteredOptions(filtered);
+      setShowDropdown(filtered.length > 0);
+    }
+  }, [inputValue, options]);
 
   const handleOptionSelect = (option: string) => {
     setInputValue(option);
     setShowDropdown(false);
+    onInputValue(option);
   };
 
   const handleInputBlur = () => {
@@ -75,7 +79,7 @@ export const SelectWithSearch = ({
       <Input
         ref={inputRef}
         Icon={MapPin}
-        value={inputValue || defaultValue}
+        value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
         placeholder="Para aonde você vai?"
         onFocus={() => inputValue && setShowDropdown(true)}

@@ -23,6 +23,13 @@ export default function Home() {
         }
     };
 
+    const handleAlterDateAndLocationClick = () => {
+        setIsContinued(false);
+        setGuests([]);
+        setIsModalOpen(false);
+        setIsConfirmModalOpen(false);
+    };
+
     const handleGuestsChange = (newGuests: string[]) => {
         setGuests(newGuests);
     };
@@ -38,7 +45,8 @@ export default function Home() {
             size="sm"
             colorScheme="secondary"
             className="w-fit"
-            onClick={handleContinueClick}
+            onClick={isContinued ? handleAlterDateAndLocationClick : handleContinueClick}
+            disabled={!inputValue || !calendarValue}
         >
             {isContinued ? (
                 <>
@@ -57,6 +65,7 @@ export default function Home() {
             onChange={handleCalendarChange}
             value={calendarValue}
             selectRange
+            disabled={isContinued}
         />
     );
 
@@ -76,20 +85,21 @@ export default function Home() {
                         cta={button}
                         defaultValue={inputValue}
                         newStyle="z-[1]"
+                        disabled={isContinued}
                     />
                     {isContinued && (
                         <div className="mt-6">
                             <Input
                                 Icon={User}
                                 placeholder="Quem estará na viagem?"
-                                onFocus={() => setIsModalOpen(true)} // Open modal on input focus
+                                onFocus={() => setIsModalOpen(true)}
                                 readOnly
                                 cta={
                                     <Button
-                                        size="sm"
+                                        className="w-1/2"
                                         colorScheme="primary"
                                         onClick={handleConfirmClick}
-                                        disabled={guests.length < 2} // Disable if less than 2 guests
+                                        disabled={guests.length < 2} 
                                     >
                                         Confirmar viagem
                                     </Button>
@@ -102,8 +112,8 @@ export default function Home() {
 
             <p className="text-sm text-zinc-500 mt-6">
                 Ao planejar sua viagem pela plann.er você automaticamente concorda com nossos 
-                <a className="text-zinc-300 underline" href="#">termos de uso</a> e 
-                <a className="text-zinc-300 underline" href="#">políticas de privacidade</a>.
+                <a className="text-zinc-300 underline mx-1" href="#">termos de uso</a> e 
+                <a className="text-zinc-300 underline mx-1" href="#">políticas de privacidade</a>.
             </p>
 
             <InviteMembers
