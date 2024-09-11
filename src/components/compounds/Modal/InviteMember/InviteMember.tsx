@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/src/components/primitives/Button/Button";
 import { Dialog } from "@/src/components/primitives/Dialog/Dialog";
 import { Input } from "@/src/components/primitives/Input/Input";
@@ -94,7 +96,7 @@ export const InviteMembers = (props: InviteMembersProps) => {
         <Button colorScheme="secondary">
           <UserRoundCog width={20} /> Gerenciar convidados
         </Button>
-      ) : undefined} // Hide the trigger based on the hideTrigger prop
+      ) : undefined} 
     >
       <Dialog.Header
         title="Selecionar convidados"
@@ -130,7 +132,7 @@ export const InviteMembers = (props: InviteMembersProps) => {
               </Button>
             }
           />
-          {guests.length > 0 && (
+          {!hideTrigger && guests.length > 0 && (
             <Button onClick={handleSubmit}>Submeter</Button>
           )}
         </div>
