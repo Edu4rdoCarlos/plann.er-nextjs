@@ -25,21 +25,21 @@ export default function TripPage() {
               key={idx}
               className="group cursor-pointer"
             >
-              <li className="grid grid-cols-5 items-center p-5 border rounded-md overflow-hidden group-hover:bg-zinc-800/20 transition-colors duration-300 border-zinc-800">
-                <p className="text-center">
+              <li className="grid grid-cols-5 gap-6 items-center p-5 border rounded-md overflow-hidden group-hover:bg-zinc-800/20 transition-colors duration-300 border-zinc-800">
+                <div className="w-fit">
                   <strong>Cidade:</strong> {trip.city}
-                </p>
-                <p className="text-center">
+                </div>
+                <div className="w-fit mx-auto">
                   <strong>País:</strong> {trip.country}
-                </p>
-                <p className="text-center">
+                </div>
+                <div className="w-fit mx-auto">
                   <strong>Início:</strong>{" "}
                   {format(new Date(trip.startDate), "dd/MM/yyyy")}
-                </p>
-                <p className="text-center">
+                </div>
+                <div className="w-fit mx-auto">
                   <strong>Término:</strong>{" "}
                   {format(new Date(trip.endDate), "dd/MM/yyyy")}
-                </p>
+                </div>
                 <span className="flex justify-end pr-4 opacity-0 transition-opacity group-hover:opacity-100 duration-200">
                   <MoveRight width={32} />
                 </span>

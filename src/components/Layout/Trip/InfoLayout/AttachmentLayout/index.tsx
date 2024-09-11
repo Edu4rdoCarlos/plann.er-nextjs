@@ -4,8 +4,8 @@ import {
   ContentProps,
 } from "@/src/components/compounds/Attachments/Content/Content";
 import { CreateAttachment } from "@/src/components/compounds/Modal/CreateAttachment/CreateAttachment";
-import { Button } from "@/src/components/primitives/Button/Button";
-import { useClipboard } from "@/src/hooks/useClipboard";
+import { Link2 } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 
 interface AttachmentLayoutProps {
@@ -17,8 +17,6 @@ export const AttachmentLayout = ({ items }: AttachmentLayoutProps) => {
 
   const action = () => <CreateAttachment onOpenChange={setOpen} open={open} />;
 
-  const { Icon, copy } = useClipboard();
-
   return (
     <div className="w-full">
       <Attachment title="Links Importantes" action={action()}>
@@ -29,14 +27,9 @@ export const AttachmentLayout = ({ items }: AttachmentLayoutProps) => {
                 key={item.label}
                 {...item}
                 widget={
-                  <Button
-                    className="w-fit"
-                    variants="ghost"
-                    colorScheme="secondary"
-                    onClick={() => copy(item.info)}
-                  >
-                    <Icon width={20} />
-                  </Button>
+                  <Link href={item.info} className="w-fit" target="_blank">
+                    <Link2 width={20} />
+                  </Link>
                 }
               />
             );
