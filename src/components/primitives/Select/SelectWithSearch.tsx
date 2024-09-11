@@ -1,6 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Input } from "../Input/Input";
+import { cn } from "@/src/utils/twMerge";
 import { MapPin } from "lucide-react";
+import React, { useEffect, useRef, useState } from "react";
+import { ButtonProps } from "../Button/Button";
+import { CalendarProps } from "../Calendar/Calendar";
+import { Input } from "../Input/Input";
 import {
   sBar,
   sDropdown,
@@ -9,9 +12,6 @@ import {
   sSearch,
   sWrapper,
 } from "./SelectWithSearch.variants";
-import { cn } from "@/src/utils/twMerge";
-import { CalendarProps } from "../Calendar/Calendar";
-import { ButtonProps } from "../Button/Button";
 
 export interface SelectWithSearchProps {
   options?: string[];
@@ -20,6 +20,7 @@ export interface SelectWithSearchProps {
   calendar?: React.ReactElement<CalendarProps>;
   defaultValue?: string;
   disabled?: boolean;
+  newStyle?: string;
 }
 
 export const SelectWithSearch = ({
@@ -29,6 +30,7 @@ export const SelectWithSearch = ({
   calendar,
   defaultValue,
   disabled,
+  newStyle
 }: SelectWithSearchProps) => {
   const [inputValue, setInputValue] = useState("");
   const [filteredOptions, setFilteredOptions] = useState<string[]>([]);
@@ -89,7 +91,7 @@ export const SelectWithSearch = ({
         }
       />
       {showDropdown && (
-        <ul className={sDropdown()}>
+        <ul className={`${sDropdown()} ${newStyle}`}>
           {filteredOptions.length > 0 ? (
             filteredOptions.map((option, index) => (
               <li
