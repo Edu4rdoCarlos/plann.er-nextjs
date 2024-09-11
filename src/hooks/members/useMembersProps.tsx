@@ -13,6 +13,8 @@ export const useMembersProps = () => {
         info: member.email,
         label: member.name || `Convidado ${idx + 1}`,
         widget: <Check checked={member.status} />,
+        id: member.id,
+        tripId: member.tripId,
       };
     }) || [];
 
