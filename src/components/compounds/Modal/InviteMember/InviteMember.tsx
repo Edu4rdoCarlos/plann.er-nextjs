@@ -4,7 +4,7 @@ import { Button } from "@/src/components/primitives/Button/Button";
 import { Dialog } from "@/src/components/primitives/Dialog/Dialog";
 import { Input } from "@/src/components/primitives/Input/Input";
 import { AtSign, Plus, UserRoundCog } from "lucide-react";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { Guest } from "../../Guest/Guest";
 import { sBar, sEmpty, sGuest } from "./InviteMember.variants";
 
@@ -84,10 +84,6 @@ export const InviteMembers = (props: InviteMembersProps) => {
     showToast("Operation Error!", "error");
   };
 
-  useEffect(() => {
-    onGuestsChange([]);
-  }, [open]);
-
   return (
     <Dialog.Root
       open={open}
@@ -104,14 +100,19 @@ export const InviteMembers = (props: InviteMembersProps) => {
       />
       <Dialog.Content>
         {guests.length ? (
-          <div className={sGuest()}>
-            {guests.map((guest) => (
-              <Guest
-                key={guest}
-                email={guest}
-                onCancel={() => handleCancelGuest(guest)}
-              />
-            ))}
+          <div>
+            <p className="text-sm text-zinc-500 mb-2">
+              {guests.length} convidado(s) adicionado(s).
+            </p>
+            <div className={sGuest()}>
+              {guests.map((guest) => (
+                <Guest
+                  key={guest}
+                  email={guest}
+                  onCancel={() => handleCancelGuest(guest)}
+                />
+              ))}
+            </div>
           </div>
         ) : (
           <div className={sEmpty()}>Nenhum convite inserido</div>

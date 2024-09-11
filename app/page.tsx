@@ -1,13 +1,12 @@
-'use client'
+'use client';
 
-import { ConfirmTrip } from "@/src/components/compounds/Modal/ConfirmTrip/ConfirmTrip";
 import { InviteMembers } from "@/src/components/compounds/Modal/InviteMember/InviteMember";
 import { Button } from "@/src/components/primitives/Button/Button";
 import { Calendar } from "@/src/components/primitives/Calendar/Calendar";
 import { Input } from "@/src/components/primitives/Input/Input";
 import { SelectWithSearch } from "@/src/components/primitives/Select/SelectWithSearch";
 import { useTripProps } from "@/src/hooks/trip/useTripProps";
-import { ArrowRight, Settings2, User } from "lucide-react";
+import { ArrowRight, Mail, Settings2, User, UsersRound } from "lucide-react";
 import { useState } from "react";
 
 export default function Home() {
@@ -15,7 +14,8 @@ export default function Home() {
     const [isContinued, setIsContinued] = useState(false);
     const [guests, setGuests] = useState<string[]>([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+    const [nameOwner, setNameOwner] = useState<string>();
+    const [emailOwner, setEmailOwner] = useState<string>();
 
     const handleContinueClick = () => {
         if (inputValue && calendarValue) {
@@ -27,17 +27,14 @@ export default function Home() {
         setIsContinued(false);
         setGuests([]);
         setIsModalOpen(false);
-        setIsConfirmModalOpen(false);
     };
 
     const handleGuestsChange = (newGuests: string[]) => {
         setGuests(newGuests);
     };
 
-    const handleConfirmClick = () => {
-        if (guests.length >= 2) {
-            setIsConfirmModalOpen(true);
-        }
+    const handleSubmit = async () => {
+        
     };
 
     const button = (
@@ -88,24 +85,40 @@ export default function Home() {
                         disabled={isContinued}
                     />
                     {isContinued && (
+                        <>
                         <div className="mt-6">
                             <Input
                                 Icon={User}
-                                placeholder="Quem estará na viagem?"
-                                onFocus={() => setIsModalOpen(true)}
-                                readOnly
-                                cta={
-                                    <Button
-                                        className="w-1/2"
-                                        colorScheme="primary"
-                                        onClick={handleConfirmClick}
-                                        disabled={guests.length < 2} 
-                                    >
-                                        Confirmar viagem
-                                    </Button>
-                                }
+                                placeholder="Seu nome completo"
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNameOwner(e.target.value)}
                             />
                         </div>
+                        <div className="mt-6">
+                            <Input
+                                Icon={Mail}
+                                placeholder="Seu e-mail"
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmailOwner(e.target.value)}
+                            />
+                        </div>
+                        <div className="mt-6">
+                        <Input
+                            Icon={UsersRound}
+                            placeholder={guests.length > 0 ? `${guests.length} membro(s) adicionado(s)` : "Quem estará na viagem?"}
+                            onFocus={() => setIsModalOpen(true)}
+                            readOnly
+                            cta={
+                                <Button
+                                className="w-1/2"
+                                colorScheme="primary"
+                                disabled={guests.length < 1}
+                                onClick={handleSubmit}  // Add this line
+                                >
+                                Confirmar viagem
+                                </Button>
+                            }
+                        />
+                        </div>
+                        </>
                     )}
                 </div>
             </div>
@@ -122,13 +135,6 @@ export default function Home() {
                 onGuestsChange={handleGuestsChange}
                 guests={guests}
                 hideTrigger={true}
-            />
-
-            <ConfirmTrip
-                location={inputValue || "local não definido"} 
-                date={calendarValue?.toString() || "data não definida"} 
-                open={isConfirmModalOpen}
-                onOpenChange={setIsConfirmModalOpen}
             />
         </div>
     );

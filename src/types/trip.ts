@@ -16,3 +16,8 @@ export interface UpdateTripArgs {
   formData: ITrip;
   id: string;
 }
+
+export interface CreateTripArgs {
+  formData: ITrip;
+}
+
