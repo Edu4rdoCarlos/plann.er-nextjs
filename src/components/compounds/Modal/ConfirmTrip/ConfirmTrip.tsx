@@ -2,7 +2,12 @@ import { Button } from "@/src/components/primitives/Button/Button";
 import { Dialog } from "@/src/components/primitives/Dialog/Dialog";
 import { Input } from "@/src/components/primitives/Input/Input";
 import { Mail, User } from "lucide-react";
-import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  confirmTripSchema,
+  ConfirmTripFormData,
+} from "@/src/schemas/trip/confirmTripSchema";
 
 export interface ConfirmTripProps {
   date: string;
@@ -10,12 +15,25 @@ export interface ConfirmTripProps {
   open: boolean;
   onOpenChange: (value: boolean) => void;
 }
+
 export const ConfirmTrip = (props: ConfirmTripProps) => {
   const { location, date, open, onOpenChange } = props;
 
-  const handleConfirmTrip = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ConfirmTripFormData>({
+    resolver: zodResolver(confirmTripSchema),
+    mode: "onBlur",
+  });
+
+  const handleConfirmTrip = async (data: ConfirmTripFormData) => {
+    console.log(data);
+
     onOpenChange(false);
   };
+
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Header
@@ -28,12 +46,25 @@ export const ConfirmTrip = (props: ConfirmTripProps) => {
         }
       />
       <Dialog.Content>
-        <Input Icon={User} placeholder="Seu nome completo" />
-        <Input Icon={Mail} type="email" placeholder="Seu e-mail" />
+        <form onSubmit={handleSubmit(handleConfirmTrip)}>
+          <Input
+            Icon={User}
+            placeholder="Seu nome completo"
+            {...register("name")}
+            error={errors.name?.message}
+          />
+          <Input
+            Icon={Mail}
+            type="email"
+            placeholder="Seu e-mail"
+            {...register("email")}
+            error={errors.email?.message}
+          />
+          <Dialog.Footer>
+            <Button type="submit">Confirmar minha presença</Button>
+          </Dialog.Footer>
+        </form>
       </Dialog.Content>
-      <Dialog.Footer>
-        <Button onClick={handleConfirmTrip}>Confirmar minha presença</Button>
-      </Dialog.Footer>
     </Dialog.Root>
   );
 };

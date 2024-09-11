@@ -28,8 +28,10 @@ const ListAll = () => {
   return useQuery([QUERY_KEY], () => ApiTrip.listAllTrips());
 };
 
-const FindOne = (id: string) => {
-  return useQuery([QUERY_KEY, id], () => ApiTrip.findTrip(id));
+const FindOne = (id?: string) => {
+  return useQuery([QUERY_KEY, id], () => ApiTrip.findTrip(id!), {
+    enabled: !!id,
+  });
 };
 
 const Update = () => {
