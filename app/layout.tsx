@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import ReactQueryProvider from "@/src/providers/ReactQueryProvider";
-import { cn } from "@/src/utils/twMerge";
 import { ToastProvider } from "@/src/providers/ToastProvider";
+import Header from "@/src/components/Layout/Header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,12 +19,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={cn(inter.className, "max-w-[1250px] px-5 pt-11 mx-auto")}
-      >
-        <ReactQueryProvider>
-          <ToastProvider>{children}</ToastProvider>
-        </ReactQueryProvider>
+      <body className={inter.className}>
+        <Header />
+        <div className="max-w-[1250px] px-5 pt-11 mx-auto">
+          <ReactQueryProvider>
+            <ToastProvider>{children}</ToastProvider>
+          </ReactQueryProvider>
+        </div>
       </body>
     </html>
   );

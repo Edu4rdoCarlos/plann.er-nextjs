@@ -22,8 +22,6 @@ export const Collection = (props: CollectionProps) => {
   const day = getDayOfMonth({ date });
   const dayOfWeek = getDayOfWeek({ date });
 
-  console.log(new Date(date).toISOString());
-
   return (
     <div className={sCollectionWrapper({ className })}>
       <div className={sHeading()}>

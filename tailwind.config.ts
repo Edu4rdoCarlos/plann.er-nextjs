@@ -3,7 +3,7 @@ import type { Config } from "tailwindcss";
 const config: Config = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./.storybook/**/*.{js,jsx,ts,tsx}",
   ],
@@ -17,9 +17,5 @@ const config: Config = {
     },
   },
   plugins: [],
-  purge: {
-    mode: "all",
-    content: ["./src/components/**/**/*.{ts, tsx}", "./app/**/*.{ts,tsx}"],
-  },
 };
 export default config;

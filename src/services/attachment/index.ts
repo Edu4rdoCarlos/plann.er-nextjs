@@ -17,7 +17,6 @@ const createAttachment = async (
     );
     return true;
   } catch (error) {
-    console.error("Erro ao criar link:", error);
     return false;
   }
 };
