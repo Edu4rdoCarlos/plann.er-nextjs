@@ -1,6 +1,6 @@
 import { ApiActivity } from "@/src/services/activity";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { CreateActivityArgs } from "../types/activity";
+import { CreateActivityArgs, IActivity } from "../types/activity";
 
 const QUERY_KEY = "qkActivity";
 
@@ -22,29 +22,40 @@ const Create = () => {
 const Delete = () => {
   const queryClient = useQueryClient();
 
-  return useMutation(() => ApiActivity.deleteActivity(), {
-    onSuccess: () => {
-      queryClient.invalidateQueries(QUERY_KEY);
-    },
-  });
+  return useMutation<IActivity, Error, { id: string; tripId: string }>(
+    ({ id, tripId }) => ApiActivity.deleteActivity(id, tripId),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(QUERY_KEY);
+      },
+    }
+  );
 };
 
 const ListAll = (tripId: string) => {
   return useQuery([QUERY_KEY], () => ApiActivity.listAllActivities(tripId));
 };
 
-const FindOne = (id: string) => {
-  return useQuery([QUERY_KEY, id], () => ApiActivity.findActivity(id));
+const FindOne = (id: string, tripId: string) => {
+  return useQuery([QUERY_KEY, id], () => ApiActivity.findActivity(id, tripId));
 };
 
 const Update = () => {
   const queryClient = useQueryClient();
 
-  return useMutation(() => ApiActivity.updateActivity(), {
-    onSuccess: () => {
-      queryClient.invalidateQueries(QUERY_KEY);
-    },
-  });
+  return useMutation<
+    IActivity,
+    Error,
+    { formData: IActivity; id: string; tripId: string }
+  >(
+    ({ formData, id, tripId }) =>
+      ApiActivity.updateActivity(formData, id, tripId),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(QUERY_KEY);
+      },
+    }
+  );
 };
 
 export const useActivity = {
