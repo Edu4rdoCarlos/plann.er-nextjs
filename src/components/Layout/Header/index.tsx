@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { MenuAvatar } from "@/src/components/compounds/MenuAvatar";
 
 const Header = () => {
   return (
@@ -27,9 +28,7 @@ const Header = () => {
             </Link>
           </nav>
         </div>
-        <div className="text-sm w-fit">
-          <span>Explore Your Next Adventure</span>
-        </div>
+        <MenuAvatar />
       </div>
     </header>
   );
