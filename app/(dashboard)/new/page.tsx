@@ -128,37 +128,38 @@ export default function DashboardPage() {
                     />
 
                     {isContinued && (
-                        <div className="space-y-2 pt-2">
-                            <Input
-                                Icon={User}
-                                placeholder="Seu nome completo"
-                                value={nameOwner}
-                                onChange={(e) => setNameOwner(e.target.value)}
-                            />
-                            <Input
-                                Icon={Mail}
-                                placeholder="Seu e-mail"
-                                type="email"
-                                value={emailOwner}
-                                onChange={(e) => setEmailOwner(e.target.value)}
-                            />
-                            <Input
-                                Icon={UsersRound}
-                                placeholder={guests.length > 0 ? `${guests.length} membro(s) convidado(s)` : "Quem estará na viagem?"}
-                                onFocus={() => setIsModalOpen(true)}
-                                readOnly
-                                value={guests.length > 0 ? `${guests.length} membro(s) convidado(s)` : ""}
-                                cta={
-                                    <Button
-                                        className="w-fit"
-                                        colorScheme="primary"
-                                        disabled={!nameOwner || !emailOwner || isLoading}
-                                        onClick={handleSubmit}
-                                    >
-                                        {isLoading ? 'Confirmando...' : 'Confirmar Viagem'}
-                                    </Button>
-                                }
-                            />
+                        <div className="space-y-4 pt-2">
+                            <div className="space-y-2">
+                                <Input
+                                    Icon={User}
+                                    placeholder="Seu nome completo"
+                                    value={nameOwner}
+                                    onChange={(e) => setNameOwner(e.target.value)}
+                                />
+                                <Input
+                                    Icon={Mail}
+                                    placeholder="Seu e-mail"
+                                    type="email"
+                                    value={emailOwner}
+                                    onChange={(e) => setEmailOwner(e.target.value)}
+                                />
+                                <Input
+                                    Icon={UsersRound}
+                                    placeholder={guests.length > 0 ? `${guests.length} membro(s) convidado(s)` : "Quem estará na viagem?"}
+                                    onFocus={() => setIsModalOpen(true)}
+                                    readOnly
+                                    value={guests.length > 0 ? `${guests.length} membro(s) convidado(s)` : ""}
+                                />
+                            </div>
+
+                            <Button
+                                className="w-full max-w-sm mx-auto"
+                                colorScheme="primary"
+                                disabled={!nameOwner || !emailOwner || isLoading}
+                                onClick={handleSubmit}
+                            >
+                                {isLoading ? 'Confirmando...' : 'Confirmar Viagem'}
+                            </Button>
                         </div>
                     )}
                 </div>

@@ -1,71 +1,35 @@
 "use client";
 
-import { Button } from "@/src/components/primitives/Button/Button";
-import { Calendar } from "@/src/components/primitives/Calendar/Calendar";
-import { SelectWithSearch } from "@/src/components/primitives/Select/SelectWithSearch";
-import { useTripProps } from "@/src/hooks/trip/useTripProps";
-import { ArrowRight, Settings2 } from "lucide-react";
-import { useState } from "react";
+import { TripDetailsHeader } from "@/src/components/compounds/TripDetails/TripDetailsHeader";
+import { useTrip } from "@/src/hooks/useTrip";
+import { useParams } from "next/navigation";
 
-interface SelectLayoutProps {
-  onContinueEdit: () => void;
-}
+export const SelectLayout = () => {
+  const params = useParams();
+  const tripId = params.id as string;
+  const { data: trip, isLoading } = useTrip.FindOne(tripId);
 
-export const SelectLayout = (props: SelectLayoutProps) => {
-  const { onContinueEdit } = props;
-  const {
-    handleCalendarChange,
-    calendarValue,
-    handleInput,
-    options,
-    inputValue,
-  } = useTripProps();
-  const filled = Boolean(inputValue && calendarValue);
-  const [inputDisabled, setInputDisabled] = useState(filled);
+  if (isLoading) {
+    return (
+      <div className="flex h-16 w-full items-center justify-between rounded-xl bg-zinc-900 px-6 shadow-shape">
+        <p className="text-zinc-400">Carregando...</p>
+      </div>
+    );
+  }
 
-  const handleButton = () => {
-    if (inputDisabled) {
-      setInputDisabled(false);
-    } else {
-      onContinueEdit();
-    }
-  };
+  if (!trip) {
+    return (
+      <div className="flex h-16 w-full items-center justify-between rounded-xl bg-zinc-900 px-6 shadow-shape">
+        <p className="text-red-400">Não foi possível carregar os dados da viagem.</p>
+      </div>
+    );
+  }
 
-  const button = (
-    <Button
-      size="sm"
-      colorScheme={inputDisabled ? "secondary" : "primary"}
-      className="w-fit"
-      onClick={handleButton}
-    >
-      {inputDisabled ? (
-        <>
-          Alterar local/data <Settings2 width={20} />
-        </>
-      ) : (
-        <>
-          Continuar <ArrowRight width={20} />
-        </>
-      )}
-    </Button>
-  );
-
-  const calendar = (
-    <Calendar
-      onChange={handleCalendarChange}
-      value={calendarValue}
-      selectRange
-      disabled={filled}
-    />
-  );
   return (
-    <SelectWithSearch
-      onInputValue={handleInput}
-      options={options}
-      calendar={calendar}
-      cta={button}
-      defaultValue={inputValue}
-      disabled={filled}
+    <TripDetailsHeader
+      destination={`${trip.city}, ${trip.country}`}
+      startDate={new Date(trip.startDate)} 
+      endDate={new Date(trip.endDate)}
     />
   );
 };
