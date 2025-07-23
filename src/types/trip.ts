@@ -17,7 +17,20 @@ export interface UpdateTripArgs {
   id: string;
 }
 
-export interface CreateTripArgs {
-  formData: ITrip;
+export interface ICreateTrip {
+  city: string;
+  country: string;
+  startDate: string;
+  endDate: string;
+  owner: {
+    name: string;
+    email: string;
+  };
+  members: {
+    email: string;
+  }[];
 }
 
+export interface CreateTripArgs {
+  formData: ICreateTrip;
+}

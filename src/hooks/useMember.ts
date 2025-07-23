@@ -40,18 +40,8 @@ const ListAll = (tripId: string) => {
   return useQuery([QUERY_KEY], () => ApiMember.listAllMembers(tripId));
 };
 
-const FindOne = (id: string) => {
-  return useQuery([QUERY_KEY, id], () => ApiMember.findOne(id));
-};
-
-const Update = () => {
-  const queryClient = useQueryClient();
-
-  return useMutation(ApiMember.update, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(QUERY_KEY);
-    },
-  });
+const FindOne = (id: string, tripId: string) => {
+  return useQuery([QUERY_KEY, id], () => ApiMember.findMember(id, tripId));
 };
 
 const ConfirmPresence = () => {
@@ -73,7 +63,6 @@ const ConfirmPresence = () => {
 export const useMember = {
   Create,
   Delete,
-  Update,
   FindOne,
   ListAll,
   ConfirmPresence,

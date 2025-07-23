@@ -33,24 +33,23 @@ export const useAuth = () => {
   const VerifyCode = () => {
     const queryClient = useQueryClient();
 
-    return useMutation<
-      boolean,
-      Error,
-      { email: string; code: string; owner: boolean }
-    >(({ email, code }) => ApiLogin.verifyCode(email, code), {
-      onSuccess: (data, variables) => {
-        if (data) {
-          store.login(variables.email, variables.owner);
-          queryClient.invalidateQueries(QUERY_KEY);
-          router.push("/new");
-        } else {
-          showToast("Código inválido. Tente novamente.", "error");
-        }
-      },
-      onError: () => {
-        showToast("Erro ao verificar código. Tente novamente.", "error");
-      },
-    });
+    return useMutation<boolean, Error, { email: string; code: string }>(
+      ({ email, code }) => ApiLogin.verifyCode(email, code),
+      {
+        onSuccess: (data, variables) => {
+          if (data) {
+            store.login(variables.email);
+            queryClient.invalidateQueries(QUERY_KEY);
+            router.push("/new");
+          } else {
+            showToast("Código inválido. Tente novamente.", "error");
+          }
+        },
+        onError: () => {
+          showToast("Erro ao verificar código. Tente novamente.", "error");
+        },
+      }
+    );
   };
 
   const handleLogout = () => {
@@ -61,7 +60,7 @@ export const useAuth = () => {
   return {
     ...store,
     isLoggedIn: store.isAuthenticated && store.userEmail,
-    isAdmin: store.owner,
+    isAdmin: false,
     SendCode,
     VerifyCode,
     handleLogout,

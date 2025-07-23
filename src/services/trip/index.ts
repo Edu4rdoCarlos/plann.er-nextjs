@@ -1,5 +1,5 @@
 import { ILocation } from "@/src/types/location";
-import { ITrip } from "@/src/types/trip";
+import { ICreateTrip, ITrip } from "@/src/types/trip";
 import { api } from "../api";
 
 const endpoint = "/trips";
@@ -11,7 +11,7 @@ const listCities = async (startsWith: string): Promise<ILocation[]> => {
   return data;
 };
 
-const createTrip = async (formData: ITrip): Promise<ITrip> => {
+const createTrip = async (formData: ICreateTrip): Promise<ITrip> => {
   const { data } = await api.post<ITrip>(`${endpoint}`, formData);
   return data;
 };
