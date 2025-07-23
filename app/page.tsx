@@ -12,7 +12,7 @@ export default function HomePage() {
     if (isLoggedIn) {
       router.push("/new");
     } else {
-      router.push("/login");
+      router.push("/auth");
     }
   }, [isLoggedIn, router]);
 
