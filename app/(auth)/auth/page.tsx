@@ -7,17 +7,39 @@ import { useAuth } from "@/src/hooks/auth/useAuth";
 import { Mail, Lock } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { 
+  emailSchema, 
+  codeSchema, 
+  EmailFormData, 
+  CodeFormData 
+} from "@/src/schemas/auth/loginSchema";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [code, setCode] = useState("");
   const [step, setStep] = useState<"email" | "code">("email");
-  const [isLoading, setIsLoading] = useState(false);
+  const [currentEmail, setCurrentEmail] = useState("");
   const { SendCode, VerifyCode, isLoggedIn } = useAuth();   
   
-  const { mutateAsync: sendCode } = SendCode();
-  const { mutateAsync: verifyCode } = VerifyCode();
+  const { mutate: sendCode, isLoading: isSendingCode } = SendCode();
+  const { mutate: verifyCode, isLoading: isVerifyingCode } = VerifyCode();
   const router = useRouter();
+
+  const emailForm = useForm<EmailFormData>({
+    resolver: zodResolver(emailSchema),
+    mode: "onChange",
+    defaultValues: {
+      email: "",
+    },
+  });
+
+  const codeForm = useForm<CodeFormData>({
+    resolver: zodResolver(codeSchema),
+    mode: "onChange",
+    defaultValues: {
+      code: "",
+    },
+  });
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -25,47 +47,43 @@ export default function LoginPage() {
     }
   }, [isLoggedIn, router]);
 
-  const handleSendCode = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email) return;
-    
-    setIsLoading(true);
-    try {
-      const success = await sendCode({ email });
-      if (success) {
-        setStep("code");
-      } else {
-        alert("Erro ao enviar código. Tente novamente.");
-      }
-    } catch (error) {
-      alert("Erro ao enviar código. Tente novamente.");
-    } finally {
-      setIsLoading(false);
+  useEffect(() => {
+    if (step === "email") {
+      codeForm.reset();
     }
+  }, [step, codeForm]);
+
+  const handleSendCode = (data: EmailFormData) => {
+    if (data.email === "") {
+      emailForm.setError("email", { message: "Email é obrigatório" });
+      return;
+    }
+
+    setCurrentEmail(data.email);
+    sendCode({ email: data.email }, {
+      onSuccess: () => {
+        setStep("code");
+      }
+    });
   };
 
-  const handleVerifyCode = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!code) return;
-    
-    setIsLoading(true);
-    try {
-      const success = await verifyCode({ email, code, owner: false });
-      if (success) {
-        router.push("/new");
-      } else {
-        alert("Código inválido. Tente novamente.");
-      }
-    } catch (error) {
-      alert("Erro ao verificar código. Tente novamente.");
-    } finally {
-      setIsLoading(false);
+  const handleVerifyCode = (data: CodeFormData) => {
+    if (data.code === "") {
+      codeForm.setError("code", { message: "Código é obrigatório" });
+      return;
     }
+
+    verifyCode({ 
+      email: currentEmail, 
+      code: data.code, 
+      owner: false 
+    });
   };
 
   const handleBackToEmail = () => {
     setStep("email");
-    setCode("");
+    codeForm.reset();
+    setCurrentEmail("");
   };
 
   return (
@@ -77,49 +95,47 @@ export default function LoginPage() {
         <p className="mt-2 text-zinc-600 dark:text-zinc-400">
           {step === "email" 
             ? "Digite seu email para receber o código de acesso"
-            : `Código enviado para ${email}`
+            : `Código enviado para ${currentEmail}`
           }
         </p>
       </div>
 
       {step === "email" ? (
-        <form onSubmit={handleSendCode} className="space-y-6">
+        <form onSubmit={emailForm.handleSubmit(handleSendCode)} className="space-y-6">
           <Input
             Icon={Mail}
             type="email"
             placeholder="Seu email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
+            {...emailForm.register("email")}
+            error={emailForm.formState.errors.email?.message}
           />
           
           <Button
             type="submit"
             className="w-full"
-            disabled={isLoading || !email}
+            disabled={isSendingCode || !emailForm.formState.isValid || Object.keys(emailForm.formState.errors).length > 0}
           >
-            {isLoading ? "Enviando..." : "Enviar código"}
+            {isSendingCode ? "Enviando..." : "Enviar código"}
           </Button>
         </form>
       ) : (
-        <form onSubmit={handleVerifyCode} className="space-y-6">
+        <form onSubmit={codeForm.handleSubmit(handleVerifyCode)} className="space-y-6">
           <Input
             Icon={Lock}
             type="text"
             placeholder="Código de 6 dígitos"
-            value={code}
-            onChange={(e) => setCode(e.target.value)}
             maxLength={6}
-            required
+            {...codeForm.register("code")}
+            error={codeForm.formState.errors.code?.message}
           />
           
           <div className="space-y-3">
             <Button
               type="submit"
               className="w-full"
-              disabled={isLoading || !code}
+              disabled={isVerifyingCode || !codeForm.formState.isValid || Object.keys(codeForm.formState.errors).length > 0}
             >
-              {isLoading ? "Verificando..." : "Entrar"}
+              {isVerifyingCode ? "Verificando..." : "Entrar"}
             </Button>
             
             <Button
@@ -127,7 +143,7 @@ export default function LoginPage() {
               colorScheme="secondary"
               className="w-full"
               onClick={handleBackToEmail}
-              disabled={isLoading}
+              disabled={isVerifyingCode}
             >
               Voltar
             </Button>
