@@ -1,8 +1,8 @@
+import { Button } from "@/src/components/primitives/Button/Button";
+import { trimWithEllipsis } from "@/src/lib/utils/text";
+import { X } from "lucide-react";
 import { ReactNode } from "react";
 import { sContent, sInfo, sLabel, sWrapper } from "./Content.variants";
-import { trimWithEllipsis } from "@/src/utils/text";
-import { Button } from "@/src/components/primitives/Button/Button";
-import { X } from "lucide-react";
 
 export interface ContentProps {
   label: string;

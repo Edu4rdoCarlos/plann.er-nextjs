@@ -1,15 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
-import { useAuth } from "./auth/useAuth";
 import {
-  isPublicRoute,
-  isProtectedRoute,
-  isAdminRoute,
   AUTH_REDIRECT,
-} from "@/src/config/routes";
+  isAdminRoute,
+  isProtectedRoute,
+  isPublicRoute,
+} from "@/src/lib/config/routes";
 import { useToast } from "@/src/providers/ToastProvider";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useAuth } from "./auth/useAuth";
 
 export const useRouteProtection = () => {
   const pathname = usePathname();

@@ -1,13 +1,12 @@
-import { format } from "date-fns";
+import { getDayOfMonth, getDayOfWeek } from "@/src/lib/utils/date";
 import { Activity, ActivityProps } from "../Activity/Activity";
-import { getDayOfMonth, getDayOfWeek } from "@/src/utils/date";
 import {
-  sActivities,
-  sCollectionWrapper,
-  sDay,
-  sDayOfWeek,
-  sEmpty,
-  sHeading,
+    sActivities,
+    sCollectionWrapper,
+    sDay,
+    sDayOfWeek,
+    sEmpty,
+    sHeading,
 } from "./Collection.variants";
 
 export interface CollectionProps {

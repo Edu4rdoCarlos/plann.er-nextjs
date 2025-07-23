@@ -1,8 +1,8 @@
 "use client";
 import { ConfirmTrip } from "@/src/components/compounds/Modal/ConfirmTrip/ConfirmTrip";
 import { useConfirmTripProps } from "@/src/hooks/trip/useConfirmTripProps";
-import { getRangeDate } from "@/src/utils/date";
-import { FormatLocation } from "@/src/utils/location";
+import { getRangeDate } from "@/src/lib/utils/date";
+import { FormatLocation } from "@/src/lib/utils/location";
 import { useState } from "react";
 
 export default function ConfirmationPage() {

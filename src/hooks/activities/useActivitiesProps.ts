@@ -1,7 +1,7 @@
+import { CollectionProps } from "@/src/components/compounds/Activities/Collection/Collection";
+import { hasDatePassed } from "@/src/lib/utils/date";
 import { useParams } from "next/navigation";
 import { useActivity } from "../useActivity";
-import { CollectionProps } from "@/src/components/compounds/Activities/Collection/Collection";
-import { hasDatePassed } from "@/src/utils/date";
 
 export const useActivitiesProps = () => {
   const router = useParams();
