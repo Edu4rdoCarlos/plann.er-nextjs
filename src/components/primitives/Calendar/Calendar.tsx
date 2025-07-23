@@ -1,7 +1,7 @@
 import { getDate, getRangeDate } from "@/src/utils/date";
 import { cn } from "@/src/utils/twMerge";
 import { Calendar as CalendarIcon } from "lucide-react";
-import { ButtonHTMLAttributes, useState } from "react";
+import { ButtonHTMLAttributes, useEffect, useRef, useState } from "react";
 import {
   Calendar as ReactCalendar,
   CalendarProps as ReactCalendarProps,
@@ -24,24 +24,47 @@ export type CalendarProps = ReactCalendarProps &
   Pick<ButtonHTMLAttributes<HTMLButtonElement>, "disabled">;
 
 const formatDate = (value: any) => {
-  if (Array.isArray(value)) {
+  if (Array.isArray(value) && value[0] && value[1]) {
     return getRangeDate({
-      startDate: new Date(value[0] || ""),
-      endDate: new Date(value[1] || ""),
+      startDate: new Date(value[0]),
+      endDate: new Date(value[1]),
     });
   }
 
-  return getDate({ date: value });
+  if (value instanceof Date) {
+    return getDate({ date: value });
+  }
+  return "";
 };
 
 export const Calendar = (props: CalendarProps) => {
   const [showCalendar, setShowCalendar] = useState(false);
   const { className, value, as, disabled, ...rest } = props;
+  const calendarRef = useRef<HTMLDivElement>(null);
 
   const date = formatDate(value);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        calendarRef.current &&
+        !calendarRef.current.contains(event.target as Node)
+      ) {
+        setShowCalendar(false);
+      }
+    };
+
+    if (showCalendar) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showCalendar]);
+
   return (
-    <div className={sWrapper({ as })}>
+    <div className={sWrapper({ as })} ref={calendarRef}>
       <Button
         colorScheme="secondary"
         variants="ghost"
@@ -54,10 +77,7 @@ export const Calendar = (props: CalendarProps) => {
         {date || <>Quando?</>}
       </Button>
       {showCalendar && (
-        <div
-          className={sCalendarWrapper()}
-          onBlur={() => setShowCalendar(false)}
-        >
+        <div className={sCalendarWrapper()}>
           <ReactCalendar
             className={cn(sCalendar({ className }))}
             value={value}

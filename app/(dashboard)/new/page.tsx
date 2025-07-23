@@ -6,27 +6,46 @@ import { Calendar } from "@/src/components/primitives/Calendar/Calendar";
 import { Input } from "@/src/components/primitives/Input/Input";
 import { SelectWithSearch } from "@/src/components/primitives/Select/SelectWithSearch";
 import { useTripProps } from "@/src/hooks/trip/useTripProps";
+import { useTrip } from "@/src/hooks/useTrip";
+import { useToast } from "@/src/providers/ToastProvider";
+import { ICreateTrip } from "@/src/types/trip";
 import { ArrowRight, Mail, Settings2, User, UsersRound } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function DashboardPage() {
-    const { handleCalendarChange, calendarValue, handleInput, options, inputValue } = useTripProps();
+    const router = useRouter();
+    const { showToast } = useToast();
+    const { mutateAsync: createTrip, isLoading } = useTrip.Create();
+
+    const {
+        handleCalendarChange,
+        calendarValue,
+        handleInput,
+        options,
+        inputValue
+    } = useTripProps();
+
     const [isContinued, setIsContinued] = useState(false);
     const [guests, setGuests] = useState<string[]>([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [nameOwner, setNameOwner] = useState<string>();
-    const [emailOwner, setEmailOwner] = useState<string>();
+    const [nameOwner, setNameOwner] = useState<string>('');
+    const [emailOwner, setEmailOwner] = useState<string>('');
+
+    const isReadyToContinue =
+        inputValue &&
+        Array.isArray(calendarValue) &&
+        calendarValue[0] !== null &&
+        calendarValue[1] !== null;
 
     const handleContinueClick = () => {
-        if (inputValue && calendarValue) {
+        if (isReadyToContinue) {
             setIsContinued(true);
         }
     };
 
     const handleAlterDateAndLocationClick = () => {
         setIsContinued(false);
-        setGuests([]);
-        setIsModalOpen(false);
     };
 
     const handleGuestsChange = (newGuests: string[]) => {
@@ -34,30 +53,53 @@ export default function DashboardPage() {
     };
 
     const handleSubmit = async () => {
-        
+        if (!isReadyToContinue || !nameOwner || !emailOwner) {
+            showToast("Por favor, preencha todos os campos.", "error");
+            return;
+        }
+
+        const tripPayload: ICreateTrip = {
+            city: inputValue.split(',')[0]?.trim(),
+            country: inputValue.split(',')[1]?.trim(),
+            startDate: calendarValue[0]!.toISOString(),
+            endDate: calendarValue[1]!.toISOString(),
+            owner: {
+                name: nameOwner,
+                email: emailOwner,
+            },
+            members: guests.map(email => ({ email: email })),
+        };
+
+        try {
+            const newTrip = await createTrip({ formData: tripPayload });
+
+            if (newTrip) {
+                showToast("Viagem criada com sucesso!", "success");
+                router.push(`/trip/${newTrip.id}`);
+            }
+        } catch (error) {
+            showToast("Erro ao criar a viagem. Tente novamente.", "error");
+            console.error(error);
+        }
     };
 
-    const button = (
+    const continueButton = (
         <Button
             size="sm"
             colorScheme="secondary"
             className="w-fit"
             onClick={isContinued ? handleAlterDateAndLocationClick : handleContinueClick}
-            disabled={!inputValue || !calendarValue}
+            disabled={!isContinued && !isReadyToContinue}
         >
             {isContinued ? (
-                <>
-                    Alterar local/data <Settings2 width={20} />
-                </>
+                <>Alterar local/data <Settings2 width={20} /></>
             ) : (
-                <>
-                    Continuar <ArrowRight width={20} />
-                </>
+                <>Continuar <ArrowRight width={20} /></>
             )}
         </Button>
     );
 
-    const calendar = (
+    const calendarComponent = (
         <Calendar
             onChange={handleCalendarChange}
             value={calendarValue}
@@ -78,54 +120,53 @@ export default function DashboardPage() {
                     <SelectWithSearch
                         onInputValue={handleInput}
                         options={options}
-                        calendar={calendar}
-                        cta={button}
+                        calendar={calendarComponent}
+                        cta={continueButton}
                         defaultValue={inputValue}
                         newStyle="z-[1]"
                         disabled={isContinued}
                     />
+
                     {isContinued && (
-                        <>
-                        <div className="mt-6">
+                        <div className="space-y-2 pt-2">
                             <Input
                                 Icon={User}
                                 placeholder="Seu nome completo"
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNameOwner(e.target.value)}
+                                value={nameOwner}
+                                onChange={(e) => setNameOwner(e.target.value)}
                             />
-                        </div>
-                        <div className="mt-6">
                             <Input
                                 Icon={Mail}
                                 placeholder="Seu e-mail"
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmailOwner(e.target.value)}
+                                type="email"
+                                value={emailOwner}
+                                onChange={(e) => setEmailOwner(e.target.value)}
+                            />
+                            <Input
+                                Icon={UsersRound}
+                                placeholder={guests.length > 0 ? `${guests.length} membro(s) convidado(s)` : "Quem estará na viagem?"}
+                                onFocus={() => setIsModalOpen(true)}
+                                readOnly
+                                value={guests.length > 0 ? `${guests.length} membro(s) convidado(s)` : ""}
+                                cta={
+                                    <Button
+                                        className="w-fit"
+                                        colorScheme="primary"
+                                        disabled={!nameOwner || !emailOwner || isLoading}
+                                        onClick={handleSubmit}
+                                    >
+                                        {isLoading ? 'Confirmando...' : 'Confirmar Viagem'}
+                                    </Button>
+                                }
                             />
                         </div>
-                        <div className="mt-6">
-                        <Input
-                            Icon={UsersRound}
-                            placeholder={guests.length > 0 ? `${guests.length} membro(s) adicionado(s)` : "Quem estará na viagem?"}
-                            onFocus={() => setIsModalOpen(true)}
-                            readOnly
-                            cta={
-                                <Button
-                                className="w-1/2"
-                                colorScheme="primary"
-                                disabled={guests.length < 1}
-                                onClick={handleSubmit}
-                                >
-                                Confirmar viagem
-                                </Button>
-                            }
-                        />
-                        </div>
-                        </>
                     )}
                 </div>
             </div>
 
-            <p className="text-sm text-zinc-500 mt-6">
-                Ao planejar sua viagem pela plann.er você automaticamente concorda com nossos 
-                <a className="text-zinc-300 underline mx-1" href="#">termos de uso</a> e 
+            <p className="text-sm text-zinc-500 mt-auto pb-4 px-6 text-center">
+                Ao planejar sua viagem pela plann.er você automaticamente concorda com nossos
+                <a className="text-zinc-300 underline mx-1" href="#">termos de uso</a> e
                 <a className="text-zinc-300 underline mx-1" href="#">políticas de privacidade</a>.
             </p>
 
@@ -138,4 +179,4 @@ export default function DashboardPage() {
             />
         </div>
     );
-} 
+}
