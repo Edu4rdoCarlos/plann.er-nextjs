@@ -2,7 +2,7 @@ const { format, isBefore } = require("date-fns");
 const { ptBR } = require("date-fns/locale");
 
 interface IDate {
-  date: Date;
+  date: Date | string;
 }
 
 interface IRangeDate {
@@ -41,19 +41,23 @@ export const getRangeDate = ({ startDate, endDate }: IRangeDate) => {
 
 export const getDate = ({ date }: IDate) => {
   if (!date) return "";
-
-  const formattedEndDate = format(new Date(date), "d 'de' MMMM", {
+  const formattedEndDate = format(new Date(date), "dd 'de' MMMM", {
     locale: ptBR,
   });
-
   return formattedEndDate;
 };
 
-export const hasDatePassed = (dateDay: string): boolean => {
-  const today = new Date();
-  const targetDate = new Date(dateDay);
+export const getFullDate = ({ date }: IDate) => {
+  if (!date) return "";
+  const formattedEndDate = format(new Date(date), "dd 'de' MMMM 'de' yyyy", {
+    locale: ptBR,
+  });
+  return formattedEndDate;
+};
 
-  return isBefore(targetDate, today);
+export const hasDatePassed = (dateToCheck: Date): boolean => {
+  const today = new Date();
+  return isBefore(dateToCheck, today);
 };
 
 export const formatDateTime = (date: Date, time: string): string => {

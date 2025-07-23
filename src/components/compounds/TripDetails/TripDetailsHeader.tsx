@@ -12,9 +12,13 @@ interface TripDetailsHeaderProps {
 
 const formatDateRange = (start: Date | null, end: Date | null): string => {
   if (!start || !end) return "Data não definida";
-  const startDay = format(start, "d");
-  const endDay = format(end, "d 'de' MMM", { locale: ptBR });
-  return `${startDay} a ${endDay}`;
+  if (format(start, 'yyyy-MM') === format(end, 'yyyy-MM')) {
+    return `${format(start, "d")} a ${format(end, "d 'de' MMM 'de' yyyy", { locale: ptBR })}`;
+  }
+  if (format(start, 'yyyy') === format(end, 'yyyy')) {
+    return `${format(start, "d 'de' MMM", { locale: ptBR })} a ${format(end, "d 'de' MMM 'de' yyyy", { locale: ptBR })}`;
+  }
+  return `${format(start, "d 'de' MMM 'de' yyyy", { locale: ptBR })} a ${format(end, "d 'de' MMM 'de' yyyy", { locale: ptBR })}`;
 };
 
 export const TripDetailsHeader = (props: TripDetailsHeaderProps) => {
