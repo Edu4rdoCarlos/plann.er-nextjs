@@ -43,7 +43,6 @@ export const RouteProtectionProvider = ({ children }: RouteProtectionProviderPro
     );
   }
 
-  // Se autorizado, renderiza o conteúdo
   return <>{children}</>;
 };
 
