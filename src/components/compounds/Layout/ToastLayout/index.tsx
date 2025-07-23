@@ -1,5 +1,5 @@
+import { Toast, ToastProps } from "@/src/components/primitives/Toast/Toast";
 import { useState } from "react";
-import { Toast, ToastProps } from "../../primitives/Toast/Toast";
 
 interface ToastLayoutProps {
   success: boolean;

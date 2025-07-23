@@ -1,8 +1,8 @@
+import { getRangeDate } from "@/src/lib/utils/date";
+import { FormatLocation } from "@/src/lib/utils/location";
 import { Meta, StoryFn } from "@storybook/react";
-import { ConfirmTrip, ConfirmTripProps } from "./ConfirmTrip";
 import { useState } from "react";
-import { FormatLocation } from "@/src/utils/location";
-import { getRangeDate } from "@/src/utils/date";
+import { ConfirmTrip, ConfirmTripProps } from "./ConfirmTrip";
 
 export default {
   title: "Components/Modal/ConfirmTrip",
@@ -25,8 +25,7 @@ const Template: StoryFn<ConfirmTripProps> = (args) => {
       onOpenChange={setOpen}
       open={open}
       location={location}
-      date={rangeDate}
-    />
+      date={rangeDate} tripId={""} email={""}/>
   );
 };
 

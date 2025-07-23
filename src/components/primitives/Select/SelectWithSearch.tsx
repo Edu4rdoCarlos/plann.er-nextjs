@@ -1,16 +1,16 @@
-import { cn } from "@/src/utils/twMerge";
+import { cn } from "@/src/lib/utils/twMerge";
 import { MapPin } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import { ButtonProps } from "../Button/Button";
 import { CalendarProps } from "../Calendar/Calendar";
 import { Input } from "../Input/Input";
 import {
-  sBar,
-  sDropdown,
-  sItems,
-  sNotFound,
-  sSearch,
-  sWrapper,
+    sBar,
+    sDropdown,
+    sItems,
+    sNotFound,
+    sSearch,
+    sWrapper,
 } from "./SelectWithSearch.variants";
 
 export interface SelectWithSearchProps {

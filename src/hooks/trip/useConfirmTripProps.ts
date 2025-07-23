@@ -1,5 +1,5 @@
 import { useTrip } from "@/src/hooks/useTrip";
-import { parseQueryString } from "@/src/utils/text";
+import { parseQueryString } from "@/src/lib/utils/text";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 

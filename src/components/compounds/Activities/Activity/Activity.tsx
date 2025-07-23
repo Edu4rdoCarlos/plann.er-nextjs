@@ -1,13 +1,13 @@
+import { Check } from "@/src/components/primitives/Check/Check";
+import { getHour } from "@/src/lib/utils/date";
 import { VariantProps } from "tailwind-variants";
 import {
-  activityVariants,
-  sActivity,
-  sHour,
-  sLabel,
-  sLabelWrapper,
+    activityVariants,
+    sActivity,
+    sHour,
+    sLabel,
+    sLabelWrapper,
 } from "./Activity.variants";
-import { getHour } from "@/src/utils/date";
-import { Check } from "@/src/components/primitives/Check/Check";
 
 export interface ActivityProps extends VariantProps<typeof activityVariants> {
   className?: string;

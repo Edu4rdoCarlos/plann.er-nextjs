@@ -1,23 +1,23 @@
 import { Button } from "@/src/components/primitives/Button/Button";
 import {
-  Calendar,
-  CalendarValue,
+    Calendar,
+    CalendarValue,
 } from "@/src/components/primitives/Calendar/Calendar";
 import { Dialog } from "@/src/components/primitives/Dialog/Dialog";
 import { Input } from "@/src/components/primitives/Input/Input";
-import { Clock4, Plus, Tag } from "lucide-react";
-import { useEffect, useState } from "react";
-import { sTimeWrapper } from "./CreateActivity.variants";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { formatDateTime } from "@/src/utils/date";
-import {
-  CreateActivityFormData,
-  createActivitySchema,
-} from "@/src/schemas/activity/activitySchema";
 import { useActivity } from "@/src/hooks/useActivity";
-import { useParams } from "next/navigation";
+import { formatDateTime } from "@/src/lib/utils/date";
 import { useToast } from "@/src/providers/ToastProvider";
+import {
+    CreateActivityFormData,
+    createActivitySchema,
+} from "@/src/schemas/activity/activitySchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Clock4, Plus, Tag } from "lucide-react";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { sTimeWrapper } from "./CreateActivity.variants";
 
 export interface CreateActivityProps {
   open: boolean;

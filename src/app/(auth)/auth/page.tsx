@@ -2,19 +2,20 @@
 
 import { Button } from "@/src/components/primitives/Button/Button";
 import { Input } from "@/src/components/primitives/Input/Input";
-import AuthLayout from "@/src/components/Layout/Auth";
+
+import AuthLayout from "@/src/components/compounds/Layout/Auth";
 import { useAuth } from "@/src/hooks/auth/useAuth";
-import { Mail, Lock } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { 
-  emailSchema, 
-  codeSchema, 
-  EmailFormData, 
-  CodeFormData 
+import {
+  CodeFormData,
+  codeSchema,
+  EmailFormData,
+  emailSchema
 } from "@/src/schemas/auth/loginSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Lock, Mail } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 
 export default function LoginPage() {
   const [step, setStep] = useState<"email" | "code">("email");
