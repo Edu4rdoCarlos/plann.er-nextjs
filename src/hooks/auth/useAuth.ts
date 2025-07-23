@@ -1,11 +1,15 @@
 import { ApiLogin } from "@/src/services/auth";
 import { useMutation, useQueryClient } from "react-query";
 import { useAuthStore } from "@/src/store/auth";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/src/providers/ToastProvider";
 
 const QUERY_KEY = "qkAuth";
 
 export const useAuth = () => {
   const store = useAuthStore();
+  const router = useRouter();
+  const { showToast } = useToast();
 
   const SendCode = () => {
     const queryClient = useQueryClient();
@@ -18,6 +22,9 @@ export const useAuth = () => {
             store.setEmail(variables.email);
             queryClient.invalidateQueries(QUERY_KEY);
           }
+        },
+        onError: () => {
+          showToast("Erro ao enviar código. Tente novamente.", "error");
         },
       }
     );
@@ -35,9 +42,20 @@ export const useAuth = () => {
         if (data) {
           store.login(variables.email, variables.owner);
           queryClient.invalidateQueries(QUERY_KEY);
+          router.push("/new");
+        } else {
+          showToast("Código inválido. Tente novamente.", "error");
         }
       },
+      onError: () => {
+        showToast("Erro ao verificar código. Tente novamente.", "error");
+      },
     });
+  };
+
+  const handleLogout = () => {
+    store.logout();
+    router.push("/auth");
   };
 
   return {
@@ -46,5 +64,6 @@ export const useAuth = () => {
     isAdmin: store.owner,
     SendCode,
     VerifyCode,
+    handleLogout,
   };
 };

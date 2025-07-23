@@ -14,7 +14,7 @@ export interface MenuAvatarProps {
 export const MenuAvatar = ({ className }: MenuAvatarProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const { userEmail, isAdmin, logout, isLoggedIn } = useAuth();
+  const { userEmail, isAdmin, handleLogout, isLoggedIn } = useAuth();
   const router = useRouter();
 
   const getAvatarUrl = (email: string | null) => {
@@ -40,9 +40,8 @@ export const MenuAvatar = ({ className }: MenuAvatarProps) => {
     return null;
   }
 
-  const handleLogout = () => {
-    logout();
-    router.push("/login");
+  const onLogout = () => {
+    handleLogout();
     setIsOpen(false);
   };
 
@@ -99,7 +98,7 @@ export const MenuAvatar = ({ className }: MenuAvatarProps) => {
             )}
             
             <button
-              onClick={handleLogout}
+              onClick={onLogout}
               className={sMenuItem({ variant: "danger" })}
             >
               <LogOut className="w-4 h-4" />
