@@ -15,7 +15,7 @@ export const RouteGuard = ({ children, fallback }: RouteGuardProps) => {
     return (
       <div className="h-screen flex items-center justify-center">
         <div className="text-center space-y-4">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600 mx-auto"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-lime-600 mx-auto"></div>
           <p className="text-zinc-500">Verificando acesso...</p>
         </div>
       </div>

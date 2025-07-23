@@ -12,7 +12,7 @@ export const sAvatar = tv({
     "transition-transform duration-200",
     "cursor-pointer",
     "hover:scale-105",
-    "focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2",
+    "focus:outline-none focus:ring-2 focus:ring-lime-500 focus:ring-offset-2",
     "border-2 border-white dark:border-zinc-700",
     "shadow-sm",
   ],

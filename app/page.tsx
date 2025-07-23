@@ -10,7 +10,7 @@ export default function HomePage() {
 
   useEffect(() => {
     if (isLoggedIn) {
-      router.push("/new");
+      router.push("/trip");
     } else {
       router.push("/auth");
     }

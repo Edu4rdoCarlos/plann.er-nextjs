@@ -43,7 +43,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (isLoggedIn) {
-      router.push("/new");
+      router.push("/trip");
     }
   }, [isLoggedIn, router]);
 
@@ -76,7 +76,6 @@ export default function LoginPage() {
     verifyCode({ 
       email: currentEmail, 
       code: data.code, 
-      owner: false 
     });
   };
 
@@ -154,11 +153,11 @@ export default function LoginPage() {
       <div className="text-center text-sm text-zinc-500">
         <p>
           Ao fazer login, você concorda com nossos{" "}
-          <a href="#" className="text-emerald-600 hover:underline">
+          <a href="#" className="text-lime-600 hover:underline">
             termos de uso
           </a>{" "}
           e{" "}
-          <a href="#" className="text-emerald-600 hover:underline">
+          <a href="#" className="text-lime-600 hover:underline">
             política de privacidade
           </a>
         </p>
