@@ -13,7 +13,7 @@ const selectWithSearch = tv({
       "border-[1px]",
       "absolute",
       "top-[48px]",
-      "z-[0]",
+      "z-[50]",
       "overflow-y-scroll",
       "max-h-64",
     ],
