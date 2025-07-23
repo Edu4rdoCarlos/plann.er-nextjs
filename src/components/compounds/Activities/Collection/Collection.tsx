@@ -1,12 +1,14 @@
-import { getDayOfMonth, getDayOfWeek } from "@/src/lib/utils/date";
+"use client";
+
+import { getDayOfWeek, getFullDate } from "@/src/lib/utils/date";
 import { Activity, ActivityProps } from "../Activity/Activity";
 import {
-    sActivities,
-    sCollectionWrapper,
-    sDay,
-    sDayOfWeek,
-    sEmpty,
-    sHeading,
+  sActivities,
+  sCollectionWrapper,
+  sDay,
+  sDayOfWeek,
+  sEmpty,
+  sHeading,
 } from "./Collection.variants";
 
 export interface CollectionProps {
@@ -18,16 +20,17 @@ export interface CollectionProps {
 export const Collection = (props: CollectionProps) => {
   const { activities, date, className } = props;
 
-  const day = getDayOfMonth({ date });
+  const fullDate = getFullDate({ date });
   const dayOfWeek = getDayOfWeek({ date });
 
   return (
     <div className={sCollectionWrapper({ className })}>
       <div className={sHeading()}>
-        <h3 className={sDay()}>Dia {day}</h3>
+        <h3 className={sDay()}>{fullDate}</h3>
         <span className={sDayOfWeek()}>{dayOfWeek}</span>
       </div>
-      {activities?.length ? (
+
+      {activities && activities.length > 0 ? (
         <ul className={sActivities()}>
           {activities.map((activity) => (
             <li key={activity.label}>
