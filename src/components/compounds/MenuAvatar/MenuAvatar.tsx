@@ -4,8 +4,8 @@ import { useState, useRef, useEffect } from "react";
 import { useAuth } from "@/src/hooks/auth/useAuth";
 import { Settings, LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { capitalize } from "radash";
 import { sMenuAvatar, sAvatar, sDropdown, sMenuItem } from "./MenuAvatar.variants";
-import Image from "next/image";
 
 export interface MenuAvatarProps {
   className?: string;
@@ -74,10 +74,10 @@ export const MenuAvatar = ({ className }: MenuAvatarProps) => {
         <div className={sDropdown()}>
           <div className="px-4 py-3 border-b border-zinc-200 dark:border-zinc-700">
             <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100">
-              {userEmail?.split("@")[0] || "Usuário"}
+              Bem-vindo, {capitalize(userEmail?.split("@")[0] || "usuário")}!
             </p>
             <p className="text-xs text-zinc-500 dark:text-zinc-400">
-              Bem vindo, {userEmail}!
+              {userEmail}
             </p>
             {isAdmin && (
               <span className="inline-block mt-1 px-2 py-1 text-xs bg-emerald-100 text-emerald-800 rounded-full">

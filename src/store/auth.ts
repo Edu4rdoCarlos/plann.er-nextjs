@@ -7,8 +7,7 @@ interface AuthState {
   isAuthenticated: boolean;
   userEmail: string | null;
   token: string | null;
-  owner: boolean;
-  login: (email: string, owner?: boolean, token?: string) => void;
+  login: (email: string, token?: string) => void;
   logout: () => void;
   setEmail: (email: string) => void;
 }
@@ -19,20 +18,17 @@ export const useAuthStore = create<AuthState>()(
       isAuthenticated: false,
       userEmail: null,
       token: null,
-      owner: false,
-      login: (email: string, owner: boolean = false, token?: string) =>
+      login: (email: string, token?: string) =>
         set({
           isAuthenticated: true,
           userEmail: email,
           token: token || null,
-          owner,
         }),
       logout: () =>
         set({
           isAuthenticated: false,
           userEmail: null,
           token: null,
-          owner: false,
         }),
       setEmail: (email: string) => set({ userEmail: email }),
     }),
@@ -42,7 +38,6 @@ export const useAuthStore = create<AuthState>()(
         isAuthenticated: state.isAuthenticated,
         userEmail: state.userEmail,
         token: state.token,
-        owner: state.owner,
       }),
     }
   )
