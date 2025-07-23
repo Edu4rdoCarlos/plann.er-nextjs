@@ -12,11 +12,6 @@ export interface ITrip {
   id: string;
 }
 
-export interface UpdateTripArgs {
-  formData: ITrip;
-  id: string;
-}
-
 export interface ICreateTrip {
   city: string;
   country: string;
@@ -33,4 +28,16 @@ export interface ICreateTrip {
 
 export interface CreateTripArgs {
   formData: ICreateTrip;
+}
+
+export interface IUpdateTrip {
+  city: string;
+  country: string;
+  startDate: string;
+  endDate: string;
+}
+
+export interface UpdateTripArgs {
+  formData: IUpdateTrip;
+  id: string;
 }

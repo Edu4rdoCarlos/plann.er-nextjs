@@ -1,5 +1,5 @@
 import { ILocation } from "@/src/types/location";
-import { ICreateTrip, ITrip } from "@/src/types/trip";
+import { ICreateTrip, ITrip, IUpdateTrip } from "@/src/types/trip";
 import { api } from "../api";
 
 const endpoint = "/trips";
@@ -26,7 +26,7 @@ const findTrip = async (id: string): Promise<ITrip> => {
   return data;
 };
 
-const updateTrip = async (formData: ITrip, id: string): Promise<ITrip> => {
+const updateTrip = async (formData: IUpdateTrip, id: string): Promise<ITrip> => {
   const { data } = await api.put<ITrip>(`${endpoint}/${id}`, formData);
   return data;
 };
