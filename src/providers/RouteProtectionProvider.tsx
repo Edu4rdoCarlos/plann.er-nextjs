@@ -14,7 +14,7 @@ export const RouteProtectionProvider = ({ children }: RouteProtectionProviderPro
     return (
       <div className="h-screen flex items-center justify-center bg-zinc-900">
         <div className="text-center space-y-4">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600 mx-auto"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-lime-600 mx-auto"></div>
           <p className="text-zinc-300">Verificando acesso...</p>
         </div>
       </div>
@@ -35,7 +35,7 @@ export const RouteProtectionProvider = ({ children }: RouteProtectionProviderPro
             </p>
           </div>
           <div className="flex items-center justify-center space-x-2 text-zinc-500">
-            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-emerald-600"></div>
+            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-lime-600"></div>
             <span>Redirecionando...</span>
           </div>
         </div>
@@ -43,7 +43,6 @@ export const RouteProtectionProvider = ({ children }: RouteProtectionProviderPro
     );
   }
 
-  // Se autorizado, renderiza o conteúdo
   return <>{children}</>;
 };
 

@@ -17,8 +17,21 @@ export const useRouteProtection = () => {
   const { isLoggedIn, isAdmin } = useAuth();
   const { showToast } = useToast();
   const [isLoading, setIsLoading] = useState(true);
+  const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsHydrated(true);
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (!isHydrated) {
+      return;
+    }
+
     setIsLoading(true);
 
     if (isPublicRoute(pathname)) {
@@ -29,7 +42,6 @@ export const useRouteProtection = () => {
     if (isProtectedRoute(pathname) && !isLoggedIn) {
       setTimeout(() => {
         showToast("Acesso negado. Faça login para continuar.", "error");
-
         router.push(AUTH_REDIRECT.LOGIN);
         setIsLoading(false);
       }, 500);
@@ -58,10 +70,10 @@ export const useRouteProtection = () => {
     }
 
     setIsLoading(false);
-  }, [pathname, isLoggedIn, isAdmin, router, showToast]);
+  }, [pathname, isLoggedIn, isAdmin, router, showToast, isHydrated]);
 
   return {
-    isLoading,
+    isLoading: isLoading || !isHydrated,
     isAuthorized:
       isPublicRoute(pathname) ||
       (isProtectedRoute(pathname) && isLoggedIn) ||

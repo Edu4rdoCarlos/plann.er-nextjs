@@ -40,7 +40,7 @@ export const useAuth = () => {
           if (data) {
             store.login(variables.email);
             queryClient.invalidateQueries(QUERY_KEY);
-            router.push("/new");
+            router.push("/trip");
           } else {
             showToast("Código inválido. Tente novamente.", "error");
           }
@@ -53,8 +53,10 @@ export const useAuth = () => {
   };
 
   const handleLogout = () => {
-    store.logout();
     router.push("/auth");
+    setTimeout(() => {
+      store.logout();
+    }, 50);
   };
 
   return {

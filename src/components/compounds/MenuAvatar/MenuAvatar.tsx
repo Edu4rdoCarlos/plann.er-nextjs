@@ -80,7 +80,7 @@ export const MenuAvatar = ({ className }: MenuAvatarProps) => {
               {userEmail}
             </p>
             {isAdmin && (
-              <span className="inline-block mt-1 px-2 py-1 text-xs bg-emerald-100 text-emerald-800 rounded-full">
+              <span className="inline-block mt-1 px-2 py-1 text-xs bg-lime-100 text-lime-800 rounded-full">
                 Admin
               </span>
             )}

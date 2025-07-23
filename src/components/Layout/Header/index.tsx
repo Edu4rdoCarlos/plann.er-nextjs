@@ -5,7 +5,7 @@ import { MenuAvatar } from "@/src/components/compounds/MenuAvatar";
 const Header = () => {
   return (
     <header className="text-white p-4 bg-zinc-900/50 border-b-[1px] border-zinc-800 rounded-xl">
-      <div className="w-full max-w-[1440px] flex items-center justify-between mx-auto px-10">
+      <div className="w-full flex items-center justify-between mx-auto px-10">
         <div className="flex justify-between items-center gap-10">
           <div className="flex items-center">
             <Link href="/">
@@ -22,9 +22,6 @@ const Header = () => {
           <nav className="flex gap-6">
             <Link href="/">
               <div className="hover:underline">Home</div>
-            </Link>
-            <Link href="/trip">
-              <div className="hover:underline">Trips</div>
             </Link>
           </nav>
         </div>
