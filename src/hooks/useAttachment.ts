@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import {
   CreateAttachmentArgs,
   DeleteAttachmentArgs,
+  IAttachment,
 } from "../types/attachment";
 
 const QUERY_KEY = "qkAttachment";
@@ -39,18 +40,21 @@ const ListAll = (tripId: string) => {
   return useQuery([QUERY_KEY], () => ApiAttachment.listAllAttachments(tripId));
 };
 
-const FindOne = (id: string) => {
-  return useQuery([QUERY_KEY, id], () => ApiAttachment.findAttachment(id));
+const FindOne = (id: string, tripId: string) => {
+  return useQuery([QUERY_KEY, id], () => ApiAttachment.findAttachment(id, tripId));
 };
 
 const Update = () => {
   const queryClient = useQueryClient();
 
-  return useMutation(ApiAttachment.updateAttachment, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(QUERY_KEY);
-    },
-  });
+  return useMutation<IAttachment, Error, { formData: IAttachment; id: string; tripId: string }>(
+    ({ formData, id, tripId }) => ApiAttachment.updateAttachment(formData, id, tripId),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(QUERY_KEY);
+      },
+    }
+  );
 };
 
 export const useAttachment = {

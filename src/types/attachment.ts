@@ -5,8 +5,13 @@ export interface IAttachment {
   tripId: string;
 }
 
+export interface CreateAttachmentData {
+  title: string;
+  link: string;
+}
+
 export interface CreateAttachmentArgs {
-  formData: IAttachment[];
+  formData: CreateAttachmentData[];
   tripId: string;
 }
 

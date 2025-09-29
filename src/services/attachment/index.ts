@@ -1,10 +1,10 @@
-import { IAttachment } from "@/src/types/attachment";
+import { CreateAttachmentData, IAttachment } from "@/src/types/attachment";
 import { api } from "../api";
 
 const endpoint = "/attachments";
 
 const createAttachment = async (
-  formData: IAttachment[],
+  formData: CreateAttachmentData[],
   tripId: string
 ): Promise<boolean> => {
   try {
@@ -16,7 +16,7 @@ const createAttachment = async (
       }
     );
     return true;
-  } catch (error) {
+  } catch {
     return false;
   }
 };
@@ -32,7 +32,9 @@ const findAttachment = async (
   id: string,
   tripId: string
 ): Promise<IAttachment> => {
-  const { data } = await api.get<IAttachment>(`${endpoint}/${id}`, tripId);
+  const { data } = await api.get<IAttachment>(`${endpoint}/${id}`, {
+    params: { tripId },
+  });
   return data;
 };
 
@@ -44,7 +46,9 @@ const updateAttachment = async (
   const { data } = await api.put<IAttachment>(
     `${endpoint}/${id}`,
     formData,
-    tripId
+    {
+      params: { tripId },
+    }
   );
   return data;
 };
@@ -58,7 +62,7 @@ const deleteAttachment = async (
       params: { tripId },
     });
     return true;
-  } catch (error) {
+  } catch {
     return false;
   }
 };

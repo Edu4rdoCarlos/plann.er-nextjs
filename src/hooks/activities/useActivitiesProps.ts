@@ -16,7 +16,7 @@ export const useActivitiesProps = () => {
           return {
             date: new Date(activity.date),
             label: activity.title,
-            checked: hasDatePassed(activity.date),
+            checked: hasDatePassed(new Date(activity.date)),
           };
         }),
       };

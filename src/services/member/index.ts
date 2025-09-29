@@ -23,12 +23,16 @@ const listAllMembers = async (tripId: string): Promise<IMember[]> => {
 };
 
 const findMember = async (id: string, tripId: string): Promise<IMember> => {
-  const { data } = await api.get<IMember>(`${endpoint}/${id}`, tripId);
+  const { data } = await api.get<IMember>(`${endpoint}/${id}`, {
+    params: { tripId },
+  });
   return data;
 };
 
 const findByEmail = async (email: string, tripId: string): Promise<IMember> => {
-  const { data } = await api.get<IMember>(`${endpoint}/${email}`, tripId);
+  const { data } = await api.get<IMember>(`${endpoint}/${email}`, {
+    params: { tripId },
+  });
   return data;
 };
 

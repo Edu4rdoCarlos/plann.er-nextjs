@@ -49,7 +49,7 @@ export const InviteMembers = (props: InviteMembersProps) => {
           setError(null);
         } catch (e) {
           if (e instanceof z.ZodError) {
-            setError(e.errors[0]?.message || "Erro de validação.");
+            setError(e.issues[0]?.message || "Erro de validação.");
           } else {
             console.error(e);
           }

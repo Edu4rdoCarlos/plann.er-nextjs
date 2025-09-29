@@ -25,9 +25,9 @@ export const SingleDate: Story = {
   render: (args) => {
     const [value, setValue] = useState<CalendarValue>(new Date());
 
-    const handleChange = (newValue: CalendarValue) => {
+    const handleChange = (newValue: CalendarValue, event: any) => {
       setValue(newValue);
-      args.onChange?.(newValue as any);
+      args.onChange?.(newValue as any, event);
     };
 
     return <Calendar {...args} value={value} onChange={handleChange} />;
@@ -44,9 +44,9 @@ export const DateRange: Story = {
       new Date(new Date().setDate(new Date().getDate() + 7)),
     ]);
 
-    const handleChange = (newValue: CalendarValue) => {
+    const handleChange = (newValue: CalendarValue, event: any) => {
       setValue(newValue);
-      args.onChange?.(newValue as any);
+      args.onChange?.(newValue as any, event);
     };
 
     return <Calendar {...args} value={value} onChange={handleChange} />;
