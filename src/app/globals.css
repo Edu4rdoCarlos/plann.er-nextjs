@@ -31,3 +31,88 @@ body {
     text-wrap: balance;
   }
 }
+
+/* Accessibility - Font Size Controls */
+.font-size-small {
+  font-size: 0.875rem; /* 14px */
+}
+
+.font-size-small h1 {
+  font-size: 1.5rem;
+}
+.font-size-small h2 {
+  font-size: 1.25rem;
+}
+.font-size-small h3 {
+  font-size: 1.125rem;
+}
+.font-size-small h4 {
+  font-size: 1rem;
+}
+.font-size-small h5 {
+  font-size: 0.875rem;
+}
+.font-size-small h6 {
+  font-size: 0.75rem;
+}
+
+.font-size-medium {
+  font-size: 1rem; /* 16px - default */
+}
+
+.font-size-large {
+  font-size: 1.125rem; /* 18px */
+}
+
+.font-size-large h1 {
+  font-size: 2.25rem;
+}
+.font-size-large h2 {
+  font-size: 1.875rem;
+}
+.font-size-large h3 {
+  font-size: 1.5rem;
+}
+.font-size-large h4 {
+  font-size: 1.25rem;
+}
+.font-size-large h5 {
+  font-size: 1.125rem;
+}
+.font-size-large h6 {
+  font-size: 1rem;
+}
+
+/* Enhanced Focus Styles - WCAG 2.2 AA Compliant */
+.enhanced-focus *:focus {
+  outline: 3px solid #10b981 !important; /* lime-500 */
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 1px #ffffff, 0 0 0 4px #10b981 !important;
+}
+
+.enhanced-focus button:focus,
+.enhanced-focus input:focus,
+.enhanced-focus select:focus,
+.enhanced-focus textarea:focus,
+.enhanced-focus [role="button"]:focus {
+  outline: 3px solid #10b981 !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 1px #ffffff, 0 0 0 4px #10b981 !important;
+}
+
+/* Ensure minimum touch target size (44x44px) for accessibility */
+button,
+[role="button"],
+input[type="button"],
+input[type="submit"] {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Support for 200% zoom without breaking layout */
+@media (max-width: 320px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}

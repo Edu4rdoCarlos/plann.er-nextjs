@@ -23,6 +23,7 @@ export const inputVariants = tv({
       "flex-wrap",
       "md:flex-nowrap",
       "justify-between",
+      "min-h-[44px]", // Accessibility: minimum touch target
     ],
     sInput: [
       "bg-transparent",

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { MenuAvatar } from "@/src/components/compounds/MenuAvatar";
+import { AccessibilityPanel } from "@/src/components/compounds/AccessibilityPanel";
 
 const Header = () => {
   return (
@@ -25,7 +26,10 @@ const Header = () => {
             </Link>
           </nav>
         </div>
-        <MenuAvatar />
+        <div className="flex items-center gap-3">
+          <AccessibilityPanel />
+          <MenuAvatar />
+        </div>
       </div>
     </header>
   );

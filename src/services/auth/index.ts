@@ -11,12 +11,20 @@ const sendCode = async (email: string): Promise<boolean> => {
   }
 };
 
-const verifyCode = async (email: string, code: string): Promise<boolean> => {
+const verifyCode = async (
+  email: string,
+  code: string
+): Promise<{ success: boolean; token?: string }> => {
   try {
-    await api.post<void>(`${endpoint}/verify-code`, { email, code });
-    return true;
+    const response = await api.post<{
+      accessToken: string;
+      expiresAt: string;
+      email: string;
+      name: string | null;
+    }>(`${endpoint}/verify-code`, { email, code });
+    return { success: true, token: response.data.accessToken };
   } catch (error) {
-    return false;
+    return { success: false };
   }
 };
 

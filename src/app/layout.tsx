@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { 
-  ReactQueryProvider, 
-  ToastProvider, 
-  RouteProtectionProvider 
+import {
+  ReactQueryProvider,
+  ToastProvider,
+  RouteProtectionProvider,
+  AccessibilityProvider,
 } from "@/src/providers";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -24,9 +25,9 @@ export default function RootLayout({
       <body className={inter.className}>
         <ReactQueryProvider>
           <ToastProvider>
-            <RouteProtectionProvider>
-              {children}
-            </RouteProtectionProvider>
+            <AccessibilityProvider>
+              <RouteProtectionProvider>{children}</RouteProtectionProvider>
+            </AccessibilityProvider>
           </ToastProvider>
         </ReactQueryProvider>
       </body>
