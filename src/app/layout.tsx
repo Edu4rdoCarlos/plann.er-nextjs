@@ -6,6 +6,7 @@ import {
   ToastProvider,
   RouteProtectionProvider,
   AccessibilityProvider,
+  LocaleProvider,
 } from "@/src/providers";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -21,15 +22,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="pt">
       <body className={inter.className}>
-        <ReactQueryProvider>
-          <ToastProvider>
-            <AccessibilityProvider>
-              <RouteProtectionProvider>{children}</RouteProtectionProvider>
-            </AccessibilityProvider>
-          </ToastProvider>
-        </ReactQueryProvider>
+        <LocaleProvider>
+          <ReactQueryProvider>
+            <ToastProvider>
+              <AccessibilityProvider>
+                <RouteProtectionProvider>{children}</RouteProtectionProvider>
+              </AccessibilityProvider>
+            </ToastProvider>
+          </ReactQueryProvider>
+        </LocaleProvider>
       </body>
     </html>
   );

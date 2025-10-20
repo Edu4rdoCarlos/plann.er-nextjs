@@ -1,0 +1,44 @@
+{
+  "common": {
+    "home": "Home",
+    "language": "Idioma",
+    "loading": "Carregando..."
+  },
+  "auth": {
+    "login": "Fazer login",
+    "verifyCode": "Verificar código",
+    "emailPlaceholder": "Seu email",
+    "emailRequired": "Email é obrigatório",
+    "emailDescription": "Digite seu email para receber o código de acesso",
+    "codeSent": "Código enviado para {email}",
+    "codePlaceholder": "Código de 6 dígitos",
+    "codeRequired": "Código é obrigatório",
+    "sendCode": "Enviar código",
+    "sending": "Enviando...",
+    "enter": "Entrar",
+    "verifying": "Verificando...",
+    "back": "Voltar",
+    "terms": "termos de uso",
+    "privacy": "política de privacidade",
+    "agreement": "Ao fazer login, você concorda com nossos {terms} e {privacy}",
+    "sendCodeError": "Erro ao enviar código. Tente novamente.",
+    "verifyCodeError": "Erro ao verificar código. Tente novamente.",
+    "invalidCode": "Código inválido. Tente novamente."
+  },
+  "accessibility": {
+    "title": "Configurações de Acessibilidade",
+    "subtitle": "Personalize a experiência para melhor visibilidade",
+    "fontSize": "Tamanho da Fonte",
+    "fontSmall": "Pequeno",
+    "fontMedium": "Médio",
+    "fontLarge": "Grande",
+    "enhancedFocus": "Foco Melhorado",
+    "enhancedFocusDescription": "Destaca elementos em foco com maior contraste",
+    "language": "Idioma",
+    "languageDescription": "Selecione o idioma de sua preferência"
+  },
+  "toast": {
+    "accessDenied": "Acesso negado. Faça login para continuar.",
+    "adminRequired": "Acesso negado. Permissões de administrador necessárias."
+  }
+}

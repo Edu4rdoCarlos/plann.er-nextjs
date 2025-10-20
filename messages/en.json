@@ -1,0 +1,44 @@
+{
+  "common": {
+    "home": "Home",
+    "language": "Language",
+    "loading": "Loading..."
+  },
+  "auth": {
+    "login": "Log in",
+    "verifyCode": "Verify code",
+    "emailPlaceholder": "Your email",
+    "emailRequired": "Email is required",
+    "emailDescription": "Enter your email to receive the access code",
+    "codeSent": "Code sent to {email}",
+    "codePlaceholder": "6-digit code",
+    "codeRequired": "Code is required",
+    "sendCode": "Send code",
+    "sending": "Sending...",
+    "enter": "Enter",
+    "verifying": "Verifying...",
+    "back": "Back",
+    "terms": "terms of use",
+    "privacy": "privacy policy",
+    "agreement": "By logging in, you agree to our {terms} and {privacy}",
+    "sendCodeError": "Error sending code. Please try again.",
+    "verifyCodeError": "Error verifying code. Please try again.",
+    "invalidCode": "Invalid code. Please try again."
+  },
+  "accessibility": {
+    "title": "Accessibility Settings",
+    "subtitle": "Customize the experience for better visibility",
+    "fontSize": "Font Size",
+    "fontSmall": "Small",
+    "fontMedium": "Medium",
+    "fontLarge": "Large",
+    "enhancedFocus": "Enhanced Focus",
+    "enhancedFocusDescription": "Highlights focused elements with higher contrast",
+    "language": "Language",
+    "languageDescription": "Select your preferred language"
+  },
+  "toast": {
+    "accessDenied": "Access denied. Please log in to continue.",
+    "adminRequired": "Access denied. Administrator permissions required."
+  }
+}

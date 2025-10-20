@@ -5,3 +5,4 @@ export {
   AccessibilityProvider,
   useAccessibility,
 } from "./AccessibilityProvider";
+export { LocaleProvider } from "./LocaleProvider";
