@@ -8,11 +8,13 @@ import { useTrip } from "@/src/hooks/useTrip";
 import { Settings2 } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 export const SelectLayout = () => {
   const params = useParams();
   const tripId = params.id as string;
   const { data: trip, isLoading } = useTrip.FindOne(tripId);
+  const t = useTranslations("tripDetails");
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -20,7 +22,7 @@ export const SelectLayout = () => {
     return (
       <div className="flex h-16 w-full items-center justify-between rounded-xl bg-zinc-900 px-6 shadow-shape">
         <p className="text-zinc-400">
-          {isLoading ? "Carregando detalhes da viagem..." : "Não foi possível carregar os dados da viagem."}
+          {isLoading ? t("loadingTrip") : t("errorLoadingTrip")}
         </p>
       </div>
     );
@@ -37,19 +39,16 @@ export const SelectLayout = () => {
           />
         </div>
 
-        <Button
-          onClick={() => setIsModalOpen(true)}
-          variants="default"
-        >
-          Editar Viagem
+        <Button onClick={() => setIsModalOpen(true)} variants="default">
+          {t("editTrip")}
           <Settings2 className="size-5" />
         </Button>
       </div>
 
       <Dialog.Root open={isModalOpen} onOpenChange={setIsModalOpen}>
         <Dialog.Header
-          title="Editar viagem"
-          subtitle="Altere o destino e as datas da sua viagem."
+          title={t("editTripTitle")}
+          subtitle={t("editTripSubtitle")}
         />
         <Dialog.Content>
           <EditTripForm trip={trip} onSuccess={() => setIsModalOpen(false)} />

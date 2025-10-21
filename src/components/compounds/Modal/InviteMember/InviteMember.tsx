@@ -16,6 +16,7 @@ import {
 } from "@/src/schemas/members/membersSchema";
 import { useParams } from "next/navigation";
 import { z } from "zod";
+import { useTranslations } from "next-intl";
 
 export interface InviteMembersProps {
   open: boolean;
@@ -31,6 +32,7 @@ export const InviteMembers = (props: InviteMembersProps) => {
   const [error, setError] = useState<string | null>(null);
   const router = useParams();
   const { showToast } = useToast();
+  const t = useTranslations("modals");
 
   const { mutateAsync: inviteMember } = useMember.Create();
 
@@ -78,31 +80,33 @@ export const InviteMembers = (props: InviteMembersProps) => {
     });
     if (res) {
       onOpenChange(false);
-      showToast("Operation Successful!", "success");
+      showToast(t("operationSuccess"), "success");
       return;
     }
-    showToast("Operation Error!", "error");
+    showToast(t("operationError"), "error");
   };
 
   return (
     <Dialog.Root
       open={open}
       onOpenChange={onOpenChange}
-      trigger={!hideTrigger ? (
-        <Button colorScheme="secondary">
-          <UserRoundCog width={20} /> Gerenciar convidados
-        </Button>
-      ) : undefined} 
+      trigger={
+        !hideTrigger ? (
+          <Button colorScheme="secondary">
+            <UserRoundCog width={20} /> {t("manageGuests")}
+          </Button>
+        ) : undefined
+      }
     >
       <Dialog.Header
-        title="Selecionar convidados"
-        subtitle="Os convidados irão receber e-mails para confirmar a participação na viagem."
+        title={t("selectGuests")}
+        subtitle={t("selectGuestsSubtitle")}
       />
       <Dialog.Content>
         {guests.length ? (
           <div>
             <p className="text-sm text-zinc-500 mb-2">
-              {guests.length} convidado(s) adicionado(s).
+              {guests.length} {t("guestsAdded")}
             </p>
             <div className={sGuest()}>
               {guests.map((guest) => (
@@ -115,7 +119,7 @@ export const InviteMembers = (props: InviteMembersProps) => {
             </div>
           </div>
         ) : (
-          <div className={sEmpty()}>Nenhum convite inserido</div>
+          <div className={sEmpty()}>{t("noInviteAdded")}</div>
         )}
         <div className={sBar()} />
         {error && <div className="text-zinc-400">{error}</div>}{" "}
@@ -125,16 +129,16 @@ export const InviteMembers = (props: InviteMembersProps) => {
           <Input
             ref={inputRef}
             Icon={AtSign}
-            placeholder="Digite o e-mail do convidado"
+            placeholder={t("emailPlaceholder")}
             onKeyDown={handleKeyDown}
             cta={
               <Button onClick={handleInviteMembers} className="w-fit" size="sm">
-                Adicionar <Plus width={20} />
+                {t("add")} <Plus width={20} />
               </Button>
             }
           />
           {!hideTrigger && guests.length > 0 && (
-            <Button onClick={handleSubmit}>Submeter</Button>
+            <Button onClick={handleSubmit}>{t("submit")}</Button>
           )}
         </div>
       </Dialog.Footer>

@@ -1,3 +1,5 @@
+"use client";
+
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/src/components/primitives/Button/Button";
@@ -12,6 +14,7 @@ import { useAttachment } from "@/src/hooks/useAttachment";
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
 import { useToast } from "@/src/providers/ToastProvider";
+import { useTranslations } from "next-intl";
 
 export interface CreateAttachmentProps {
   open: boolean;
@@ -23,6 +26,7 @@ export const CreateAttachment = (props: CreateAttachmentProps) => {
   const { mutateAsync: createAttachment } = useAttachment.Create();
   const router = useParams();
   const { showToast } = useToast();
+  const t = useTranslations("modals");
 
   const {
     register,
@@ -41,10 +45,10 @@ export const CreateAttachment = (props: CreateAttachmentProps) => {
     });
     if (res) {
       onOpenChange(false);
-      showToast("Operation Successful!", "success");
+      showToast(t("operationSuccess"), "success");
       return;
     }
-    showToast("Operation Error!", "error");
+    showToast(t("operationError"), "error");
   };
 
   useEffect(() => {
@@ -57,20 +61,20 @@ export const CreateAttachment = (props: CreateAttachmentProps) => {
       onOpenChange={onOpenChange}
       trigger={
         <Button colorScheme="secondary">
-          <Plus width={20} /> Cadastrar novo link
+          <Plus width={20} /> {t("registerNewLink")}
         </Button>
       }
     >
       <Dialog.Header
-        title="Cadastrar link"
-        subtitle="Todos convidados podem visualizar os links importantes."
+        title={t("registerLink")}
+        subtitle={t("registerLinkSubtitle")}
       />
       <form onSubmit={handleSubmit(handleCreateAttachment)}>
         <Dialog.Content>
           <div>
             <Input
               Icon={Tag}
-              placeholder="Título do link"
+              placeholder={t("linkTitle")}
               {...register("title")}
             />
             {errors.title && (
@@ -85,7 +89,7 @@ export const CreateAttachment = (props: CreateAttachmentProps) => {
           </div>
         </Dialog.Content>
         <Dialog.Footer>
-          <Button type="submit">Salvar link</Button>
+          <Button type="submit">{t("saveLink")}</Button>
         </Dialog.Footer>
       </form>
     </Dialog.Root>
