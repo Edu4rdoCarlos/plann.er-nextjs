@@ -11,7 +11,7 @@ const Header = () => {
           <div className="flex items-center">
             <Link href="/">
               <Image
-                src="/logo/logo.svg"
+                src="/logo/Logo.svg"
                 alt="Planner Logo"
                 width={160}
                 height={160}
