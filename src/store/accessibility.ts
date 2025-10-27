@@ -9,12 +9,14 @@ interface AccessibilityState extends AccessibilityPreferences {
   increaseFontSize: () => void;
   decreaseFontSize: () => void;
   setEnhancedFocus: (enabled: boolean) => void;
+  setSpeechEnabled: (enabled: boolean) => void;
   resetPreferences: () => void;
 }
 
 const defaultPreferences: AccessibilityPreferences = {
   fontSize: 0,
   enhancedFocus: false,
+  speechEnabled: false,
 };
 
 const migrateFontSize = (oldValue: unknown): FontSize => {
@@ -48,6 +50,7 @@ export const useAccessibilityStore = create<AccessibilityState>()(
         });
       },
       setEnhancedFocus: (enabled: boolean) => set({ enhancedFocus: enabled }),
+      setSpeechEnabled: (enabled: boolean) => set({ speechEnabled: enabled }),
       resetPreferences: () => set(defaultPreferences),
     }),
     {
@@ -56,15 +59,17 @@ export const useAccessibilityStore = create<AccessibilityState>()(
       partialize: (state) => ({
         fontSize: state.fontSize,
         enhancedFocus: state.enhancedFocus,
+        speechEnabled: state.speechEnabled,
       }),
       migrate: (persistedState: unknown) => {
-        const state = persistedState as { fontSize?: unknown; enhancedFocus?: boolean };
+        const state = persistedState as { fontSize?: unknown; enhancedFocus?: boolean; speechEnabled?: boolean };
         return {
           fontSize: migrateFontSize(state.fontSize),
           enhancedFocus: state.enhancedFocus ?? false,
+          speechEnabled: state.speechEnabled ?? false,
         };
       },
-      version: 1,
+      version: 2,
     }
   )
 );

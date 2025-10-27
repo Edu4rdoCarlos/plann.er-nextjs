@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useAccessibility } from "@/src/providers/AccessibilityProvider";
-import { Accessibility, Type, Eye } from "lucide-react";
+import { Accessibility, Type, Eye, Volume2 } from "lucide-react";
 import {
   sPanel,
   sTrigger,
@@ -29,7 +29,7 @@ export interface AccessibilityPanelProps {
 export const AccessibilityPanel = ({ className }: AccessibilityPanelProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const { preferences, increaseFontSize, decreaseFontSize, setEnhancedFocus } =
+  const { preferences, increaseFontSize, decreaseFontSize, setEnhancedFocus, setSpeechEnabled } =
     useAccessibility();
 
   useEffect(() => {
@@ -56,7 +56,11 @@ export const AccessibilityPanel = ({ className }: AccessibilityPanelProps) => {
     setEnhancedFocus(!preferences.enhancedFocus);
   };
 
-  const canDecrease = preferences.fontSize > -2;
+  const handleSpeechToggle = () => {
+    setSpeechEnabled(!preferences.speechEnabled);
+  };
+
+  const canDecrease = preferences.fontSize > 0;
   const canIncrease = preferences.fontSize < 2;
 
   return (
@@ -109,8 +113,6 @@ export const AccessibilityPanel = ({ className }: AccessibilityPanelProps) => {
 
               <div className="flex items-center justify-center px-3 py-2 bg-zinc-100 dark:bg-zinc-800 rounded-md">
                 <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
-                  {preferences.fontSize === -2 && "-2"}
-                  {preferences.fontSize === -1 && "-1"}
                   {preferences.fontSize === 0 && "0"}
                   {preferences.fontSize === 1 && "1"}
                   {preferences.fontSize === 2 && "2"}
@@ -145,6 +147,35 @@ export const AccessibilityPanel = ({ className }: AccessibilityPanelProps) => {
             </div>
             <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-2">
               Destaca elementos em foco com maior contraste
+            </p>
+          </div>
+
+          <div className={sSection()}>
+            <div className={sToggleContainer()}>
+              <div className="flex items-center gap-2">
+                <Volume2 className="w-4 h-4 text-zinc-500" />
+                <span className={sToggleLabel()}>Leitura por Voz</span>
+              </div>
+              <button
+                onClick={handleSpeechToggle}
+                className={sToggle({
+                  className: preferences.speechEnabled ? sToggleActive() : "",
+                })}
+                role="switch"
+                aria-checked={preferences.speechEnabled}
+                aria-label="Ativar leitura por voz"
+              >
+                <span
+                  className={sToggleThumb({
+                    className: preferences.speechEnabled
+                      ? sToggleThumbActive()
+                      : "",
+                  })}
+                />
+              </button>
+            </div>
+            <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-2">
+              Lê em voz alta os elementos durante a navegação por teclado
             </p>
           </div>
         </div>

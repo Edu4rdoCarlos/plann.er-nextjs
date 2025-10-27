@@ -208,13 +208,41 @@ As preferências são salvas no `localStorage` com a chave `accessibility-storag
 - `MenuAvatar` - Navegação completa, role="menu"
 - `Header` - IDs para skip links, aria-labels
 
+## 🔊 Leitura por Voz (Text-to-Speech)
+
+### Funcionalidade Implementada
+
+A aplicação agora inclui **leitura por voz** que lê em voz alta os elementos durante a navegação por teclado.
+
+#### Como Ativar
+1. Abra o painel de acessibilidade (ícone ♿)
+2. Ative o toggle "Leitura por Voz"
+3. Navegue pela aplicação com Tab
+
+#### O que é Lido
+- **Todos os elementos focados**: Botões, links, inputs
+- **Modais**: Anuncia abertura e fechamento
+- **Listas de opções**: Lê cada item ao navegar com setas
+- **Menus**: Anuncia abertura e cada item
+
+#### Tecnologia
+- Utiliza Web Speech API (nativa do navegador)
+- Processamento 100% local
+- Funciona offline
+- Idioma: Português (pt-BR)
+
+**Documentação completa**: [SPEECH_ACCESSIBILITY.md](SPEECH_ACCESSIBILITY.md)
+
 ## 🚀 Próximos Passos
 
 - [x] Suporte a mais tamanhos de fonte
 - [x] Navegação por teclado avançada
+- [x] Leitura por voz (Text-to-Speech)
 - [ ] Alto contraste (tema escuro/claro)
 - [ ] Redução de movimento (prefers-reduced-motion)
 - [x] Leitores de tela (ARIA labels)
+- [ ] Ajuste de velocidade da voz
+- [ ] Seleção de voz específica
 
 ## 📚 Referências
 

@@ -6,6 +6,8 @@ import { Settings, LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { capitalize } from "radash";
 import { sMenuAvatar, sAvatar, sDropdown, sMenuItem } from "./MenuAvatar.variants";
+import { useSpeech } from "@/src/hooks/useSpeech";
+import { useAccessibility } from "@/src/providers/AccessibilityProvider";
 
 export interface MenuAvatarProps {
   className?: string;
@@ -19,6 +21,8 @@ export const MenuAvatar = ({ className }: MenuAvatarProps) => {
   const menuItemsRef = useRef<(HTMLButtonElement | null)[]>([]);
   const { userEmail, isAdmin, handleLogout, isLoggedIn } = useAuth();
   const router = useRouter();
+  const { preferences } = useAccessibility();
+  const { speak, announce } = useSpeech(preferences.speechEnabled);
 
   const getAvatarUrl = (email: string | null) => {
     if (!email) return "https://api.dicebear.com/7.x/bottts/svg?seed=default";
@@ -26,13 +30,14 @@ export const MenuAvatar = ({ className }: MenuAvatarProps) => {
     return `https://api.dicebear.com/7.x/bottts/svg?seed=${seed}`;
   };
 
-  // Focar no primeiro item quando o menu abre
+  // Focar no primeiro item quando o menu abre e anunciar
   useEffect(() => {
     if (isOpen && menuItemsRef.current[0]) {
       menuItemsRef.current[0]?.focus();
       setSelectedIndex(0);
+      announce("Menu do usuário aberto");
     }
-  }, [isOpen]);
+  }, [isOpen, announce]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -43,6 +48,7 @@ export const MenuAvatar = ({ className }: MenuAvatarProps) => {
 
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape" && isOpen) {
+        announce("Menu fechado");
         setIsOpen(false);
         buttonRef.current?.focus();
       }
@@ -81,22 +87,34 @@ export const MenuAvatar = ({ className }: MenuAvatarProps) => {
         const nextIndex = index < totalItems - 1 ? index + 1 : 0;
         menuItemsRef.current[nextIndex]?.focus();
         setSelectedIndex(nextIndex);
+        // Anunciar o item
+        const nextText = menuItemsRef.current[nextIndex]?.textContent;
+        if (nextText) speak(nextText);
         break;
       case "ArrowUp":
         e.preventDefault();
         const prevIndex = index > 0 ? index - 1 : totalItems - 1;
         menuItemsRef.current[prevIndex]?.focus();
         setSelectedIndex(prevIndex);
+        // Anunciar o item
+        const prevText = menuItemsRef.current[prevIndex]?.textContent;
+        if (prevText) speak(prevText);
         break;
       case "Home":
         e.preventDefault();
         menuItemsRef.current[0]?.focus();
         setSelectedIndex(0);
+        // Anunciar o item
+        const firstText = menuItemsRef.current[0]?.textContent;
+        if (firstText) speak(firstText);
         break;
       case "End":
         e.preventDefault();
         menuItemsRef.current[totalItems - 1]?.focus();
         setSelectedIndex(totalItems - 1);
+        // Anunciar o item
+        const lastText = menuItemsRef.current[totalItems - 1]?.textContent;
+        if (lastText) speak(lastText);
         break;
     }
   };

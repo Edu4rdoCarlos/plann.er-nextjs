@@ -4,6 +4,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { ButtonProps } from "../Button/Button";
 import { CalendarProps } from "../Calendar/Calendar";
 import { Input } from "../Input/Input";
+import { useSpeech } from "@/src/hooks/useSpeech";
+import { useAccessibility } from "@/src/providers/AccessibilityProvider";
 import {
     sBar,
     sDropdown,
@@ -40,6 +42,9 @@ export const SelectWithSearch = ({
   const inputRef = useRef<HTMLInputElement>(null);
   const listItemsRef = useRef<(HTMLLIElement | null)[]>([]);
 
+  const { preferences } = useAccessibility();
+  const { speak } = useSpeech(preferences.speechEnabled);
+
   const isInputFocused = () => {
     return document.activeElement === inputRef.current;
   };
@@ -64,15 +69,19 @@ export const SelectWithSearch = ({
     }
   }, [inputValue, options]);
 
-  // Scroll automático para item selecionado
+  // Scroll automático para item selecionado e anunciar via voz
   useEffect(() => {
     if (selectedIndex >= 0 && listItemsRef.current[selectedIndex]) {
       listItemsRef.current[selectedIndex]?.scrollIntoView({
         block: 'nearest',
         behavior: 'smooth'
       });
+      // Anunciar opção selecionada
+      if (filteredOptions[selectedIndex]) {
+        speak(filteredOptions[selectedIndex]);
+      }
     }
-  }, [selectedIndex]);
+  }, [selectedIndex, filteredOptions, speak]);
 
   const handleOptionSelect = (option: string) => {
     setInputValue(option);

@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useEffect, ReactNode } from "react";
 import { useAccessibilityStore } from "@/src/store/accessibility";
 import { AccessibilityContextType } from "@/src/types/accessibility";
+import { useSpeechNavigation } from "@/src/hooks/useSpeech";
 
 const AccessibilityContext = createContext<
   AccessibilityContextType | undefined
@@ -12,6 +13,9 @@ export const AccessibilityProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const store = useAccessibilityStore();
+
+  // Ativar síntese de fala baseado nas preferências
+  useSpeechNavigation(store.speechEnabled);
 
   // Apply CSS classes to document based on preferences
   useEffect(() => {
@@ -38,11 +42,13 @@ export const AccessibilityProvider: React.FC<{ children: ReactNode }> = ({
     preferences: {
       fontSize: store.fontSize,
       enhancedFocus: store.enhancedFocus,
+      speechEnabled: store.speechEnabled,
     },
     setFontSize: store.setFontSize,
     increaseFontSize: store.increaseFontSize,
     decreaseFontSize: store.decreaseFontSize,
     setEnhancedFocus: store.setEnhancedFocus,
+    setSpeechEnabled: store.setSpeechEnabled,
     resetPreferences: store.resetPreferences,
   };
 

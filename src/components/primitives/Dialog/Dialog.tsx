@@ -12,6 +12,8 @@ import {
   sSubtitle,
 } from "./Dialog.variants";
 import { useFocusTrap } from "@/src/hooks/useFocusTrap";
+import { useSpeech } from "@/src/hooks/useSpeech";
+import { useAccessibility } from "@/src/providers/AccessibilityProvider";
 
 export interface DialogProps extends HtmlHTMLAttributes<HTMLDivElement> {
   open: boolean;
@@ -56,6 +58,15 @@ const Dialog = ({
   closable = true,
 }: DialogProps) => {
   const focusTrapRef = useFocusTrap(open);
+  const { preferences } = useAccessibility();
+  const { announce } = useSpeech(preferences.speechEnabled);
+
+  // Anunciar abertura do modal
+  useEffect(() => {
+    if (open) {
+      announce("Modal aberto");
+    }
+  }, [open, announce]);
 
   // Fechar modal com tecla Escape
   useEffect(() => {
@@ -64,13 +75,14 @@ const Dialog = ({
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         e.preventDefault();
+        announce("Modal fechado");
         onOpenChange(false);
       }
     };
 
     window.addEventListener("keydown", handleEscape);
     return () => window.removeEventListener("keydown", handleEscape);
-  }, [open, closable, onOpenChange]);
+  }, [open, closable, onOpenChange, announce]);
 
   // Prevenir scroll do body quando modal está aberto
   useEffect(() => {
