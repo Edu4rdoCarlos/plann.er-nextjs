@@ -5,11 +5,14 @@ import { AccessibilityPanel } from "@/src/components/compounds/AccessibilityPane
 
 const Header = () => {
   return (
-    <header className="text-white p-4 bg-zinc-900/50 border-b-[1px] border-zinc-800 rounded-xl">
+    <header
+      id="navigation"
+      className="text-white p-4 bg-zinc-900/50 border-b-[1px] border-zinc-800 rounded-xl"
+    >
       <div className="w-full flex items-center justify-between mx-auto px-10">
         <div className="flex justify-between items-center gap-10">
           <div className="flex items-center">
-            <Link href="/">
+            <Link href="/" aria-label="Ir para página inicial">
               <Image
                 src="/logo/Logo.svg"
                 alt="Planner Logo"
@@ -20,9 +23,9 @@ const Header = () => {
             </Link>
           </div>
 
-          <nav className="flex gap-6">
-            <Link href="/">
-              <div className="hover:underline">Home</div>
+          <nav className="flex gap-6" aria-label="Navegação principal">
+            <Link href="/" className="hover:underline focus:outline-none focus:ring-2 focus:ring-lime-500 rounded px-2 py-1">
+              Home
             </Link>
           </nav>
         </div>
