@@ -37,6 +37,7 @@ export const buttonVariants = tv({
           "[&>svg]:!w-4",
           "[&>svg]:!h-4",
           "gap-1.5",
+          "min-h-[44px]", // Accessibility: minimum touch target
         ],
       },
       md: {
@@ -48,6 +49,7 @@ export const buttonVariants = tv({
           "[&>svg]:!w-5",
           "[&>svg]:!h-5",
           "gap-2",
+          "min-h-[44px]", // Accessibility: minimum touch target
         ],
       },
     },

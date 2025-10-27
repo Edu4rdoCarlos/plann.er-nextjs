@@ -1,5 +1,5 @@
 import { X } from "lucide-react";
-import { HtmlHTMLAttributes, PropsWithChildren, ReactNode } from "react";
+import { HtmlHTMLAttributes, PropsWithChildren, ReactNode, useEffect } from "react";
 import {
   sWrapper,
   sContainer,
@@ -11,6 +11,9 @@ import {
   sFooter,
   sSubtitle,
 } from "./Dialog.variants";
+import { useFocusTrap } from "@/src/hooks/useFocusTrap";
+import { useSpeech } from "@/src/hooks/useSpeech";
+import { useAccessibility } from "@/src/providers/AccessibilityProvider";
 
 export interface DialogProps extends HtmlHTMLAttributes<HTMLDivElement> {
   open: boolean;
@@ -54,20 +57,80 @@ const Dialog = ({
   trigger,
   closable = true,
 }: DialogProps) => {
+  const focusTrapRef = useFocusTrap(open);
+  const { preferences } = useAccessibility();
+  const { announce } = useSpeech(preferences.speechEnabled);
+
+  // Anunciar abertura do modal
+  useEffect(() => {
+    if (open) {
+      announce("Modal aberto");
+    }
+  }, [open, announce]);
+
+  // Fechar modal com tecla Escape
+  useEffect(() => {
+    if (!open || !closable) return;
+
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        announce("Modal fechado");
+        onOpenChange(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleEscape);
+    return () => window.removeEventListener("keydown", handleEscape);
+  }, [open, closable, onOpenChange, announce]);
+
+  // Prevenir scroll do body quando modal está aberto
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
   return (
     <>
       {trigger && (
-        <div onClick={() => onOpenChange(true)} className="cursor-pointer">
+        <div
+          onClick={() => onOpenChange(true)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              onOpenChange(true);
+            }
+          }}
+          className="cursor-pointer"
+          role="button"
+          tabIndex={0}
+        >
           {trigger}
         </div>
       )}
       {open && (
-        <div className={sWrapper()}>
-          <div className={sContainer()}>
+        <div
+          className={sWrapper()}
+          onClick={() => closable && onOpenChange(false)}
+          role="dialog"
+          aria-modal="true"
+        >
+          <div
+            ref={focusTrapRef}
+            className={sContainer()}
+            onClick={(e) => e.stopPropagation()}
+          >
             {closable && (
               <button
                 className={sCloseButton()}
                 onClick={() => onOpenChange(false)}
+                aria-label="Fechar modal"
               >
                 <X strokeWidth={1} width={22} />
               </button>
