@@ -17,11 +17,13 @@ export const AccessibilityProvider: React.FC<{ children: ReactNode }> = ({
   useEffect(() => {
     const { fontSize, enhancedFocus } = store;
 
-    // Remove existing classes
+    // Remove existing font-size classes
     document.documentElement.classList.remove(
-      "font-size-small",
-      "font-size-medium",
-      "font-size-large",
+      "font-size--2",
+      "font-size--1",
+      "font-size-0",
+      "font-size-1",
+      "font-size-2",
       "enhanced-focus"
     );
 
@@ -38,6 +40,8 @@ export const AccessibilityProvider: React.FC<{ children: ReactNode }> = ({
       enhancedFocus: store.enhancedFocus,
     },
     setFontSize: store.setFontSize,
+    increaseFontSize: store.increaseFontSize,
+    decreaseFontSize: store.decreaseFontSize,
     setEnhancedFocus: store.setEnhancedFocus,
     resetPreferences: store.resetPreferences,
   };

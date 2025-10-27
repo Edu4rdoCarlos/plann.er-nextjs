@@ -8,7 +8,7 @@ export default function DashboardLayout({
   return (
     <>
       <Header />
-      <div className="max-w-[1250px] px-5 pt-11 mx-auto">
+      <div className="max-w-[78.125rem] px-5 pt-11 mx-auto">
         {children}
       </div>
     </>
