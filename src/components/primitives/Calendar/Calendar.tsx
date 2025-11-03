@@ -1,19 +1,20 @@
 import { getDate, getRangeDate } from "@/src/lib/utils/date";
 import { cn } from "@/src/lib/utils/twMerge";
 import { Calendar as CalendarIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { ButtonHTMLAttributes, useEffect, useRef, useState } from "react";
 import {
-    Calendar as ReactCalendar,
-    CalendarProps as ReactCalendarProps,
+  Calendar as ReactCalendar,
+  CalendarProps as ReactCalendarProps,
 } from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { VariantProps } from "tailwind-variants";
 import { Button } from "../Button/Button";
 import {
-    calendarVariants,
-    sCalendar,
-    sCalendarWrapper,
-    sWrapper,
+  calendarVariants,
+  sCalendar,
+  sCalendarWrapper,
+  sWrapper,
 } from "./Calendar.variants";
 
 type ValuePiece = Date | null;
@@ -38,6 +39,7 @@ const formatDate = (value: any) => {
 };
 
 export const Calendar = (props: CalendarProps) => {
+  const t = useTranslations("newTrip");
   const [showCalendar, setShowCalendar] = useState(false);
   const { className, value, as, disabled, ...rest } = props;
   const calendarRef = useRef<HTMLDivElement>(null);
@@ -74,7 +76,7 @@ export const Calendar = (props: CalendarProps) => {
         type="button"
       >
         <CalendarIcon width={20} />
-        {date || <>Quando?</>}
+        {date || <>{t("date")}</>}
       </Button>
       {showCalendar && (
         <div className={sCalendarWrapper()}>

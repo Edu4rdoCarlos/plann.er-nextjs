@@ -5,6 +5,7 @@ import { useTrip } from "@/src/hooks/useTrip";
 import { useToast } from "@/src/providers/ToastProvider";
 import { ITrip, IUpdateTrip } from "@/src/types/trip";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "../../primitives/Button/Button";
@@ -27,6 +28,7 @@ interface EditTripFormProps {
 }
 
 export const EditTripForm = ({ trip, onSuccess }: EditTripFormProps) => {
+    const t = useTranslations("tripDetails");
     const { showToast } = useToast();
     const { mutateAsync: updateTrip, isLoading } = useTrip.Update();
     const { handleInput, options } = useTripProps();
@@ -98,7 +100,7 @@ export const EditTripForm = ({ trip, onSuccess }: EditTripFormProps) => {
 
             <div className="pt-2">
                 <Button type="submit" className="w-full" disabled={isLoading}>
-                    {isLoading ? "Salvando..." : "Salvar alterações"}
+                    {isLoading ? t("saving") : t("saveEdit")}
                 </Button>
             </div>
         </form>

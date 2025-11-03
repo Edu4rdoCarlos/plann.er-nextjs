@@ -1,18 +1,19 @@
+import { useSpeech } from "@/src/hooks/useSpeech";
 import { cn } from "@/src/lib/utils/twMerge";
+import { useAccessibility } from "@/src/providers/AccessibilityProvider";
 import { MapPin } from "lucide-react";
+import { useTranslations } from "next-intl";
 import React, { useEffect, useRef, useState } from "react";
 import { ButtonProps } from "../Button/Button";
 import { CalendarProps } from "../Calendar/Calendar";
 import { Input } from "../Input/Input";
-import { useSpeech } from "@/src/hooks/useSpeech";
-import { useAccessibility } from "@/src/providers/AccessibilityProvider";
 import {
-    sBar,
-    sDropdown,
-    sItems,
-    sNotFound,
-    sSearch,
-    sWrapper,
+  sBar,
+  sDropdown,
+  sItems,
+  sNotFound,
+  sSearch,
+  sWrapper,
 } from "./SelectWithSearch.variants";
 
 export interface SelectWithSearchProps {
@@ -32,8 +33,9 @@ export const SelectWithSearch = ({
   calendar,
   defaultValue,
   disabled,
-  newStyle
+  newStyle,
 }: SelectWithSearchProps) => {
+  const t = useTranslations("newTrip");
   const [inputValue, setInputValue] = useState(defaultValue || "");
   const [filteredOptions, setFilteredOptions] = useState<string[]>([]);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -56,27 +58,25 @@ export const SelectWithSearch = ({
       }, 300);
       return () => clearTimeout(handler);
     }
-  }, [inputValue]);
+  }, [inputValue, onInputValue]);
 
   useEffect(() => {
     if (options) {
-      const filtered = options.filter(option =>
-        option.toLowerCase().includes(inputValue.toLowerCase())
+      const filtered = options.filter((option) =>
+        option.toLowerCase().includes(inputValue.toLowerCase()),
       );
       setFilteredOptions(filtered);
-      setShowDropdown(filtered.length > 0);
-      setSelectedIndex(-1); // Reset seleção ao filtrar
+      setShowDropdown(filtered.length > 0 && isInputFocused());
+      setSelectedIndex(-1);
     }
   }, [inputValue, options]);
 
-  // Scroll automático para item selecionado e anunciar via voz
   useEffect(() => {
     if (selectedIndex >= 0 && listItemsRef.current[selectedIndex]) {
       listItemsRef.current[selectedIndex]?.scrollIntoView({
-        block: 'nearest',
-        behavior: 'smooth'
+        block: "nearest",
+        behavior: "smooth",
       });
-      // Anunciar opção selecionada
       if (filteredOptions[selectedIndex]) {
         speak(filteredOptions[selectedIndex]);
       }
@@ -96,27 +96,33 @@ export const SelectWithSearch = ({
     return () => clearTimeout(handler);
   };
 
+  const handleInputFocus = () => {
+    if (inputValue && filteredOptions.length > 0) {
+      setShowDropdown(true);
+    }
+  };
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (!showDropdown || filteredOptions.length === 0) return;
 
     switch (e.key) {
-      case 'ArrowDown':
+      case "ArrowDown":
         e.preventDefault();
-        setSelectedIndex(prev =>
-          prev < filteredOptions.length - 1 ? prev + 1 : prev
+        setSelectedIndex((prev) =>
+          prev < filteredOptions.length - 1 ? prev + 1 : prev,
         );
         break;
-      case 'ArrowUp':
+      case "ArrowUp":
         e.preventDefault();
-        setSelectedIndex(prev => prev > 0 ? prev - 1 : -1);
+        setSelectedIndex((prev) => (prev > 0 ? prev - 1 : -1));
         break;
-      case 'Enter':
+      case "Enter":
         e.preventDefault();
         if (selectedIndex >= 0) {
           handleOptionSelect(filteredOptions[selectedIndex]);
         }
         break;
-      case 'Escape':
+      case "Escape":
         e.preventDefault();
         setShowDropdown(false);
         setSelectedIndex(-1);
@@ -125,14 +131,14 @@ export const SelectWithSearch = ({
   };
 
   return (
-    <div className={sWrapper()}>
+    <div className={cn(sWrapper(), "relative")}>
       <Input
         ref={inputRef}
         Icon={MapPin}
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
-        placeholder="Para aonde você vai?"
-        onFocus={() => inputValue && setShowDropdown(true)}
+        placeholder={t("whereAreYouGoing")}
+        onFocus={handleInputFocus}
         onBlur={handleInputBlur}
         onKeyDown={handleKeyDown}
         className={sSearch()}
@@ -155,7 +161,11 @@ export const SelectWithSearch = ({
         <ul
           id="select-dropdown"
           role="listbox"
-          className={`${sDropdown()} ${newStyle}`}
+          className={cn(
+            sDropdown(),
+            "absolute top-full left-0 w-full z-10",
+            newStyle,
+          )}
         >
           {filteredOptions.length > 0 ? (
             filteredOptions.map((option, index) => (
@@ -172,7 +182,7 @@ export const SelectWithSearch = ({
                 style={{ cursor: "pointer" }}
                 className={cn(
                   sItems(),
-                  selectedIndex === index && "bg-lime-500/20"
+                  selectedIndex === index && "bg-lime-500/20",
                 )}
               >
                 {option}
