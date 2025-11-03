@@ -17,10 +17,6 @@ export const accessibilityPanelVariants = tv({
       "transition-colors",
       "duration-200",
       "focus:outline-none",
-      "focus:ring-2",
-      "focus:ring-lime-500",
-      "focus:ring-offset-2",
-      "focus:ring-offset-zinc-900",
     ],
     sDropdown: [
       "absolute",
@@ -90,8 +86,8 @@ export const accessibilityPanelVariants = tv({
     sToggle: [
       "relative",
       "inline-flex",
-      "h-6",
-      "w-11",
+      "min-h-6",
+      "min-w-11",
       "items-center",
       "rounded-full",
       "bg-zinc-200",
@@ -99,11 +95,8 @@ export const accessibilityPanelVariants = tv({
       "transition-colors",
       "duration-200",
       "focus:outline-none",
-      "focus:ring-2",
-      "focus:ring-lime-500",
-      "focus:ring-offset-2",
     ],
-    sToggleActive: ["bg-lime-600"],
+    sToggleActive: ["bg-lime-300"],
     sToggleThumb: [
       "inline-block",
       "h-4",
@@ -114,7 +107,7 @@ export const accessibilityPanelVariants = tv({
       "transition-transform",
       "duration-200",
     ],
-    sToggleThumbActive: ["translate-x-6"],
+    sToggleThumbActive: ["translate-x-6", "bg-lime-300"],
   },
   variants: {
     fontSize: {

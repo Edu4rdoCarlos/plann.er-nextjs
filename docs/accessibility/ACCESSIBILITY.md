@@ -141,13 +141,108 @@ As preferências são salvas no `localStorage` com a chave `accessibility-storag
 }
 ```
 
+## 🎹 Navegação por Teclado Avançada
+
+### Funcionalidades Implementadas
+
+#### 1. Skip Links (Links de Navegação Rápida)
+- Links invisíveis que aparecem ao pressionar Tab
+- Permitem pular para conteúdo principal ou navegação
+- Aparecem no topo da página ao receber foco
+
+#### 2. Focus Trap em Modais
+- Foco fica contido dentro do modal quando aberto
+- Tab circular entre elementos focáveis
+- Escape fecha o modal e retorna foco ao elemento anterior
+- Implementado via hook `useFocusTrap`
+
+#### 3. Navegação em Dropdowns
+- **SelectWithSearch**:
+  - ↑↓ para navegar opções
+  - Enter para selecionar
+  - Escape para fechar
+  - Destaque visual na opção selecionada
+- **MenuAvatar**:
+  - ↑↓ para navegar itens do menu
+  - Home/End para primeiro/último item
+  - Enter para ativar item
+  - Escape para fechar menu
+
+#### 4. Painel de Ajuda de Atalhos
+- Botão flutuante com ícone de teclado
+- Atalho global: Shift + ?
+- Lista completa de atalhos disponíveis
+- Organizado por categorias
+
+#### 5. Atributos ARIA
+- `role="dialog"` em modais
+- `role="menu"` e `role="menuitem"` em menus
+- `role="combobox"` em selects
+- `aria-expanded`, `aria-controls`, `aria-activedescendant`
+- `aria-label` em elementos interativos
+
+### Atalhos de Teclado Globais
+
+| Atalho | Descrição |
+|--------|-----------|
+| Tab | Navegar para próximo elemento |
+| Shift + Tab | Navegar para elemento anterior |
+| Enter | Ativar elemento focado |
+| Espaço | Ativar botão/checkbox |
+| Escape | Fechar modal/dropdown |
+| Shift + ? | Mostrar painel de ajuda |
+| ↑↓ | Navegar em listas/menus |
+| Home/End | Primeiro/último item |
+
+### Arquivos Adicionados
+
+- `src/hooks/useFocusTrap.ts` - Hook para focus trap
+- `src/hooks/useKeyboardShortcuts.ts` - Hook para atalhos globais
+- `src/components/primitives/SkipLinks/` - Links de navegação rápida
+- `src/components/compounds/KeyboardShortcutsHelp/` - Painel de ajuda
+
+### Componentes Melhorados
+
+- `Dialog` - Focus trap, Escape para fechar, role="dialog"
+- `SelectWithSearch` - Navegação por setas, role="combobox"
+- `MenuAvatar` - Navegação completa, role="menu"
+- `Header` - IDs para skip links, aria-labels
+
+## 🔊 Leitura por Voz (Text-to-Speech)
+
+### Funcionalidade Implementada
+
+A aplicação agora inclui **leitura por voz** que lê em voz alta os elementos durante a navegação por teclado.
+
+#### Como Ativar
+1. Abra o painel de acessibilidade (ícone ♿)
+2. Ative o toggle "Leitura por Voz"
+3. Navegue pela aplicação com Tab
+
+#### O que é Lido
+- **Todos os elementos focados**: Botões, links, inputs
+- **Modais**: Anuncia abertura e fechamento
+- **Listas de opções**: Lê cada item ao navegar com setas
+- **Menus**: Anuncia abertura e cada item
+
+#### Tecnologia
+- Utiliza Web Speech API (nativa do navegador)
+- Processamento 100% local
+- Funciona offline
+- Idioma: Português (pt-BR)
+
+**Documentação completa**: [SPEECH_ACCESSIBILITY.md](SPEECH_ACCESSIBILITY.md)
+
 ## 🚀 Próximos Passos
 
-- [ ] Suporte a mais tamanhos de fonte
+- [x] Suporte a mais tamanhos de fonte
+- [x] Navegação por teclado avançada
+- [x] Leitura por voz (Text-to-Speech)
 - [ ] Alto contraste (tema escuro/claro)
 - [ ] Redução de movimento (prefers-reduced-motion)
-- [ ] Leitores de tela (ARIA labels)
-- [ ] Navegação por teclado avançada
+- [x] Leitores de tela (ARIA labels)
+- [ ] Ajuste de velocidade da voz
+- [ ] Seleção de voz específica
 
 ## 📚 Referências
 

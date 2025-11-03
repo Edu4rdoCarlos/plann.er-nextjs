@@ -8,6 +8,8 @@ import {
   AccessibilityProvider,
   LocaleProvider,
 } from "@/src/providers";
+import { SkipLinks } from "@/src/components/primitives/SkipLinks/SkipLinks";
+import { KeyboardShortcutsHelp } from "@/src/components/compounds/KeyboardShortcutsHelp/KeyboardShortcutsHelp";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,11 +26,15 @@ export default function RootLayout({
   return (
     <html lang="pt">
       <body className={inter.className}>
+        <SkipLinks />
         <LocaleProvider>
           <ReactQueryProvider>
             <ToastProvider>
               <AccessibilityProvider>
-                <RouteProtectionProvider>{children}</RouteProtectionProvider>
+                <RouteProtectionProvider>
+                  {children}
+                  <KeyboardShortcutsHelp />
+                </RouteProtectionProvider>
               </AccessibilityProvider>
             </ToastProvider>
           </ReactQueryProvider>

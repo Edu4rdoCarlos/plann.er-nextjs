@@ -32,6 +32,8 @@ export const inputVariants = tv({
       "peer",
       "focus:text-zinc-100",
       "placeholder:text-zinc-400",
+      "autofill:shadow-[inset_0_0_0px_1000px_rgb(9_9_11)]", // Force dark background on autofill
+      "autofill:[-webkit-text-fill-color:rgb(244_244_245)]", // Force light text color on autofill
     ],
   },
 });

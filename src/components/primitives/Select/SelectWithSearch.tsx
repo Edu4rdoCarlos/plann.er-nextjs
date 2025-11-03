@@ -4,6 +4,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { ButtonProps } from "../Button/Button";
 import { CalendarProps } from "../Calendar/Calendar";
 import { Input } from "../Input/Input";
+import { useSpeech } from "@/src/hooks/useSpeech";
+import { useAccessibility } from "@/src/providers/AccessibilityProvider";
 import {
     sBar,
     sDropdown,
@@ -35,8 +37,13 @@ export const SelectWithSearch = ({
   const [inputValue, setInputValue] = useState(defaultValue || "");
   const [filteredOptions, setFilteredOptions] = useState<string[]>([]);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(-1);
 
   const inputRef = useRef<HTMLInputElement>(null);
+  const listItemsRef = useRef<(HTMLLIElement | null)[]>([]);
+
+  const { preferences } = useAccessibility();
+  const { speak } = useSpeech(preferences.speechEnabled);
 
   const isInputFocused = () => {
     return document.activeElement === inputRef.current;
@@ -58,8 +65,23 @@ export const SelectWithSearch = ({
       );
       setFilteredOptions(filtered);
       setShowDropdown(filtered.length > 0);
+      setSelectedIndex(-1); // Reset seleção ao filtrar
     }
   }, [inputValue, options]);
+
+  // Scroll automático para item selecionado e anunciar via voz
+  useEffect(() => {
+    if (selectedIndex >= 0 && listItemsRef.current[selectedIndex]) {
+      listItemsRef.current[selectedIndex]?.scrollIntoView({
+        block: 'nearest',
+        behavior: 'smooth'
+      });
+      // Anunciar opção selecionada
+      if (filteredOptions[selectedIndex]) {
+        speak(filteredOptions[selectedIndex]);
+      }
+    }
+  }, [selectedIndex, filteredOptions, speak]);
 
   const handleOptionSelect = (option: string) => {
     setInputValue(option);
@@ -74,6 +96,34 @@ export const SelectWithSearch = ({
     return () => clearTimeout(handler);
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (!showDropdown || filteredOptions.length === 0) return;
+
+    switch (e.key) {
+      case 'ArrowDown':
+        e.preventDefault();
+        setSelectedIndex(prev =>
+          prev < filteredOptions.length - 1 ? prev + 1 : prev
+        );
+        break;
+      case 'ArrowUp':
+        e.preventDefault();
+        setSelectedIndex(prev => prev > 0 ? prev - 1 : -1);
+        break;
+      case 'Enter':
+        e.preventDefault();
+        if (selectedIndex >= 0) {
+          handleOptionSelect(filteredOptions[selectedIndex]);
+        }
+        break;
+      case 'Escape':
+        e.preventDefault();
+        setShowDropdown(false);
+        setSelectedIndex(-1);
+        break;
+    }
+  };
+
   return (
     <div className={sWrapper()}>
       <Input
@@ -84,8 +134,15 @@ export const SelectWithSearch = ({
         placeholder="Para aonde você vai?"
         onFocus={() => inputValue && setShowDropdown(true)}
         onBlur={handleInputBlur}
+        onKeyDown={handleKeyDown}
         className={sSearch()}
         disabled={disabled}
+        role="combobox"
+        aria-expanded={showDropdown}
+        aria-controls="select-dropdown"
+        aria-activedescendant={
+          selectedIndex >= 0 ? `option-${selectedIndex}` : undefined
+        }
         cta={
           <div className="flex justify-between md:justify-normal items-center gap-3">
             {calendar}
@@ -95,14 +152,28 @@ export const SelectWithSearch = ({
         }
       />
       {showDropdown && (
-        <ul className={`${sDropdown()} ${newStyle}`}>
+        <ul
+          id="select-dropdown"
+          role="listbox"
+          className={`${sDropdown()} ${newStyle}`}
+        >
           {filteredOptions.length > 0 ? (
             filteredOptions.map((option, index) => (
               <li
                 key={index}
+                ref={(el) => {
+                  listItemsRef.current[index] = el;
+                }}
+                id={`option-${index}`}
+                role="option"
+                aria-selected={selectedIndex === index}
                 onClick={() => handleOptionSelect(option)}
+                onMouseEnter={() => setSelectedIndex(index)}
                 style={{ cursor: "pointer" }}
-                className={sItems()}
+                className={cn(
+                  sItems(),
+                  selectedIndex === index && "bg-lime-500/20"
+                )}
               >
                 {option}
               </li>

@@ -3,10 +3,10 @@
 import { useState, useRef, useEffect } from "react";
 import { useAccessibility } from "@/src/providers/AccessibilityProvider";
 import { FontSize } from "@/src/types/accessibility";
-import { Accessibility, Type, Eye, Globe } from "lucide-react";
 import { useLocale } from "@/src/hooks/useLocale";
 import { useTranslations } from "next-intl";
 import { locales, localeNames, localeFlags, Locale } from "@/src/i18n/request";
+import { Accessibility, Type, Eye, Volume2, Globe } from "lucide-react";
 import {
   sPanel,
   sTrigger,
@@ -18,7 +18,6 @@ import {
   sSectionTitle,
   sFontControls,
   sFontButton,
-  sFontButtonActive,
   sToggleContainer,
   sToggleLabel,
   sToggle,
@@ -34,7 +33,8 @@ export interface AccessibilityPanelProps {
 export const AccessibilityPanel = ({ className }: AccessibilityPanelProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const { preferences, setFontSize, setEnhancedFocus } = useAccessibility();
+   const { preferences, increaseFontSize, decreaseFontSize, setEnhancedFocus, setSpeechEnabled } =
+    useAccessibility();
   const { locale, changeLocale } = useLocale();
   const t = useTranslations("accessibility");
 
@@ -58,19 +58,16 @@ export const AccessibilityPanel = ({ className }: AccessibilityPanelProps) => {
     setIsOpen(!isOpen);
   };
 
-  const handleFontSizeChange = (size: FontSize) => {
-    setFontSize(size);
-  };
-
   const handleEnhancedFocusToggle = () => {
     setEnhancedFocus(!preferences.enhancedFocus);
   };
 
-  const fontSizes: { size: FontSize; label: string; icon: string }[] = [
-    { size: "small", label: t("fontSmall"), icon: "A-" },
-    { size: "medium", label: t("fontMedium"), icon: "A" },
-    { size: "large", label: t("fontLarge"), icon: "A+" },
-  ];
+  const handleSpeechToggle = () => {
+    setSpeechEnabled(!preferences.speechEnabled);
+  };
+
+  const canDecrease = preferences.fontSize > 0;
+  const canIncrease = preferences.fontSize < 2;
 
   const handleLocaleChange = (newLocale: Locale) => {
     changeLocale(newLocale);
@@ -101,20 +98,34 @@ export const AccessibilityPanel = ({ className }: AccessibilityPanelProps) => {
               {t("fontSize")}
             </h4>
             <div className={sFontControls()}>
-              {fontSizes.map(({ size, label, icon }) => (
-                <button
-                  key={size}
-                  onClick={() => handleFontSizeChange(size)}
-                  className={sFontButton({
-                    className:
-                      preferences.fontSize === size ? sFontButtonActive() : "",
-                  })}
-                  aria-label={`Alterar tamanho da fonte para ${label}`}
-                  aria-pressed={preferences.fontSize === size}
-                >
-                  <span className="text-sm font-medium">{icon}</span>
-                </button>
-              ))}
+              <button
+                onClick={decreaseFontSize}
+                disabled={!canDecrease}
+                className={sFontButton({
+                  className: !canDecrease ? "opacity-40 cursor-not-allowed" : "",
+                })}
+                aria-label="Diminuir tamanho da fonte"
+              >
+                <span className="text-lg font-bold">A-</span>
+              </button>
+              <button
+                onClick={increaseFontSize}
+                disabled={!canIncrease}
+                className={sFontButton({
+                  className: !canIncrease ? "opacity-40 cursor-not-allowed" : "",
+                })}
+                aria-label="Aumentar tamanho da fonte"
+              >
+                <span className="text-lg font-bold">A+</span>
+              </button>
+
+              <div className="flex items-center justify-center px-3 py-2 bg-zinc-100 dark:bg-zinc-800 rounded-md">
+                <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
+                  {preferences.fontSize === 0 && "0"}
+                  {preferences.fontSize === 1 && "1"}
+                  {preferences.fontSize === 2 && "2"}
+                </span>
+              </div>
             </div>
           </div>
 
@@ -174,6 +185,35 @@ export const AccessibilityPanel = ({ className }: AccessibilityPanelProps) => {
             </div>
             <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-2">
               {t("languageDescription")}
+            </p>
+          </div>
+
+          <div className={sSection()}>
+            <div className={sToggleContainer()}>
+              <div className="flex items-center gap-2">
+                <Volume2 className="w-4 h-4 text-zinc-500" />
+                <span className={sToggleLabel()}>Leitura por Voz</span>
+              </div>
+              <button
+                onClick={handleSpeechToggle}
+                className={sToggle({
+                  className: preferences.speechEnabled ? sToggleActive() : "",
+                })}
+                role="switch"
+                aria-checked={preferences.speechEnabled}
+                aria-label="Ativar leitura por voz"
+              >
+                <span
+                  className={sToggleThumb({
+                    className: preferences.speechEnabled
+                      ? sToggleThumbActive()
+                      : "",
+                  })}
+                />
+              </button>
+            </div>
+            <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-2">
+              Lê em voz alta os elementos durante a navegação por teclado
             </p>
           </div>
         </div>

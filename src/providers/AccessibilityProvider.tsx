@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useEffect, ReactNode } from "react";
 import { useAccessibilityStore } from "@/src/store/accessibility";
 import { AccessibilityContextType } from "@/src/types/accessibility";
+import { useSpeechNavigation } from "@/src/hooks/useSpeech";
 
 const AccessibilityContext = createContext<
   AccessibilityContextType | undefined
@@ -13,15 +14,20 @@ export const AccessibilityProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const store = useAccessibilityStore();
 
+  // Ativar síntese de fala baseado nas preferências
+  useSpeechNavigation(store.speechEnabled);
+
   // Apply CSS classes to document based on preferences
   useEffect(() => {
     const { fontSize, enhancedFocus } = store;
 
-    // Remove existing classes
+    // Remove existing font-size classes
     document.documentElement.classList.remove(
-      "font-size-small",
-      "font-size-medium",
-      "font-size-large",
+      "font-size--2",
+      "font-size--1",
+      "font-size-0",
+      "font-size-1",
+      "font-size-2",
       "enhanced-focus"
     );
 
@@ -36,9 +42,13 @@ export const AccessibilityProvider: React.FC<{ children: ReactNode }> = ({
     preferences: {
       fontSize: store.fontSize,
       enhancedFocus: store.enhancedFocus,
+      speechEnabled: store.speechEnabled,
     },
     setFontSize: store.setFontSize,
+    increaseFontSize: store.increaseFontSize,
+    decreaseFontSize: store.decreaseFontSize,
     setEnhancedFocus: store.setEnhancedFocus,
+    setSpeechEnabled: store.setSpeechEnabled,
     resetPreferences: store.resetPreferences,
   };
 

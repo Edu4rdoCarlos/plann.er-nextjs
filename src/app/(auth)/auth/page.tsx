@@ -17,12 +17,23 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
+import { Toast } from "@/src/components/primitives/Toast/Toast";
 
 export default function LoginPage() {
   const [step, setStep] = useState<"email" | "code">("email");
   const [currentEmail, setCurrentEmail] = useState("");
   const { SendCode, VerifyCode, isLoggedIn } = useAuth();
   const t = useTranslations("auth");
+  
+   const [toast, setToast] = useState<{
+    isOpen: boolean;
+    message: string;
+    type: "success" | "error";
+  }>({
+    isOpen: false,
+    message: "",
+    type: "success",
+  });
 
   const { mutate: sendCode, isLoading: isSendingCode } = SendCode();
   const { mutate: verifyCode, isLoading: isVerifyingCode } = VerifyCode();
@@ -63,14 +74,23 @@ export default function LoginPage() {
     }
 
     setCurrentEmail(data.email);
-    sendCode(
-      { email: data.email },
-      {
-        onSuccess: () => {
-          setStep("code");
-        },
+    sendCode({ email: data.email }, {
+      onSuccess: () => {
+        setStep("code");
+        setToast({
+          isOpen: true,
+          message: "Código enviado com sucesso!",
+          type: "success",
+        });
+      },
+      onError: () => {
+        setToast({
+          isOpen: true,
+          message: "Erro ao enviar código",
+          type: "error",
+        });
       }
-    );
+    });
   };
 
   const handleVerifyCode = (data: CodeFormData) => {
@@ -89,6 +109,10 @@ export default function LoginPage() {
     setStep("email");
     codeForm.reset();
     setCurrentEmail("");
+  };
+
+  const handleCloseToast = () => {
+    setToast((prev) => ({ ...prev, isOpen: false }));
   };
 
   return (
@@ -171,20 +195,27 @@ export default function LoginPage() {
 
       <div className="text-center text-sm text-zinc-500">
         <p>
-          {t("agreement", {
-            terms: (
+          {t.rich("agreement", {
+            terms: (chunks) => (
               <a href="#" className="text-lime-600 hover:underline">
-                {t("terms")}
+                {chunks}
               </a>
             ),
-            privacy: (
+            privacy: (chunks) => (
               <a href="#" className="text-lime-600 hover:underline">
-                {t("privacy")}
+                {chunks}
               </a>
             ),
           })}
         </p>
       </div>
+
+      <Toast
+        message={toast.message}
+        isOpen={toast.isOpen}
+        onClose={handleCloseToast}
+        type={toast.type}
+      />
     </AuthLayout>
   );
 }
