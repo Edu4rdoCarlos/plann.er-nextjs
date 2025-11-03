@@ -1,3 +1,5 @@
+"use client";
+
 import { Attachment } from "@/src/components/compounds/Attachments";
 import {
   Content,
@@ -7,6 +9,7 @@ import { InviteMembers } from "@/src/components/compounds/Modal/InviteMember/Inv
 import { Button } from "@/src/components/primitives/Button/Button";
 import { useMember } from "@/src/hooks/useMember";
 import { ReactNode, useState } from "react";
+import { useTranslations } from "next-intl";
 
 interface GuestsItems extends Pick<ContentProps, "info" | "label"> {
   widget: ReactNode;
@@ -22,6 +25,7 @@ export const MemberLayout = ({ items }: MemberLayoutProps) => {
   const [open, setOpen] = useState(false);
   const [guests, setGuests] = useState<string[]>([]);
   const { mutateAsync: deleteMember } = useMember.Delete();
+  const t = useTranslations("tripDetails");
 
   const action = () => (
     <InviteMembers
@@ -34,7 +38,7 @@ export const MemberLayout = ({ items }: MemberLayoutProps) => {
 
   return (
     <div className="w-full">
-      <Attachment title="Membros" action={action()}>
+      <Attachment title={t("members")} action={action()}>
         {items.length ? (
           items.map((item) => {
             return (
@@ -57,7 +61,7 @@ export const MemberLayout = ({ items }: MemberLayoutProps) => {
             );
           })
         ) : (
-          <div className="text-zinc-400">Nenhum convite enviado</div>
+          <div className="text-zinc-400">{t("noMembers")}</div>
         )}
       </Attachment>
     </div>

@@ -42,7 +42,6 @@ We will add accessibility features that follow WCAG 2.2 Level AA guidelines. Bel
 
 🔐 Accessible Authentication
 •	Clearly labeled login fields with password requirement descriptions.
-•	"Show password" button accessible and announced by screen readers.
 
 ⸻
 

@@ -1,9 +1,14 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { MenuAvatar } from "@/src/components/compounds/MenuAvatar";
 import { AccessibilityPanel } from "@/src/components/compounds/AccessibilityPanel";
+import { useTranslations } from "next-intl";
 
 const Header = () => {
+  const t = useTranslations("common");
+
   return (
     <header
       id="navigation"
@@ -24,8 +29,11 @@ const Header = () => {
           </div>
 
           <nav className="flex gap-6" aria-label="Navegação principal">
-            <Link href="/" className="hover:underline focus:outline-none focus:ring-2 focus:ring-lime-500 rounded px-2 py-1">
-              Home
+            <Link
+              href="/"
+              className="hover:underline focus:outline-none focus:ring-2 focus:ring-lime-500 rounded px-2 py-1"
+            >
+              <div className="hover:underline">{t("home")}</div>
             </Link>
           </nav>
         </div>

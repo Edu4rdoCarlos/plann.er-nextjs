@@ -6,6 +6,7 @@ import {
   ToastProvider,
   RouteProtectionProvider,
   AccessibilityProvider,
+  LocaleProvider,
 } from "@/src/providers";
 import { SkipLinks } from "@/src/components/primitives/SkipLinks/SkipLinks";
 import { KeyboardShortcutsHelp } from "@/src/components/compounds/KeyboardShortcutsHelp/KeyboardShortcutsHelp";
@@ -23,19 +24,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR">
+    <html lang="pt">
       <body className={inter.className}>
         <SkipLinks />
-        <ReactQueryProvider>
-          <ToastProvider>
-            <AccessibilityProvider>
-              <RouteProtectionProvider>
-                {children}
-                <KeyboardShortcutsHelp />
-              </RouteProtectionProvider>
-            </AccessibilityProvider>
-          </ToastProvider>
-        </ReactQueryProvider>
+        <LocaleProvider>
+          <ReactQueryProvider>
+            <ToastProvider>
+              <AccessibilityProvider>
+                <RouteProtectionProvider>
+                  {children}
+                  <KeyboardShortcutsHelp />
+                </RouteProtectionProvider>
+              </AccessibilityProvider>
+            </ToastProvider>
+          </ReactQueryProvider>
+        </LocaleProvider>
       </body>
     </html>
   );
