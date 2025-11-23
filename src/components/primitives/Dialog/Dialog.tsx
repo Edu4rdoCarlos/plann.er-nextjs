@@ -1,21 +1,22 @@
-import { X } from "lucide-react";
-import { HtmlHTMLAttributes, PropsWithChildren, ReactNode, useEffect } from "react";
-import {
-  sWrapper,
-  sContainer,
-  sCloseButton,
-  sContentWrapper,
-  sHeader,
-  sTitle,
-  sContent,
-  sFooter,
-  sSubtitle,
-} from "./Dialog.variants";
 import { useFocusTrap } from "@/src/hooks/useFocusTrap";
+import { useLocale } from "@/src/hooks/useLocale";
 import { useSpeech } from "@/src/hooks/useSpeech";
 import { useAccessibility } from "@/src/providers/AccessibilityProvider";
-import { useLocale } from "@/src/hooks/useLocale";
+import { X } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { HtmlHTMLAttributes, PropsWithChildren, ReactNode, useEffect, useState } from "react";
+import { createPortal } from "react-dom";
+import {
+  sCloseButton,
+  sContainer,
+  sContent,
+  sContentWrapper,
+  sFooter,
+  sHeader,
+  sSubtitle,
+  sTitle,
+  sWrapper,
+} from "./Dialog.variants";
 
 export interface DialogProps extends HtmlHTMLAttributes<HTMLDivElement> {
   open: boolean;
@@ -64,6 +65,12 @@ const Dialog = ({
   const { locale } = useLocale();
   const { announce } = useSpeech(preferences.speechEnabled, locale);
   const t = useTranslations("modals");
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    return () => setMounted(false);
+  }, []);
 
   // Anunciar abertura do modal
   useEffect(() => {
@@ -99,6 +106,34 @@ const Dialog = ({
       document.body.style.overflow = "";
     };
   }, [open]);
+
+  if (!mounted) return trigger ? <>{trigger}</> : null;
+
+  const dialogContent = open ? (
+    <div
+      className={sWrapper()}
+      onClick={() => closable && onOpenChange(false)}
+      role="dialog"
+      aria-modal="true"
+    >
+      <div
+        ref={focusTrapRef}
+        className={sContainer()}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {closable && (
+          <button
+            className={sCloseButton()}
+            onClick={() => onOpenChange(false)}
+            aria-label="Fechar modal"
+          >
+            <X strokeWidth={1} width={22} />
+          </button>
+        )}
+        <div className={sContentWrapper()}>{children}</div>
+      </div>
+    </div>
+  ) : null;
 
   return (
     <>
@@ -143,6 +178,7 @@ const Dialog = ({
           </div>
         </div>
       )}
+      {createPortal(dialogContent, document.body)}
     </>
   );
 };
@@ -153,3 +189,4 @@ Dialog.Content = Content;
 Dialog.Footer = Footer;
 
 export { Dialog };
+
