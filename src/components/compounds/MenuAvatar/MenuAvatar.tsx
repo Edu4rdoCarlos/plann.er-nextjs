@@ -1,19 +1,21 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
 import { useAuth } from "@/src/hooks/auth/useAuth";
-import { Settings, LogOut } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { capitalize } from "radash";
-import { sMenuAvatar, sAvatar, sDropdown, sMenuItem } from "./MenuAvatar.variants";
 import { useSpeech } from "@/src/hooks/useSpeech";
 import { useAccessibility } from "@/src/providers/AccessibilityProvider";
+import { LogOut, Settings } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import { capitalize } from "radash";
+import { useEffect, useRef, useState } from "react";
+import { sAvatar, sDropdown, sMenuAvatar, sMenuItem } from "./MenuAvatar.variants";
 
 export interface MenuAvatarProps {
   className?: string;
 }
 
 export const MenuAvatar = ({ className }: MenuAvatarProps) => {
+  const t = useTranslations("avatar");
   const [isOpen, setIsOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -150,7 +152,7 @@ export const MenuAvatar = ({ className }: MenuAvatarProps) => {
         <div className={sDropdown()} role="menu">
           <div className="px-4 py-3 border-b border-zinc-200 dark:border-zinc-700">
             <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100">
-              Bem-vindo, {capitalize(userEmail?.split("@")[0] || "usuário")}!
+              {t("welcome")}, {capitalize(userEmail?.split("@")[0] || "usuário")}!
             </p>
             <p className="text-xs text-zinc-500 dark:text-zinc-400">
               {userEmail}
@@ -188,7 +190,7 @@ export const MenuAvatar = ({ className }: MenuAvatarProps) => {
               role="menuitem"
             >
               <LogOut className="w-4 h-4" />
-              <span>Sair</span>
+              <span>{t("logout")}</span>
             </button>
           </div>
         </div>

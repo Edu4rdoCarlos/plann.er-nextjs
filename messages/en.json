@@ -35,7 +35,37 @@
     "enhancedFocus": "Enhanced Focus",
     "enhancedFocusDescription": "Highlights focused elements with higher contrast",
     "language": "Language",
-    "languageDescription": "Select your preferred language"
+    "languageDescription": "Select your preferred language",
+    "voiceReading": "Voice Reading",
+    "voiceReadingDescription": "Reads elements aloud during keyboard navigation"
+
+  },
+  "avatar": {
+    "welcome": "Welcome",
+    "logout": "Logout"
+  },
+  "shortcuts": {
+    "triggerAriaLabel": "Keyboard shortcuts",
+    "headerTitle": "Keyboard Shortcuts",
+    "headerSubtitle": "Navigate the application easily using your keyboard",
+    "generalNavigationTitle": "General Navigation",
+    "generalNavNext": "Navigate to next element",
+    "generalNavPrevious": "Navigate to previous element",
+    "generalActivateFocused": "Activate focused element",
+    "generalActivateButton": "Activate focused button or checkbox",
+    "generalCloseModal": "Close modal or dropdown",
+    "generalShowHelp": "Show this help",
+    "generalOpenAccessibility": "Open Accessibility Settings",
+    "listSelectionTitle": "Lists & Selections",
+    "listNavDown": "Navigate down the list",
+    "listNavUp": "Navigate up the list",
+    "listSelectItem": "Select list item",
+    "modalsTitle": "Modals",
+    "modalsNav": "Navigate within modal",
+    "modalsClose": "Close modal",
+    "modalsConfirm": "Confirm action (when applicable)",
+    "skipLinksTitle": "Skip Links (Navigation Shortcuts)",
+    "skipLinksDescription": "At the start of the page, press Tab to access quick navigation links"
   },
   "toast": {
     "accessDenied": "Access denied. Please log in to continue.",
@@ -76,7 +106,9 @@
     "termsAgreement": "By planning your trip on plann.er you automatically agree to our",
     "termsOfUse": "terms of use",
     "and": "and",
-    "privacyPolicy": "privacy policies"
+    "privacyPolicy": "privacy policies",
+    "whereAreYouGoing": "Where are you going?",
+    "date": "When?"
   },
   "tripDetails": {
     "activities": "Activities",
@@ -89,7 +121,8 @@
     "editTripTitle": "Edit trip",
     "editTripSubtitle": "Change the destination and dates of your trip.",
     "loadingTrip": "Loading trip details...",
-    "errorLoadingTrip": "Unable to load trip data."
+    "errorLoadingTrip": "Unable to load trip data.",
+    "saveEdit": "Save changes"
   },
   "modals": {
     "registerActivities": "Register activities",

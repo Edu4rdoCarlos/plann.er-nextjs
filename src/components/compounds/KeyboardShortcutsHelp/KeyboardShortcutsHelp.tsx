@@ -1,15 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { Dialog } from "@/src/components/primitives/Dialog/Dialog";
 import { Keyboard } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
 import {
-  sShortcut,
-  sShortcutKey,
-  sShortcutDescription,
-  sShortcutsList,
   sSection,
   sSectionTitle,
+  sShortcut,
+  sShortcutDescription,
+  sShortcutKey,
+  sShortcutsList,
 } from "./KeyboardShortcutsHelp.variants";
 
 interface Shortcut {
@@ -22,47 +23,49 @@ interface ShortcutSection {
   shortcuts: Shortcut[];
 }
 
-const keyboardShortcuts: ShortcutSection[] = [
-  {
-    title: "Navegação Geral",
-    shortcuts: [
-      { keys: ["Tab"], description: "Navegar para o próximo elemento" },
-      { keys: ["Shift", "Tab"], description: "Navegar para o elemento anterior" },
-      { keys: ["Enter"], description: "Ativar elemento focado" },
-      { keys: ["Espaço"], description: "Ativar botão ou checkbox focado" },
-      { keys: ["Esc"], description: "Fechar modal ou dropdown" },
-      { keys: ["?"], description: "Mostrar esta ajuda" },
-    ],
-  },
-  {
-    title: "Listas e Seleções",
-    shortcuts: [
-      { keys: ["↓"], description: "Navegar para baixo na lista" },
-      { keys: ["↑"], description: "Navegar para cima na lista" },
-      { keys: ["Enter"], description: "Selecionar item da lista" },
-    ],
-  },
-  {
-    title: "Modais",
-    shortcuts: [
-      { keys: ["Tab"], description: "Navegar entre elementos do modal" },
-      { keys: ["Esc"], description: "Fechar modal" },
-      { keys: ["Enter"], description: "Confirmar ação (quando aplicável)" },
-    ],
-  },
-  {
-    title: "Skip Links (Atalhos de Navegação)",
-    shortcuts: [
-      {
-        keys: ["Tab"],
-        description: "No início da página, pressione Tab para acessar links de navegação rápida",
-      },
-    ],
-  },
-];
-
 export const KeyboardShortcutsHelp = () => {
   const [open, setOpen] = useState(false);
+  const t = useTranslations("shortcuts");
+
+  const keyboardShortcuts: ShortcutSection[] = [
+    {
+      title: t("generalNavigationTitle"),
+      shortcuts: [
+        { keys: ["Tab"], description: t("generalNavNext") },
+        { keys: ["Shift", "Tab"], description: t("generalNavPrevious") },
+        { keys: ["Enter"], description: t("generalActivateFocused") },
+        { keys: ["Espaço"], description: t("generalActivateButton") },
+        { keys: ["Esc"], description: t("generalCloseModal") },
+        { keys: ["?"], description: t("generalShowHelp") },
+        { keys: ["Alt", "A"], description: t("generalOpenAccessibility") },
+      ],
+    },
+    {
+      title: t("listSelectionTitle"),
+      shortcuts: [
+        { keys: ["↓"], description: t("listNavDown") },
+        { keys: ["↑"], description: t("listNavUp") },
+        { keys: ["Enter"], description: t("listSelectItem") },
+      ],
+    },
+    {
+      title: t("modalsTitle"),
+      shortcuts: [
+        { keys: ["Tab"], description: t("modalsNav") },
+        { keys: ["Esc"], description: t("modalsClose") },
+        { keys: ["Enter"], description: t("modalsConfirm") },
+      ],
+    },
+    {
+      title: t("skipLinksTitle"),
+      shortcuts: [
+        {
+          keys: ["Tab"],
+          description: t("skipLinksDescription"),
+        },
+      ],
+    },
+  ];
 
   useEffect(() => {
     const handleToggle = () => setOpen((prev) => !prev);
@@ -70,7 +73,6 @@ export const KeyboardShortcutsHelp = () => {
     return () => window.removeEventListener("toggle-shortcuts-help", handleToggle);
   }, []);
 
-  // Atalho Shift + ? para abrir/fechar
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.shiftKey && e.key === "?") {
@@ -89,7 +91,7 @@ export const KeyboardShortcutsHelp = () => {
       onOpenChange={setOpen}
       trigger={
         <button
-          aria-label="Atalhos de teclado"
+          aria-label={t("triggerAriaLabel")}
           className="fixed bottom-6 right-6 p-3 bg-lime-500 text-zinc-950 rounded-full shadow-lg hover:bg-lime-400 transition-colors focus:outline-none focus:ring-2 focus:ring-lime-400 focus:ring-offset-2 focus:ring-offset-zinc-950 z-50"
         >
           <Keyboard size={24} />
@@ -97,11 +99,11 @@ export const KeyboardShortcutsHelp = () => {
       }
     >
       <Dialog.Header
-        title="Atalhos de Teclado"
-        subtitle="Navegue facilmente pela aplicação usando seu teclado"
+        title={t("headerTitle")}
+        subtitle={t("headerSubtitle")}
       />
       <Dialog.Content>
-        <div className={sShortcutsList()}>
+        <div className={`${sShortcutsList()} pr-4`}>
           {keyboardShortcuts.map((section) => (
             <div key={section.title} className={sSection()}>
               <h3 className={sSectionTitle()}>{section.title}</h3>

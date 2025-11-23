@@ -35,7 +35,36 @@
     "enhancedFocus": "Enfoque Mejorado",
     "enhancedFocusDescription": "Resalta elementos enfocados con mayor contraste",
     "language": "Idioma",
-    "languageDescription": "Seleccione su idioma preferido"
+    "languageDescription": "Seleccione su idioma preferido",
+    "voiceReading": "Lectura de Voz",
+    "voiceReadingDescription": "Lee en voz alta los elementos durante la navegación con teclado"
+  },
+  "avatar": {
+    "welcome": "Bienvenido",
+    "logout": "Cerrar sesión"
+  },
+  "shortcuts": {
+    "triggerAriaLabel": "Atajos de teclado",
+    "headerTitle": "Atajos de Teclado",
+    "headerSubtitle": "Navegue fácilmente por la aplicación usando su teclado",
+    "generalNavigationTitle": "Navegación General",
+    "generalNavNext": "Navegar al siguiente elemento",
+    "generalNavPrevious": "Navegar al elemento anterior",
+    "generalActivateFocused": "Activar elemento enfocado",
+    "generalActivateButton": "Activar botón o casilla de verificación enfocado",
+    "generalCloseModal": "Cerrar modal o desplegable",
+    "generalShowHelp": "Mostrar esta ayuda",
+    "generalOpenAccessibility": "Abrir Configuración de Accesibilidad",
+    "listSelectionTitle": "Listas y Selecciones",
+    "listNavDown": "Navegar hacia abajo en la lista",
+    "listNavUp": "Navegar hacia arriba en la lista",
+    "listSelectItem": "Seleccionar elemento de la lista",
+    "modalsTitle": "Modales",
+    "modalsNav": "Navegar dentro del modal",
+    "modalsClose": "Cerrar modal",
+    "modalsConfirm": "Confirmar acción (cuando aplique)",
+    "skipLinksTitle": "Enlaces de Salto (Atajos de Navegación)",
+    "skipLinksDescription": "Al inicio de la página, presione Tab para acceder a los enlaces de navegación rápida"
   },
   "toast": {
     "accessDenied": "Acceso denegado. Inicie sesión para continuar.",
@@ -76,7 +105,9 @@
     "termsAgreement": "Al planear tu viaje en plann.er aceptas automáticamente nuestros",
     "termsOfUse": "términos de uso",
     "and": "y",
-    "privacyPolicy": "políticas de privacidad"
+    "privacyPolicy": "políticas de privacidad",
+    "whereAreYouGoing": "¿A dónde vas?",
+    "date": "Cuándo?"
   },
   "tripDetails": {
     "activities": "Actividades",
@@ -89,7 +120,8 @@
     "editTripTitle": "Editar viaje",
     "editTripSubtitle": "Cambia el destino y las fechas de tu viaje.",
     "loadingTrip": "Cargando detalles del viaje...",
-    "errorLoadingTrip": "No se pudieron cargar los datos del viaje."
+    "errorLoadingTrip": "No se pudieron cargar los datos del viaje.",
+    "saveEdit": "Guardar cambios"
   },
   "modals": {
     "registerActivities": "Registrar actividades",

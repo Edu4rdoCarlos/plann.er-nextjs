@@ -16,11 +16,11 @@ import {
 } from "@/src/schemas/activity/activitySchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Clock4, Plus, Tag } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { sTimeWrapper } from "./CreateActivity.variants";
-import { useTranslations } from "next-intl";
 
 export interface CreateActivityProps {
   open: boolean;
@@ -111,6 +111,7 @@ export const CreateActivity = (props: CreateActivityProps) => {
               placeholder={t("time")}
               {...register("activityTime")}
               error={errors.activityTime?.message}
+              className="flex-1"
             />
           </div>
           <Dialog.Footer>

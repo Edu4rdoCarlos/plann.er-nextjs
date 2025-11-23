@@ -1,29 +1,28 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import { useAccessibility } from "@/src/providers/AccessibilityProvider";
-import { FontSize } from "@/src/types/accessibility";
 import { useLocale } from "@/src/hooks/useLocale";
+import { Locale, localeFlags, localeNames, locales } from "@/src/i18n/request";
+import { useAccessibility } from "@/src/providers/AccessibilityProvider";
+import { Accessibility, Eye, Globe, Type, Volume2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { locales, localeNames, localeFlags, Locale } from "@/src/i18n/request";
-import { Accessibility, Type, Eye, Volume2, Globe } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import {
-  sPanel,
-  sTrigger,
   sDropdown,
+  sFontButton,
+  sFontControls,
   sHeader,
-  sTitle,
-  sSubtitle,
+  sPanel,
   sSection,
   sSectionTitle,
-  sFontControls,
-  sFontButton,
-  sToggleContainer,
-  sToggleLabel,
+  sSubtitle,
+  sTitle,
   sToggle,
   sToggleActive,
+  sToggleContainer,
+  sToggleLabel,
   sToggleThumb,
   sToggleThumbActive,
+  sTrigger,
 } from "./AccessibilityPanel.variants";
 
 export interface AccessibilityPanelProps {
@@ -33,8 +32,13 @@ export interface AccessibilityPanelProps {
 export const AccessibilityPanel = ({ className }: AccessibilityPanelProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-   const { preferences, increaseFontSize, decreaseFontSize, setEnhancedFocus, setSpeechEnabled } =
-    useAccessibility();
+  const {
+    preferences,
+    increaseFontSize,
+    decreaseFontSize,
+    setEnhancedFocus,
+    setSpeechEnabled,
+  } = useAccessibility();
   const { locale, changeLocale } = useLocale();
   const t = useTranslations("accessibility");
 
@@ -51,6 +55,24 @@ export const AccessibilityPanel = ({ className }: AccessibilityPanelProps) => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleToggleShortcut = () => {
+      setIsOpen((prev) => !prev);
+    };
+
+    window.addEventListener(
+      "toggle-accessibility-settings",
+      handleToggleShortcut,
+    );
+
+    return () => {
+      window.removeEventListener(
+        "toggle-accessibility-settings",
+        handleToggleShortcut,
+      );
     };
   }, []);
 
@@ -168,11 +190,10 @@ export const AccessibilityPanel = ({ className }: AccessibilityPanelProps) => {
                 <button
                   key={loc}
                   onClick={() => handleLocaleChange(loc)}
-                  className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${
-                    locale === loc
+                  className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${locale === loc
                       ? "bg-lime-100 dark:bg-lime-900 border border-lime-500 text-lime-700 dark:text-lime-200"
                       : "bg-zinc-50 dark:bg-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-600 border border-zinc-200 dark:border-zinc-600"
-                  }`}
+                    }`}
                   aria-label={`${t("language")}: ${localeNames[loc]}`}
                   aria-pressed={locale === loc}
                 >
@@ -192,7 +213,7 @@ export const AccessibilityPanel = ({ className }: AccessibilityPanelProps) => {
             <div className={sToggleContainer()}>
               <div className="flex items-center gap-2">
                 <Volume2 className="w-4 h-4 text-zinc-500" />
-                <span className={sToggleLabel()}>Leitura por Voz</span>
+                <span className={sToggleLabel()}>{t("voiceReading")}</span>
               </div>
               <button
                 onClick={handleSpeechToggle}
@@ -212,9 +233,7 @@ export const AccessibilityPanel = ({ className }: AccessibilityPanelProps) => {
                 />
               </button>
             </div>
-            <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-2">
-              Lê em voz alta os elementos durante a navegação por teclado
-            </p>
+            <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-2">{t("voiceReadingDescription")}</p>
           </div>
         </div>
       )}
