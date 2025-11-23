@@ -73,18 +73,6 @@ export const KeyboardShortcutsHelp = () => {
     return () => window.removeEventListener("toggle-shortcuts-help", handleToggle);
   }, []);
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.shiftKey && e.key === "?") {
-        e.preventDefault();
-        setOpen((prev) => !prev);
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
-
   return (
     <Dialog.Root
       open={open}
