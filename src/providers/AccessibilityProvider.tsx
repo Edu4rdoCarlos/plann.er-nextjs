@@ -4,6 +4,7 @@ import React, { createContext, useContext, useEffect, ReactNode } from "react";
 import { useAccessibilityStore } from "@/src/store/accessibility";
 import { AccessibilityContextType } from "@/src/types/accessibility";
 import { useSpeechNavigation } from "@/src/hooks/useSpeech";
+import { useLocale } from "@/src/hooks/useLocale";
 
 const AccessibilityContext = createContext<
   AccessibilityContextType | undefined
@@ -13,9 +14,10 @@ export const AccessibilityProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const store = useAccessibilityStore();
+  const { locale } = useLocale();
 
   // Ativar síntese de fala baseado nas preferências
-  useSpeechNavigation(store.speechEnabled);
+  useSpeechNavigation(store.speechEnabled, locale);
 
   // Apply CSS classes to document based on preferences
   useEffect(() => {

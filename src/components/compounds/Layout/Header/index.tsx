@@ -17,7 +17,7 @@ const Header = () => {
       <div className="w-full flex items-center justify-between mx-auto px-10">
         <div className="flex justify-between items-center gap-10">
           <div className="flex items-center">
-            <Link href="/" aria-label="Ir para página inicial">
+            <Link href="/" aria-label={t("goToHomeAriaLabel")}>
               <Image
                 src="/logo/Logo.svg"
                 alt="Planner Logo"
@@ -28,7 +28,7 @@ const Header = () => {
             </Link>
           </div>
 
-          <nav className="flex gap-6" aria-label="Navegação principal">
+          <nav className="flex gap-6" aria-label={t("mainNavigationAriaLabel")}>
             <Link
               href="/"
               className="hover:underline focus:outline-none focus:ring-2 focus:ring-lime-500 rounded px-2 py-1"

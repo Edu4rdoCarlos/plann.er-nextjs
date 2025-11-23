@@ -65,13 +65,13 @@ export const AccessibilityPanel = ({ className }: AccessibilityPanelProps) => {
 
     window.addEventListener(
       "toggle-accessibility-settings",
-      handleToggleShortcut,
+      handleToggleShortcut
     );
 
     return () => {
       window.removeEventListener(
         "toggle-accessibility-settings",
-        handleToggleShortcut,
+        handleToggleShortcut
       );
     };
   }, []);
@@ -100,7 +100,7 @@ export const AccessibilityPanel = ({ className }: AccessibilityPanelProps) => {
       <button
         onClick={toggleDropdown}
         className={sTrigger()}
-        aria-label="Configurações de acessibilidade"
+        aria-label={t("settingsAriaLabel")}
         aria-expanded={isOpen}
         aria-haspopup="true"
       >
@@ -124,9 +124,11 @@ export const AccessibilityPanel = ({ className }: AccessibilityPanelProps) => {
                 onClick={decreaseFontSize}
                 disabled={!canDecrease}
                 className={sFontButton({
-                  className: !canDecrease ? "opacity-40 cursor-not-allowed" : "",
+                  className: !canDecrease
+                    ? "opacity-40 cursor-not-allowed"
+                    : "",
                 })}
-                aria-label="Diminuir tamanho da fonte"
+                aria-label={t("decreaseFontSizeAriaLabel")}
               >
                 <span className="text-lg font-bold">A-</span>
               </button>
@@ -134,9 +136,11 @@ export const AccessibilityPanel = ({ className }: AccessibilityPanelProps) => {
                 onClick={increaseFontSize}
                 disabled={!canIncrease}
                 className={sFontButton({
-                  className: !canIncrease ? "opacity-40 cursor-not-allowed" : "",
+                  className: !canIncrease
+                    ? "opacity-40 cursor-not-allowed"
+                    : "",
                 })}
-                aria-label="Aumentar tamanho da fonte"
+                aria-label={t("increaseFontSizeAriaLabel")}
               >
                 <span className="text-lg font-bold">A+</span>
               </button>
@@ -152,35 +156,6 @@ export const AccessibilityPanel = ({ className }: AccessibilityPanelProps) => {
           </div>
 
           <div className={sSection()}>
-            <div className={sToggleContainer()}>
-              <div className="flex items-center gap-2">
-                <Eye className="w-4 h-4 text-zinc-500" />
-                <span className={sToggleLabel()}>{t("enhancedFocus")}</span>
-              </div>
-              <button
-                onClick={handleEnhancedFocusToggle}
-                className={sToggle({
-                  className: preferences.enhancedFocus ? sToggleActive() : "",
-                })}
-                role="switch"
-                aria-checked={preferences.enhancedFocus}
-                aria-label={t("enhancedFocus")}
-              >
-                <span
-                  className={sToggleThumb({
-                    className: preferences.enhancedFocus
-                      ? sToggleThumbActive()
-                      : "",
-                  })}
-                />
-              </button>
-            </div>
-            <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-2">
-              {t("enhancedFocusDescription")}
-            </p>
-          </div>
-
-          <div className={sSection()}>
             <h4 className={sSectionTitle()}>
               <Globe className="inline w-4 h-4 mr-2" />
               {t("language")}
@@ -190,11 +165,15 @@ export const AccessibilityPanel = ({ className }: AccessibilityPanelProps) => {
                 <button
                   key={loc}
                   onClick={() => handleLocaleChange(loc)}
-                  className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${locale === loc
+                  className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${
+                    locale === loc
                       ? "bg-lime-100 dark:bg-lime-900 border border-lime-500 text-lime-700 dark:text-lime-200"
                       : "bg-zinc-50 dark:bg-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-600 border border-zinc-200 dark:border-zinc-600"
-                    }`}
-                  aria-label={`${t("language")}: ${localeNames[loc]}`}
+                  }`}
+                  aria-label={t("languageOptionAriaLabel", {
+                    language: t("language"),
+                    name: localeNames[loc],
+                  })}
                   aria-pressed={locale === loc}
                 >
                   <span className="text-2xl">{localeFlags[loc]}</span>
@@ -222,7 +201,7 @@ export const AccessibilityPanel = ({ className }: AccessibilityPanelProps) => {
                 })}
                 role="switch"
                 aria-checked={preferences.speechEnabled}
-                aria-label="Ativar leitura por voz"
+                aria-label={t("enableVoiceReadingAriaLabel")}
               >
                 <span
                   className={sToggleThumb({
@@ -233,7 +212,9 @@ export const AccessibilityPanel = ({ className }: AccessibilityPanelProps) => {
                 />
               </button>
             </div>
-            <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-2">{t("voiceReadingDescription")}</p>
+            <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-2">
+              {t("voiceReadingDescription")}
+            </p>
           </div>
         </div>
       )}

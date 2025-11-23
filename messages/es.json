@@ -2,7 +2,9 @@
   "common": {
     "home": "Inicio",
     "language": "Idioma",
-    "loading": "Cargando..."
+    "loading": "Cargando...",
+    "goToHomeAriaLabel": "Ir a página de inicio",
+    "mainNavigationAriaLabel": "Navegación principal"
   },
   "auth": {
     "login": "Iniciar sesión",
@@ -37,11 +39,21 @@
     "language": "Idioma",
     "languageDescription": "Seleccione su idioma preferido",
     "voiceReading": "Lectura de Voz",
-    "voiceReadingDescription": "Lee en voz alta los elementos durante la navegación con teclado"
+    "voiceReadingDescription": "Lee en voz alta los elementos durante la navegación con teclado",
+    "settingsAriaLabel": "Configuración de accesibilidad",
+    "decreaseFontSizeAriaLabel": "Disminuir tamaño de fuente",
+    "increaseFontSizeAriaLabel": "Aumentar tamaño de fuente",
+    "enableVoiceReadingAriaLabel": "Activar lectura por voz",
+    "languageOptionAriaLabel": "{language}: {name}",
+    "fieldFilledWith": "Campo lleno con: {value}"
   },
   "avatar": {
     "welcome": "Bienvenido",
-    "logout": "Cerrar sesión"
+    "logout": "Cerrar sesión",
+    "menuAriaLabel": "Menú del usuario",
+    "avatarAlt": "Avatar del usuario",
+    "menuOpened": "Menú del usuario abierto",
+    "menuClosed": "Menú cerrado"
   },
   "shortcuts": {
     "triggerAriaLabel": "Atajos de teclado",
@@ -144,6 +156,9 @@
     "add": "Agregar",
     "submit": "Enviar",
     "operationSuccess": "¡Operación exitosa!",
-    "operationError": "¡Error en la operación!"
+    "operationError": "¡Error en la operación!",
+    "closeModalAriaLabel": "Cerrar modal",
+    "modalOpened": "Modal abierto",
+    "modalClosed": "Modal cerrado"
   }
 }

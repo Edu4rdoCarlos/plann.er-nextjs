@@ -2,7 +2,9 @@
   "common": {
     "home": "Home",
     "language": "Language",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "goToHomeAriaLabel": "Go to home page",
+    "mainNavigationAriaLabel": "Main navigation"
   },
   "auth": {
     "login": "Log in",
@@ -37,12 +39,21 @@
     "language": "Language",
     "languageDescription": "Select your preferred language",
     "voiceReading": "Voice Reading",
-    "voiceReadingDescription": "Reads elements aloud during keyboard navigation"
-
+    "voiceReadingDescription": "Reads elements aloud during keyboard navigation",
+    "settingsAriaLabel": "Accessibility settings",
+    "decreaseFontSizeAriaLabel": "Decrease font size",
+    "increaseFontSizeAriaLabel": "Increase font size",
+    "enableVoiceReadingAriaLabel": "Enable voice reading",
+    "languageOptionAriaLabel": "{language}: {name}",
+    "fieldFilledWith": "Field filled with: {value}"
   },
   "avatar": {
     "welcome": "Welcome",
-    "logout": "Logout"
+    "logout": "Logout",
+    "menuAriaLabel": "User menu",
+    "avatarAlt": "User avatar",
+    "menuOpened": "User menu opened",
+    "menuClosed": "Menu closed"
   },
   "shortcuts": {
     "triggerAriaLabel": "Keyboard shortcuts",
@@ -145,6 +156,9 @@
     "add": "Add",
     "submit": "Submit",
     "operationSuccess": "Operation successful!",
-    "operationError": "Operation error!"
+    "operationError": "Operation error!",
+    "closeModalAriaLabel": "Close modal",
+    "modalOpened": "Modal opened",
+    "modalClosed": "Modal closed"
   }
 }

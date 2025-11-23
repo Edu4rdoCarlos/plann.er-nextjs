@@ -10,6 +10,17 @@ export function useLocale() {
     // Load locale from localStorage
     const savedLocale = (localStorage.getItem("locale") || "pt") as Locale;
     setLocale(savedLocale);
+
+    // Listen for locale changes
+    const handleLocaleChange = () => {
+      const newLocale = (localStorage.getItem("locale") || "pt") as Locale;
+      setLocale(newLocale);
+    };
+
+    window.addEventListener("localeChange", handleLocaleChange);
+    return () => {
+      window.removeEventListener("localeChange", handleLocaleChange);
+    };
   }, []);
 
   const changeLocale = (newLocale: Locale) => {

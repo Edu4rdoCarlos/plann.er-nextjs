@@ -2,7 +2,9 @@
   "common": {
     "home": "Home",
     "language": "Idioma",
-    "loading": "Carregando..."
+    "loading": "Carregando...",
+    "goToHomeAriaLabel": "Ir para página inicial",
+    "mainNavigationAriaLabel": "Navegação principal"
   },
   "auth": {
     "login": "Fazer login",
@@ -37,11 +39,21 @@
     "language": "Idioma",
     "languageDescription": "Selecione o idioma de sua preferência",
     "voiceReading": "Leitura por Voz",
-    "voiceReadingDescription": "Lê em voz alta os elementos durante a navegação por teclado"
+    "voiceReadingDescription": "Lê em voz alta os elementos durante a navegação por teclado",
+    "settingsAriaLabel": "Configurações de acessibilidade",
+    "decreaseFontSizeAriaLabel": "Diminuir tamanho da fonte",
+    "increaseFontSizeAriaLabel": "Aumentar tamanho da fonte",
+    "enableVoiceReadingAriaLabel": "Ativar leitura por voz",
+    "languageOptionAriaLabel": "{language}: {name}",
+    "fieldFilledWith": "Campo preenchido com: {value}"
   },
   "avatar": {
     "welcome": "Bem-vindo",
-    "logout": "Sair"
+    "logout": "Sair",
+    "menuAriaLabel": "Menu do usuário",
+    "avatarAlt": "Avatar do usuário",
+    "menuOpened": "Menu do usuário aberto",
+    "menuClosed": "Menu fechado"
   },
   "shortcuts": {
     "triggerAriaLabel": "Atalhos de teclado",
@@ -144,6 +156,9 @@
     "add": "Adicionar",
     "submit": "Submeter",
     "operationSuccess": "Operação realizada com sucesso!",
-    "operationError": "Erro na operação!"
+    "operationError": "Erro na operação!",
+    "closeModalAriaLabel": "Fechar modal",
+    "modalOpened": "Modal aberto",
+    "modalClosed": "Modal fechado"
   }
 }

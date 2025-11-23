@@ -1,6 +1,7 @@
 import { useSpeech } from "@/src/hooks/useSpeech";
 import { cn } from "@/src/lib/utils/twMerge";
 import { useAccessibility } from "@/src/providers/AccessibilityProvider";
+import { useLocale } from "@/src/hooks/useLocale";
 import { MapPin } from "lucide-react";
 import { useTranslations } from "next-intl";
 import React, { useEffect, useRef, useState } from "react";
@@ -45,7 +46,8 @@ export const SelectWithSearch = ({
   const listItemsRef = useRef<(HTMLLIElement | null)[]>([]);
 
   const { preferences } = useAccessibility();
-  const { speak } = useSpeech(preferences.speechEnabled);
+  const { locale } = useLocale();
+  const { speak } = useSpeech(preferences.speechEnabled, locale);
 
   const isInputFocused = () => {
     return document.activeElement === inputRef.current;

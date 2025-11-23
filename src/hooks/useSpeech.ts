@@ -1,6 +1,51 @@
 "use client";
 
 import { useCallback, useEffect, useRef } from "react";
+import { Locale } from "@/src/i18n/request";
+
+// Cache para mensagens de tradução
+const translationCache: Record<Locale, any> = {} as Record<Locale, any>;
+
+// Função helper para obter tradução
+const getTranslation = async (
+  locale: Locale,
+  key: string,
+  params?: Record<string, string>
+): Promise<string> => {
+  try {
+    // Carregar mensagens se ainda não estiverem em cache
+    if (!translationCache[locale]) {
+      const messages = (await import(`../../messages/${locale}.json`)).default;
+      translationCache[locale] = messages;
+    }
+
+    const messages = translationCache[locale];
+    const [namespace, ...keyParts] = key.split(".");
+    let value = messages[namespace];
+
+    for (const part of keyParts) {
+      value = value?.[part];
+    }
+
+    if (typeof value !== "string") {
+      return key; // Retornar a chave se não encontrar a tradução
+    }
+
+    // Substituir parâmetros
+    if (params) {
+      return Object.entries(params).reduce(
+        (text, [paramKey, paramValue]) =>
+          text.replace(`{${paramKey}}`, paramValue),
+        value
+      );
+    }
+
+    return value;
+  } catch (error) {
+    console.warn(`Translation not found for key: ${key}`, error);
+    return key;
+  }
+};
 
 export interface SpeechOptions {
   rate?: number; // Velocidade (0.1 a 10)
@@ -9,12 +54,38 @@ export interface SpeechOptions {
   lang?: string; // Idioma
 }
 
-export function useSpeech(enabled: boolean = false) {
+const localeToSpeechLang: Record<Locale, string> = {
+  pt: "pt-BR",
+  en: "en-US",
+  es: "es-ES",
+};
+
+export function useSpeech(enabled: boolean = false, locale: Locale = "pt") {
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
   const isInitialized = useRef(false);
 
-  // Verificar se browser suporta Speech Synthesis
-  const isSupported = typeof window !== "undefined" && "speechSynthesis" in window;
+  const isSupported =
+    typeof window !== "undefined" && "speechSynthesis" in window;
+
+  // Função para obter uma voz apropriada para o locale
+  const getVoiceForLocale = useCallback(
+    (targetLocale: Locale): SpeechSynthesisVoice | null => {
+      if (!isSupported || !window.speechSynthesis) return null;
+
+      const voices = window.speechSynthesis.getVoices();
+      const targetLang = localeToSpeechLang[targetLocale];
+
+      let voice = voices.find((v) => v.lang === targetLang);
+
+      if (!voice) {
+        const langPrefix = targetLang.split("-")[0];
+        voice = voices.find((v) => v.lang.startsWith(langPrefix));
+      }
+
+      return voice || voices.find((v) => v.default) || voices[0] || null;
+    },
+    [isSupported]
+  );
 
   // Inicializar Speech Synthesis
   useEffect(() => {
@@ -23,7 +94,18 @@ export function useSpeech(enabled: boolean = false) {
     // Inicializar a síntese de voz
     if (window.speechSynthesis) {
       // Força o carregamento das vozes
-      window.speechSynthesis.getVoices();
+      // Alguns navegadores carregam as vozes de forma assíncrona
+      const loadVoices = () => {
+        window.speechSynthesis.getVoices();
+      };
+
+      loadVoices();
+
+      // Alguns navegadores precisam de um evento para carregar as vozes
+      if (window.speechSynthesis.onvoiceschanged !== undefined) {
+        window.speechSynthesis.onvoiceschanged = loadVoices;
+      }
+
       isInitialized.current = true;
     }
   }, [isSupported]);
@@ -44,17 +126,23 @@ export function useSpeech(enabled: boolean = false) {
 
       // Criar nova utterance
       const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = options.lang || "pt-BR";
+      utterance.lang = options.lang || localeToSpeechLang[locale];
       utterance.rate = options.rate || 1.0;
       utterance.pitch = options.pitch || 1.0;
       utterance.volume = options.volume || 1.0;
+
+      // Tentar selecionar uma voz apropriada para o idioma
+      const voice = getVoiceForLocale(locale);
+      if (voice) {
+        utterance.voice = voice;
+      }
 
       utteranceRef.current = utterance;
 
       // Falar
       window.speechSynthesis.speak(utterance);
     },
-    [enabled, isSupported, stop]
+    [enabled, isSupported, stop, locale, getVoiceForLocale]
   );
 
   // Função para extrair texto de um elemento
@@ -77,11 +165,19 @@ export function useSpeech(enabled: boolean = false) {
       }
 
       // Depois placeholder (para inputs)
-      if (element instanceof HTMLInputElement || element instanceof HTMLTextAreaElement) {
+      if (
+        element instanceof HTMLInputElement ||
+        element instanceof HTMLTextAreaElement
+      ) {
         const placeholder = element.placeholder;
         const value = element.value;
         if (value) {
-          speak(`Campo preenchido com: ${value}`, options);
+          // Carregar tradução de forma assíncrona
+          getTranslation(locale, "accessibility.fieldFilledWith", {
+            value,
+          }).then((translatedText) => {
+            speak(translatedText, options);
+          });
           return;
         }
         if (placeholder) {
@@ -95,11 +191,12 @@ export function useSpeech(enabled: boolean = false) {
       if (text) {
         // Limitar tamanho para não falar textos muito longos
         const maxLength = 200;
-        const truncatedText = text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
+        const truncatedText =
+          text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
         speak(truncatedText, options);
       }
     },
-    [enabled, speak]
+    [enabled, speak, locale]
   );
 
   // Função para anunciar contexto (ex: "Modal aberto", "Menu expandido")
@@ -129,6 +226,13 @@ export function useSpeech(enabled: boolean = false) {
     return window.speechSynthesis.speaking;
   }, [isSupported]);
 
+  // Parar qualquer fala em andamento quando o locale mudar
+  useEffect(() => {
+    if (isSupported) {
+      stop();
+    }
+  }, [locale, isSupported, stop]);
+
   // Limpar ao desmontar
   useEffect(() => {
     return () => {
@@ -149,8 +253,19 @@ export function useSpeech(enabled: boolean = false) {
 }
 
 // Hook para integrar com navegação por teclado
-export function useSpeechNavigation(enabled: boolean = false) {
-  const { speakElement, announce, isSupported } = useSpeech(enabled);
+export function useSpeechNavigation(
+  enabled: boolean = false,
+  locale: Locale = "pt"
+) {
+  const { speakElement, announce, isSupported, stop } = useSpeech(
+    enabled,
+    locale
+  );
+
+  // Parar qualquer fala em andamento quando o locale mudar
+  useEffect(() => {
+    stop();
+  }, [locale, stop]);
 
   // Falar elemento ao receber foco
   useEffect(() => {
@@ -169,7 +284,7 @@ export function useSpeechNavigation(enabled: boolean = false) {
     return () => {
       document.removeEventListener("focusin", handleFocus, true);
     };
-  }, [enabled, isSupported, speakElement]);
+  }, [enabled, isSupported, speakElement, locale]);
 
   return {
     speakElement,
