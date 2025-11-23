@@ -14,6 +14,8 @@ import {
 import { useFocusTrap } from "@/src/hooks/useFocusTrap";
 import { useSpeech } from "@/src/hooks/useSpeech";
 import { useAccessibility } from "@/src/providers/AccessibilityProvider";
+import { useLocale } from "@/src/hooks/useLocale";
+import { useTranslations } from "next-intl";
 
 export interface DialogProps extends HtmlHTMLAttributes<HTMLDivElement> {
   open: boolean;
@@ -59,14 +61,16 @@ const Dialog = ({
 }: DialogProps) => {
   const focusTrapRef = useFocusTrap(open);
   const { preferences } = useAccessibility();
-  const { announce } = useSpeech(preferences.speechEnabled);
+  const { locale } = useLocale();
+  const { announce } = useSpeech(preferences.speechEnabled, locale);
+  const t = useTranslations("modals");
 
   // Anunciar abertura do modal
   useEffect(() => {
     if (open) {
-      announce("Modal aberto");
+      announce(t("modalOpened"));
     }
-  }, [open, announce]);
+  }, [open, announce, t]);
 
   // Fechar modal com tecla Escape
   useEffect(() => {
@@ -75,14 +79,14 @@ const Dialog = ({
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         e.preventDefault();
-        announce("Modal fechado");
+        announce(t("modalClosed"));
         onOpenChange(false);
       }
     };
 
     window.addEventListener("keydown", handleEscape);
     return () => window.removeEventListener("keydown", handleEscape);
-  }, [open, closable, onOpenChange, announce]);
+  }, [open, closable, onOpenChange, announce, t]);
 
   // Prevenir scroll do body quando modal está aberto
   useEffect(() => {
@@ -130,7 +134,7 @@ const Dialog = ({
               <button
                 className={sCloseButton()}
                 onClick={() => onOpenChange(false)}
-                aria-label="Fechar modal"
+                aria-label={t("closeModalAriaLabel")}
               >
                 <X strokeWidth={1} width={22} />
               </button>

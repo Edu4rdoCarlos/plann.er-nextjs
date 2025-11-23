@@ -3,6 +3,7 @@
 import { useAuth } from "@/src/hooks/auth/useAuth";
 import { useSpeech } from "@/src/hooks/useSpeech";
 import { useAccessibility } from "@/src/providers/AccessibilityProvider";
+import { useLocale } from "@/src/hooks/useLocale";
 import { LogOut, Settings } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -24,7 +25,8 @@ export const MenuAvatar = ({ className }: MenuAvatarProps) => {
   const { userEmail, isAdmin, handleLogout, isLoggedIn } = useAuth();
   const router = useRouter();
   const { preferences } = useAccessibility();
-  const { speak, announce } = useSpeech(preferences.speechEnabled);
+  const { locale } = useLocale();
+  const { speak, announce } = useSpeech(preferences.speechEnabled, locale);
 
   const getAvatarUrl = (email: string | null) => {
     if (!email) return "https://api.dicebear.com/7.x/bottts/svg?seed=default";
@@ -37,9 +39,9 @@ export const MenuAvatar = ({ className }: MenuAvatarProps) => {
     if (isOpen && menuItemsRef.current[0]) {
       menuItemsRef.current[0]?.focus();
       setSelectedIndex(0);
-      announce("Menu do usuário aberto");
+      announce(t("menuOpened"));
     }
-  }, [isOpen, announce]);
+  }, [isOpen, announce, t]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -50,7 +52,7 @@ export const MenuAvatar = ({ className }: MenuAvatarProps) => {
 
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape" && isOpen) {
-        announce("Menu fechado");
+        announce(t("menuClosed"));
         setIsOpen(false);
         buttonRef.current?.focus();
       }
@@ -62,7 +64,7 @@ export const MenuAvatar = ({ className }: MenuAvatarProps) => {
       document.removeEventListener("mousedown", handleClickOutside);
       document.removeEventListener("keydown", handleEscape);
     };
-  }, [isOpen]);
+  }, [isOpen, t]);
 
   if (!isLoggedIn) {
     return null;
@@ -135,13 +137,13 @@ export const MenuAvatar = ({ className }: MenuAvatarProps) => {
           }
         }}
         className={sAvatar()}
-        aria-label="Menu do usuário"
+        aria-label={t("menuAriaLabel")}
         aria-expanded={isOpen}
         aria-haspopup="true"
       >
         <img
           src={getAvatarUrl(userEmail)}
-          alt="Avatar do usuário"
+          alt={t("avatarAlt")}
           width={32}
           height={32}
           className="w-full h-full rounded-full"
