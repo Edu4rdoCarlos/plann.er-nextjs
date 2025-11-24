@@ -1,7 +1,9 @@
+"use client";
+
 import { Button } from "@/src/components/primitives/Button/Button";
 import {
-    Calendar,
-    CalendarValue,
+  Calendar,
+  CalendarValue,
 } from "@/src/components/primitives/Calendar/Calendar";
 import { Dialog } from "@/src/components/primitives/Dialog/Dialog";
 import { Input } from "@/src/components/primitives/Input/Input";
@@ -9,11 +11,12 @@ import { useActivity } from "@/src/hooks/useActivity";
 import { formatDateTime } from "@/src/lib/utils/date";
 import { useToast } from "@/src/providers/ToastProvider";
 import {
-    CreateActivityFormData,
-    createActivitySchema,
+  CreateActivityFormData,
+  createActivitySchema,
 } from "@/src/schemas/activity/activitySchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Clock4, Plus, Tag } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -27,6 +30,7 @@ export interface CreateActivityProps {
 export const CreateActivity = (props: CreateActivityProps) => {
   const { open, onOpenChange } = props;
   const router = useParams();
+  const t = useTranslations("modals");
 
   const {
     register,
@@ -63,10 +67,10 @@ export const CreateActivity = (props: CreateActivityProps) => {
     const res = await createActivity({ formData, tripId: router.id as string });
     if (res) {
       onOpenChange(false);
-      showToast("Operation Successful!", "success");
+      showToast(t("operationSuccess"), "success");
       return;
     }
-    showToast("Operation Error!", "error");
+    showToast(t("operationError"), "error");
   };
 
   useEffect(() => {
@@ -80,19 +84,19 @@ export const CreateActivity = (props: CreateActivityProps) => {
       onOpenChange={onOpenChange}
       trigger={
         <Button>
-          <Plus width={20} /> Cadastrar atividades
+          <Plus width={20} /> {t("registerActivities")}
         </Button>
       }
     >
       <Dialog.Header
-        title="Cadastrar atividade"
-        subtitle="Todos convidados podem visualizar as atividades."
+        title={t("registerActivity")}
+        subtitle={t("registerActivitySubtitle")}
       />
       <Dialog.Content>
         <form onSubmit={handleSubmit(handleCreateActivity)}>
           <Input
             Icon={Tag}
-            placeholder="Qual atividade"
+            placeholder={t("whatActivity")}
             {...register("activityName")}
             error={errors.activityName?.message}
           />
@@ -104,13 +108,14 @@ export const CreateActivity = (props: CreateActivityProps) => {
             />
             <Input
               Icon={Clock4}
-              placeholder="Horário"
+              placeholder={t("time")}
               {...register("activityTime")}
               error={errors.activityTime?.message}
+              className="flex-1"
             />
           </div>
           <Dialog.Footer>
-            <Button type="submit">Cadastrar</Button>
+            <Button type="submit">{t("register")}</Button>
           </Dialog.Footer>
         </form>
       </Dialog.Content>

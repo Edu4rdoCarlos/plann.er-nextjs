@@ -1,11 +1,16 @@
+import { KeyboardShortcutsHelp } from "@/src/components/compounds/KeyboardShortcutsHelp/KeyboardShortcutsHelp";
+import { SkipLinks } from "@/src/components/primitives/SkipLinks/SkipLinks";
+import {
+  AccessibilityProvider,
+  LocaleProvider,
+  ReactQueryProvider,
+  RouteProtectionProvider,
+  ToastProvider,
+} from "@/src/providers";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { GlobalKeyboardShortcuts } from "../components/GlobalKeyboardShortcuts/GlobalKeyboardShortcuts";
 import "./globals.css";
-import { 
-  ReactQueryProvider, 
-  ToastProvider, 
-  RouteProtectionProvider 
-} from "@/src/providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,15 +25,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="pt">
       <body className={inter.className}>
-        <ReactQueryProvider>
-          <ToastProvider>
-            <RouteProtectionProvider>
-              {children}
-            </RouteProtectionProvider>
-          </ToastProvider>
-        </ReactQueryProvider>
+        <SkipLinks />
+        <LocaleProvider>
+          <ReactQueryProvider>
+            <ToastProvider>
+              <AccessibilityProvider>
+                <RouteProtectionProvider>
+                  {children}
+                  <KeyboardShortcutsHelp />
+                  <GlobalKeyboardShortcuts />
+                </RouteProtectionProvider>
+              </AccessibilityProvider>
+            </ToastProvider>
+          </ReactQueryProvider>
+        </LocaleProvider>
       </body>
     </html>
   );

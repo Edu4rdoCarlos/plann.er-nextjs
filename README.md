@@ -1,4 +1,32 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Plann.er - Planejador de Viagens
+
+Aplicação web para planejamento colaborativo de viagens, construída com Next.js 14, TypeScript, e Tailwind CSS.
+
+## ♿ Acessibilidade
+
+Este projeto foi desenvolvido com **acessibilidade em primeiro lugar**, seguindo os padrões **WCAG 2.2 Level AA**.
+
+### 🎯 Funcionalidades
+- ✅ Navegação por teclado completa
+- ✅ Leitura por voz (Text-to-Speech)
+- ✅ Skip links e focus trap
+- ✅ Ajuste de tamanho de fonte (-2 a +2)
+- ✅ Foco melhorado (contraste 3:1)
+- ✅ ARIA completo
+- ✅ Touch targets 44x44px
+- ✅ Zoom 200%
+
+### 📚 Documentação Completa
+**[📖 Acesse a documentação de acessibilidade](./docs/accessibility/README.md)**
+
+Inclui guias detalhados sobre:
+- Navegação por teclado e atalhos
+- Text-to-Speech (leitura por voz)
+- Conformidade WCAG 2.2
+- Guias de teste
+- Arquitetura técnica
+
+---
 
 ## Getting Started
 

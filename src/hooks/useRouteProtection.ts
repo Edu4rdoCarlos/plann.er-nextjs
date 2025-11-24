@@ -10,12 +10,14 @@ import { useToast } from "@/src/providers/ToastProvider";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useAuth } from "./auth/useAuth";
+import { useTranslations } from "next-intl";
 
 export const useRouteProtection = () => {
   const pathname = usePathname();
   const router = useRouter();
   const { isLoggedIn, isAdmin } = useAuth();
   const { showToast } = useToast();
+  const t = useTranslations("toast");
   const [isLoading, setIsLoading] = useState(true);
   const [isHydrated, setIsHydrated] = useState(false);
 
@@ -41,7 +43,7 @@ export const useRouteProtection = () => {
 
     if (isProtectedRoute(pathname) && !isLoggedIn) {
       setTimeout(() => {
-        showToast("Acesso negado. Faça login para continuar.", "error");
+        showToast(t("accessDenied"), "error");
         router.push(AUTH_REDIRECT.LOGIN);
         setIsLoading(false);
       }, 500);
@@ -49,10 +51,7 @@ export const useRouteProtection = () => {
     }
 
     if (isAdminRoute(pathname) && (!isLoggedIn || !isAdmin)) {
-      showToast(
-        "Acesso negado. Permissões de administrador necessárias.",
-        "error"
-      );
+      showToast(t("adminRequired"), "error");
 
       setTimeout(() => {
         router.push(isLoggedIn ? AUTH_REDIRECT.DASHBOARD : AUTH_REDIRECT.LOGIN);

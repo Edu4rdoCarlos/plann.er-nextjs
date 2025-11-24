@@ -1,3 +1,5 @@
+"use client";
+
 import { Attachment } from "@/src/components/compounds/Attachments";
 import {
   Content,
@@ -8,6 +10,7 @@ import { useAttachment } from "@/src/hooks/useAttachment";
 import { Link2 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 interface AttachmentItem extends Pick<ContentProps, "info" | "label"> {
   id: string;
@@ -20,12 +23,13 @@ interface AttachmentLayoutProps {
 export const AttachmentLayout = ({ items }: AttachmentLayoutProps) => {
   const [open, setOpen] = useState(false);
   const { mutateAsync: deleteAttachment } = useAttachment.Delete();
+  const t = useTranslations("tripDetails");
 
   const action = () => <CreateAttachment onOpenChange={setOpen} open={open} />;
 
   return (
     <div className="w-full">
-      <Attachment title="Links Importantes" action={action()}>
+      <Attachment title={t("importantLinks")} action={action()}>
         {items.length ? (
           items.map((item) => {
             return (
@@ -44,7 +48,7 @@ export const AttachmentLayout = ({ items }: AttachmentLayoutProps) => {
             );
           })
         ) : (
-          <div className="text-zinc-400">Nenhum link cadastrado</div>
+          <div className="text-zinc-400">{t("noLinks")}</div>
         )}
       </Attachment>
     </div>

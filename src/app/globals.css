@@ -31,3 +31,65 @@ body {
     text-wrap: balance;
   }
 }
+
+/* Accessibility - Font Size Controls */
+/*
+  Changes font-size on :root (html element) to scale all rem-based values.
+  This ensures that containers, padding, margins, and all Tailwind utilities
+  scale proportionally with the user's font size preference.
+
+  Range: -2 (12px) to +2 (20px) in 2px increments
+*/
+html.font-size--2 {
+  font-size: 12px; /* Muito Pequeno - 75% */
+}
+
+html.font-size--1 {
+  font-size: 14px; /* Pequeno - 87.5% */
+}
+
+html.font-size-0 {
+  font-size: 16px; /* Padrão - 100% */
+}
+
+html.font-size-1 {
+  font-size: 18px; /* Grande - 112.5% */
+}
+
+html.font-size-2 {
+  font-size: 20px; /* Muito Grande - 125% */
+}
+
+/* Enhanced Focus Styles - WCAG 2.2 AA Compliant */
+.enhanced-focus *:focus {
+  outline: 1px solid #10b981 !important; /* lime-500 */
+  outline-offset: 1px !important;
+  box-shadow: 0 0 0 1px #ffffff, 0 0 0 1px #10b981 !important;
+}
+
+.enhanced-focus button:focus,
+.enhanced-focus input:focus,
+.enhanced-focus select:focus,
+.enhanced-focus textarea:focus,
+.enhanced-focus [role="button"]:focus {
+  outline: 1px solid #10b981 !important;
+  outline-offset: 1px !important;
+  box-shadow: 0 0 0 1px #ffffff, 0 0 0 1px #10b981 !important;
+}
+
+/* Ensure minimum touch target size (44x44px) for accessibility */
+button,
+[role="button"],
+input[type="button"],
+input[type="submit"] {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Support for 200% zoom without breaking layout */
+@media (max-width: 320px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
